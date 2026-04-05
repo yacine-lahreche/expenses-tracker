@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile | Expenses Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles/global.css">
+  <link rel="stylesheet" href="../../styles/components.css">
+  <link rel="stylesheet" href="../../styles/profile.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar shell">
+      <div>
+        <div class="brand">Intelligence</div>
+        <div class="tier">Premium Tier</div>
+      </div>
+      <nav class="nav">
+        <a href="../dashboard/index.html" class="nav-item"><span class="dot"></span>Dashboard</a>
+        <a href="../analytics/index.html" class="nav-item"><span class="dot"></span>Analytics</a>
+        <a href="../budget/index.html" class="nav-item"><span class="dot"></span>Budget</a>
+        <a href="../transactions/index.html" class="nav-item"><span class="dot"></span>Transactions</a>
+        <a href="../categories management/index.html" class="nav-item"><span class="dot"></span>Categories</a>
+        <a href="../settings/index.html" class="nav-item"><span class="dot"></span>Settings</a>
+        <a href="../profile/index.html" class="nav-item active"><span class="dot"></span>Profile</a>
+      </nav>
+      <hr>
+      <a href="../onboarding/index.html" class="nav-item"><span class="dot"></span>Logout</a>
+    </aside>
+    <main class="main">
+      <header class="topbar shell">
+        <div class="top-brand">User Profile</div>
+        <div class="top-actions">
+          <div class="icons"><span>&#128276;</span><span>&#9711;</span></div>
+        </div>
+      </header>
+      <div class="content">
+        <section class="profile-header">
+          <div class="avatar">Y</div>
+          <div class="profile-info">
+            <h1>Yacin Ben</h1>
+            <p>Premium Member • Member since March 2026</p>
+          </div>
+        </section>
+        
+        <section class="stats-grid">
+          <div class="card stat-card">
+            <span class="label">Total Managed</span>
+            <div class="value">$124,500.00</div>
+          </div>
+          <div class="card stat-card">
+            <span class="label">Transactions</span>
+            <div class="value">1,245</div>
+          </div>
+          <div class="card stat-card">
+            <span class="label">Savings Rate</span>
+            <div class="value">24.5%</div>
+          </div>
+        </section>
+
+        <section class="card account-details">
+          <div class="detail-item">
+            <label>Full Name</label>
+            <div class="value">Yacin Ben</div>
+          </div>
+          <div class="detail-item">
+            <label>Email Address</label>
+            <div class="value">yacin@example.com</div>
+          </div>
+          <div class="detail-item">
+            <label>Phone Number</label>
+            <div class="value">+1 (555) 000-0000</div>
+          </div>
+          <div class="detail-item">
+            <label>Location</label>
+            <div class="value">Paris, France</div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

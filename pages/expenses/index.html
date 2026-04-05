@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expenses Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles/global.css">
+  <link rel="stylesheet" href="../../styles/components.css">
+  <link rel="stylesheet" href="../../styles/expenses.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar shell">
+      <div>
+        <div class="brand">Intelligence</div>
+        <div class="tier">Premium Tier</div>
+      </div>
+      <nav class="nav">
+        <a href="../dashboard/index.html" class="nav-item"><span class="dot"></span>Dashboard</a>
+        <a href="../analytics/index.html" class="nav-item"><span class="dot"></span>Analytics</a>
+        <a href="../budget/index.html" class="nav-item"><span class="dot"></span>Budget</a>
+        <a href="../expenses/index.html" class="nav-item active"><span class="dot"></span>Expenses</a>
+        <a href="../categories management/index.html" class="nav-item"><span class="dot"></span>Categories</a>
+        <a href="../settings/index.html" class="nav-item"><span class="dot"></span>Settings</a>
+        <a href="../profile/index.html" class="nav-item"><span class="dot"></span>Profile</a>
+      </nav>
+      <hr>
+      <a href="../onboarding/index.html" class="nav-item"><span class="dot"></span>Logout</a>
+    </aside>
+    <main class="main">
+      <header class="topbar shell">
+        <div class="top-brand">Liquid Intelligence</div>
+        <div class="top-actions">
+          <div class="search">Search expenses...</div>
+          <div class="icons"><span>&#128276;</span><span>&#9711;</span></div>
+        </div>
+      </header>
+      <div class="content">
+        <h1>Expenses History</h1>
+        <div class="headline-meta"></div>
+        <section class="controls">
+          <div class="control-card">
+            <input type="text" class="search-box" placeholder="Search merchants....">
+            <div class="dropdown">
+              <button class="field dropdown-btn" required>All Categories</button>
+              <div class="dropdown-menu">
+                <a href="#">All Categories</a>
+              </div>
+            </div>
+            <input type="date" id="dateInput" class="date-box" required></input>
+          </div>
+          <div class="control-card sort-card">
+            <div class="sort-label">Sort By</div> 
+            <div class="dropdown">
+              <button class="sort-btn" required>Latest</button>
+              <div class="sort-menu">
+                <a href="#">Latest</a>
+                <a href="#">Oldest</a> 
+              </div>
+            </div>
+          </div>
+        </section>
+        <div class="table-container">
+          <div class="table-head table-container-child">
+            <div>Date</div>
+            <div>Category</div>
+            <div>Description/Merchant</div>
+            <div style="text-align: right;">Amount</div>
+            <div></div>
+          </div>
+          <section class="rows table-container-child">
+            <!-- expenses will be added here -->
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Edit Modal Overlay -->
+  <div id="editModalOverlay" class="modal-overlay">
+    <div class="modal shell">
+      <div class="modal-top">
+        <div>
+          <h1>Edit Expense</h1>
+          <div class="subtitle">Update records for this transaction</div>
+        </div>
+        <button id="closeEditModal" class="close">&times;</button>
+      </div>
+      
+      <section class="center">
+        <div class="label">Expense Amount</div>
+        <div class="amount-row">
+          <div class="currency">$</div>
+          <input type="text" id="editAmountInput" class="amount-input" placeholder="0.00" required> 
+        </div>
+        <div class="underline"></div>
+      </section>
+
+      <section class="grid">
+        <div class="field-wrap">
+          <label>Category</label>
+          <div id="editCategoryDropdown" class="dropdown dropdown-field">
+            <button class="field dropdown-btn">Choose category...</button>
+            <div class="dropdown-menu">
+              <a href="#">Groceries</a>
+              <a href="#">Transport</a>
+              <a href="#">Entertainment</a>
+              <a href="#">Utilities</a>
+              <a href="#">Health</a>
+              <a href="#">Others</a>
+            </div>
+          </div>
+        </div>
+        <div class="field-wrap">
+          <label>Date</label>
+          <input type="date" id="editDateInput" class="field" required>
+        </div>
+      </section>
+
+      <div class="field-wrap wide">
+        <label>Merchant</label>
+        <input type="text" id="editMerchantInput" class="field" placeholder="Where did you spend?">
+      </div>
+
+      <div class="field-wrap wide">
+        <label>Notes (Optional)</label>
+        <input type="text" id="editNotesInput" class="field" placeholder="What was this for?">
+      </div>
+
+      <section class="actions">
+        <button id="cancelEditBtn" class="btn-cancel">Cancel</button>
+        <button id="saveEditBtn" class="button-primary">Save Changes</button>
+      </section>
+    </div>
+  </div>
+
+  <script type="module" src="expenses.js"></script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+.card {
+  border-radius: 16px;
+  background: rgba(17, 35, 73, 0.94);
+  border: 1px solid var(--line);
+  padding: 18px 18px 16px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.badge {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.badge.green { background: rgba(17, 241, 180, 0.12); color: var(--green); }
+.badge.blue { background: rgba(81, 223, 255, 0.12); color: var(--primary); }
+.badge.red { background: rgba(255, 120, 116, 0.12); color: var(--coral); }
+
+.fab {
+  position: fixed;
+  right: 46px;
+  bottom: 24px;
+  height: 42px;
+  padding: 0 22px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #6be8ff, #2dd8f8);
+  color: #14324c;
+  font-size: 14px;
+  font-weight: 800;
+  box-shadow: 0 0 28px rgba(70, 223, 255, 0.4);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.fab:hover {
+  transform: scale(1.05);
+}
+
+.btn {
+  height: 44px;
+  border-radius: 14px;
+  background: #21436f;
+  border: 1px solid rgba(114, 229, 255, 0.18);
+  color: #83ebff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  background: #2b558c;
+}
+
+.progress {
+  width: 100%;
+  height: 6px;
+  background: rgba(119, 132, 162, 0.18);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+}

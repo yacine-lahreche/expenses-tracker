@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings | Expenses Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles/global.css">
+  <link rel="stylesheet" href="../../styles/components.css">
+  <link rel="stylesheet" href="../../styles/settings.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar shell">
+      <div>
+        <div class="brand">Intelligence</div>
+        <div class="tier">Premium Tier</div>
+      </div>
+      <nav class="nav">
+        <a href="../dashboard/index.html" class="nav-item"><span class="dot"></span>Dashboard</a>
+        <a href="../analytics/index.html" class="nav-item"><span class="dot"></span>Analytics</a>
+        <a href="../budget/index.html" class="nav-item"><span class="dot"></span>Budget</a>
+        <a href="../transactions/index.html" class="nav-item"><span class="dot"></span>Transactions</a>
+        <a href="../categories management/index.html" class="nav-item"><span class="dot"></span>Categories</a>
+        <a href="../settings/index.html" class="nav-item active"><span class="dot"></span>Settings</a>
+        <a href="../profile/index.html" class="nav-item"><span class="dot"></span>Profile</a>
+      </nav>
+      <hr>
+      <a href="../onboarding/index.html" class="nav-item"><span class="dot"></span>Logout</a>
+    </aside>
+    <main class="main">
+      <header class="topbar shell">
+        <div class="top-brand">Platform Settings</div>
+        <div class="top-actions">
+          <div class="search">Search settings...</div>
+          <div class="icons"><span>&#128276;</span><span>&#9711;</span></div>
+        </div>
+      </header>
+      <div class="content">
+        <h1>Platform Settings</h1>
+        <div class="subtitle">Manage your interface preferences, localization, and account security.</div>
+        <section class="grid">
+          <article class="card">
+            <h2><span>A</span>Appearance</h2>
+            <p>Choose your preferred visual style. Our intelligent interface adapts to your lighting conditions.</p>
+            <div class="tile">Dark Mode <div class="switch on"></div></div>
+            <div class="tile muted">Light Mode <div class="switch"></div></div>
+          </article>
+          <article class="card">
+            <h2><span>L</span>Localization</h2>
+            <div class="field-label">Primary Currency</div>
+            <div class="field">USD - $ (US Dollar) <span>&#8991;</span></div>
+            <div class="field-label">Language</div>
+            <div class="field">English (United States) <span>&#8991;</span></div>
+          </article>
+          <article class="card">
+            <h2><span>N</span>Notifications</h2>
+            <div class="notice">
+              <strong>Budget Alerts <span class="switch on"></span></strong>
+              <p>Get notified instantly when reaching 80% of your set monthly budget across all categories.</p>
+            </div>
+            <div class="notice">
+              <strong>Weekly Summary <span class="switch"></span></strong>
+              <p>A detailed breakdown of your spending habits and savings progress sent every Monday morning.</p>
+            </div>
+          </article>
+          <article class="card">
+            <h2><span>S</span>Security &amp; Data</h2>
+            <div class="btn">Change Password <span>&rsaquo;</span></div>
+            <div class="danger">
+              <h3>Danger Zone</h3>
+              <p>Permanently delete all transaction history, connected wallets, and custom categories. This action is irreversible.</p>
+              <div class="danger-btn">Reset All Data</div>
+            </div>
+          </article>
+        </section>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

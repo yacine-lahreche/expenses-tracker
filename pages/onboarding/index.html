@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome | Expenses Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles/global.css">
+  <link rel="stylesheet" href="../../styles/components.css">
+  <link rel="stylesheet" href="../../styles/onboarding.css">
+</head>
+<body style="display: grid; place-items: center; overflow: hidden; background: linear-gradient(180deg, #07182f 0%, #041126 100%);">
+  <div class="orb top" aria-hidden="true"></div>
+  <div class="tile bottom" aria-hidden="true">
+    <div class="sparkles"><span></span></div>
+  </div>
+  <main class="onboarding-card">
+    <div class="brand-large">Liquid Intelligence</div>
+    <div class="hero" aria-hidden="true">
+      <svg viewBox="0 0 48 48">
+        <path d="M10 30l8-8 6 6 13-13"></path>
+        <path d="M33 15h4v4"></path>
+        <path d="M18 15l1.5 3L23 19.5 19.5 21 18 24l-1.5-3L13 19.5l3.5-1.5L18 15z"></path>
+      </svg>
+    </div>
+    <h1>Welcome to Liquid Intelligence</h1>
+    <p class="subtitle">Your journey to financial clarity starts here. Let's get you set up with your first budget or track your first expense.</p>
+    <section class="onboarding-actions">
+      <a href="../budget/index.html" class="onboarding-action">
+        <div class="icon-box primary">G</div>
+        <h2 class="action-title">Set your first budget</h2>
+        <p class="action-copy">Create a plan for your spending.</p>
+      </a>
+      <a href="../add-expense/index.html" class="onboarding-action">
+        <div class="icon-box green">E</div>
+        <h2 class="action-title">Add your first expense</h2>
+        <p class="action-copy">Log a recent purchase quickly.</p>
+      </a>
+    </section>
+    <a href="../dashboard/index.html" class="footer-link" style="display: block; text-decoration: none;">Explore the dashboard first <span>&rarr;</span></a>
+  </main>
+</body>
+</html>

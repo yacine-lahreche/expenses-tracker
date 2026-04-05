@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Budgets | Expenses Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles/global.css">
+  <link rel="stylesheet" href="../../styles/components.css">
+  <link rel="stylesheet" href="../../styles/budget.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar shell">
+      <div>
+        <div class="brand">Intelligence</div>
+        <div class="tier">Premium Tier</div>
+      </div>
+      <nav class="nav">
+        <a href="../dashboard/index.html" class="nav-item"><span class="dot"></span>Dashboard</a>
+        <a href="../analytics/index.html" class="nav-item"><span class="dot"></span>Analytics</a>
+        <a href="../budget/index.html" class="nav-item active"><span class="dot"></span>Budget</a>
+        <a href="../expenses/index.html" class="nav-item"><span class="dot"></span>Expenses</a>
+        <a href="../categories management/index.html" class="nav-item"><span class="dot"></span>Categories</a>
+        <a href="../settings/index.html" class="nav-item"><span class="dot"></span>Settings</a>
+        <a href="../profile/index.html" class="nav-item"><span class="dot"></span>Profile</a>
+      </nav>
+      <hr>
+      <a href="../onboarding/index.html" class="nav-item"><span class="dot"></span>Logout</a>
+    </aside>
+    <main class="main">
+      <header class="topbar shell">
+        <div class="top-brand">Liquid Ledger</div>
+        <div class="top-actions">
+          <div class="search">Search budgets...</div>
+          <div class="icons"><span>&#128276;</span><span>&#9711;</span></div>
+        </div>
+      </header>
+      <div class="content">
+        <section class="page-head">
+          <div>
+            <h1>Budgets</h1>
+            <div class="subtitle">Monthly fiscal goal tracking &amp; limits.</div>
+          </div>
+          <div class="btn">Reset monthly budgets</div>
+        </section>
+        <section class="budget-grid">
+          <article class="budget-card">
+            <div class="budget-top">
+              <div class="budget-label"><div class="icon">H</div>Housing</div>
+              <div class="edit">&#9998;</div>
+            </div>
+            <div class="stats">
+              <div><div class="meta">Spent</div><div class="money">$1,200</div></div>
+              <div><div class="meta">Budget</div><div class="money small">$3,000</div></div>
+            </div>
+            <div class="bar blue"><span></span></div>
+            <div class="badge green">Safe Zone</div>
+          </article>
+          <article class="budget-card warning">
+            <div class="budget-top">
+              <div class="budget-label"><div class="icon coral">F</div>Food &amp; Dining</div>
+              <div class="edit">&#9998;</div>
+            </div>
+            <div class="stats">
+              <div><div class="meta">Spent</div><div class="money">$680</div></div>
+              <div><div class="meta">Budget</div><div class="money small">$800</div></div>
+            </div>
+            <div class="bar coral"><span></span></div>
+            <div class="badge coral">Approaching Limit</div>
+          </article>
+          <article class="budget-card danger">
+            <div class="budget-top">
+              <div class="budget-label"><div class="icon coral">E</div>Entertainment</div>
+              <div class="edit">&#9998;</div>
+            </div>
+            <div class="stats">
+              <div><div class="meta">Spent</div><div class="money red">$550</div></div>
+              <div><div class="meta">Budget</div><div class="money small">$500</div></div>
+            </div>
+            <div class="bar red"><span></span></div>
+            <div class="badge coral">You are $50 over budget</div>
+          </article>
+        </section>
+        <section class="pulse">
+          <div class="pulse-head">
+            <div>
+              <h2>Monthly Pulse</h2>
+              <p>Overall budget performance across all categories</p>
+            </div>
+            <div class="legend">
+              <span class="projected">Projected</span>
+              <span class="actual">Actual</span>
+            </div>
+          </div>
+          <div class="bars">
+            <div style="height: 72px;"></div><div style="height: 116px;"></div><div style="height: 96px;"></div><div style="height: 156px; background: linear-gradient(180deg, rgba(255,133,129,0.7), rgba(78,39,63,0.8));"></div><div style="height: 84px;"></div><div style="height: 60px;"></div><div style="height: 42px;"></div>
+          </div>
+          <div class="days">
+            <div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div><div>Sun</div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

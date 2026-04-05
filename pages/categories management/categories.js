@@ -1,0 +1,1 @@
+let categoryArr = JSON.parse(localStorage.getItem("categoryArr")) || [];

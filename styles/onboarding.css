@@ -1,0 +1,190 @@
+:root {
+  --bg: #07182f;
+  --bg-deep: #041126;
+  --panel: rgba(18, 39, 77, 0.9);
+  --panel-line: rgba(120, 233, 255, 0.12);
+}
+
+.orb,
+.tile {
+  position: fixed;
+  border-radius: 28px;
+  background: rgba(16, 34, 67, 0.45);
+  border: 1px solid rgba(90, 146, 203, 0.08);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(24px);
+}
+
+.orb.top {
+  right: 56px;
+  top: 48px;
+  width: 160px;
+  height: 160px;
+  transform: rotate(12deg);
+}
+
+.orb.top::before {
+  content: "";
+  position: absolute;
+  inset: 28px;
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(255,255,255,0.18), transparent 24%),
+    radial-gradient(circle at 52% 54%, rgba(255,255,255,0.10), transparent 16%),
+    radial-gradient(circle at 50% 50%, rgba(4, 9, 20, 0.92), rgba(4, 9, 20, 0.32));
+  box-shadow: inset 0 0 26px rgba(255,255,255,0.08);
+}
+
+.tile.bottom {
+  left: 56px;
+  bottom: 46px;
+  width: 102px;
+  height: 102px;
+  display: grid;
+  place-items: center;
+}
+
+.sparkles {
+  position: relative;
+  width: 30px;
+  height: 30px;
+}
+
+.sparkles::before,
+.sparkles::after,
+.sparkles span {
+  content: "";
+  position: absolute;
+  background: rgba(64, 167, 255, 0.26);
+  clip-path: polygon(50% 0, 60% 38%, 100% 50%, 60% 62%, 50% 100%, 40% 62%, 0 50%, 40% 38%);
+}
+
+.sparkles::before { width: 12px; height: 12px; left: 0; top: 8px; }
+.sparkles::after { width: 18px; height: 18px; right: 0; top: 0; }
+.sparkles span { width: 8px; height: 8px; right: 3px; bottom: 2px; }
+
+.onboarding-card {
+  width: min(470px, calc(100vw - 72px));
+  padding: 40px 36px 34px;
+  border-radius: 18px;
+  background: var(--panel);
+  border: 1px solid var(--panel-line);
+  box-shadow: 0 28px 64px rgba(0, 0, 0, 0.32);
+  text-align: center;
+}
+
+.brand-large {
+  color: var(--primary);
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 28px;
+  font-family: "Manrope", sans-serif;
+}
+
+.hero {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(29, 53, 96, 0.56);
+  border: 1px solid rgba(93, 198, 255, 0.22);
+  color: #7fe8ff;
+  box-shadow: inset 0 0 24px rgba(61, 211, 255, 0.05);
+}
+
+.hero svg {
+  width: 42px;
+  height: 42px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.onboarding-card h1 {
+  margin: 0 0 10px;
+  font-size: 28px;
+  line-height: 1.2;
+  font-weight: 800;
+  font-family: "Manrope", sans-serif;
+  color: #fff;
+}
+
+.onboarding-card .subtitle {
+  margin: 0 auto 34px;
+  max-width: 330px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.onboarding-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  text-align: left;
+}
+
+.onboarding-action {
+  min-height: 138px;
+  padding: 18px;
+  border-radius: 10px;
+  background: rgba(19, 40, 80, 0.72);
+  border: 1px solid rgba(71, 130, 182, 0.18);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  text-decoration: none;
+  display: block;
+}
+
+.onboarding-action:hover {
+  transform: translateY(-4px);
+  background: rgba(29, 50, 90, 0.82);
+}
+
+.icon-box {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 18px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: "Manrope", sans-serif;
+}
+
+.icon-box.primary { background: rgba(73, 164, 255, 0.16); color: #9fe7ff; }
+.icon-box.green { background: rgba(16, 240, 178, 0.14); color: var(--green); }
+
+.action-title {
+  margin: 0 0 6px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: "Manrope", sans-serif;
+  color: #fff;
+}
+
+.action-copy {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.footer-link {
+  margin-top: 28px;
+  color: rgba(197, 204, 225, 0.68);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+@media (max-width: 700px) {
+  .onboarding-actions { grid-template-columns: 1fr; }
+}

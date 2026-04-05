@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analytics | Expenses Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles/global.css">
+  <link rel="stylesheet" href="../../styles/components.css">
+  <link rel="stylesheet" href="../../styles/analytics.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar shell">
+      <div>
+        <div class="brand">Intelligence</div>
+        <div class="tier">Premium Tier</div>
+      </div>
+      <nav class="nav">
+        <a href="../dashboard/index.html" class="nav-item"><span class="dot"></span>Dashboard</a>
+        <a href="../analytics/index.html" class="nav-item active"><span class="dot"></span>Analytics</a>
+        <a href="../budget/index.html" class="nav-item"><span class="dot"></span>Budget</a>
+        <a href="../expenses/index.html" class="nav-item"><span class="dot"></span>Expenses</a>
+        <a href="../categories management/index.html" class="nav-item"><span class="dot"></span>Categories</a>
+        <a href="../settings/index.html" class="nav-item"><span class="dot"></span>Settings</a>
+        <a href="../profile/index.html" class="nav-item"><span class="dot"></span>Profile</a>
+      </nav>
+      <hr>
+      <a href="../onboarding/index.html" class="nav-item"><span class="dot"></span>Logout</a>
+    </aside>
+    <main class="main">
+      <header class="topbar shell">
+        <div class="top-brand">Liquid Ledger</div>
+        <div class="top-actions">
+          <div class="search">Search insights...</div>
+          <div class="icons"><span>&#128276;</span><span>&#9711;</span></div>
+        </div>
+      </header>
+      <div class="content">
+        <section class="head">
+          <div>
+            <h1>Analytics &amp; <span>Insights</span></h1>
+            <div class="subtitle">Visualizing your fiscal flow for October 2023</div>
+          </div>
+          <div class="month-pill">&lsaquo; October 2023 &rsaquo;</div>
+        </section>
+        <section class="analytics">
+          <div>
+            <article class="card trend-card">
+              <div class="trend-head">
+                <h2>Monthly Spending Trend</h2>
+                <div class="legend"><span class="spend">Spending</span><span class="avg">Average</span></div>
+              </div>
+              <div class="bars">
+                <div class="bar-wrap"><div class="bar may" style="height: 96px;"></div><div class="label">May</div></div>
+                <div class="bar-wrap"><div class="bar jun" style="height: 120px;"></div><div class="label">Jun</div></div>
+                <div class="bar-wrap"><div class="bar jul" style="height: 72px;"></div><div class="label">Jul</div></div>
+                <div class="bar-wrap"><div class="bar aug" style="height: 156px;"></div><div class="label">Aug</div></div>
+                <div class="bar-wrap"><div class="bar sep" style="height: 144px; background: linear-gradient(180deg, #25cde8, #4c98b1); box-shadow: 0 0 20px rgba(81,223,255,0.32);"></div><div class="label active">Sep</div></div>
+                <div class="bar-wrap"><div class="bar oct" style="height: 96px; background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.08);"></div><div class="label">Oct (Est)</div></div>
+              </div>
+            </article>
+            <section class="sub-grid">
+              <article class="card donut-card">
+                <h2>Spending Allocation</h2>
+                <div class="donut-wrap"></div>
+                <div class="donut-legend">
+                  <span class="b1">Housing (45%)</span>
+                  <span class="b2">Food (25%)</span>
+                  <span class="b3">Entertainment (15%)</span>
+                  <span class="b4">Others (15%)</span>
+                </div>
+              </article>
+              <article class="card breakdown-card">
+                <h2>Categorical Breakdown</h2>
+                <div class="break-row">
+                  <div class="break-top"><strong>Housing</strong><span style="color:#78e9ff;">$1,200.00</span></div>
+                  <div class="track"><span class="w1"></span></div>
+                </div>
+                <div class="break-row">
+                  <div class="break-top"><strong>Food &amp; Dining</strong><span style="color:#11efb4;">$667.00</span></div>
+                  <div class="track"><span class="w2"></span></div>
+                </div>
+                <div class="break-row">
+                  <div class="break-top"><strong>Entertainment</strong><span style="color:#ff8c84;">$400.00</span></div>
+                  <div class="track"><span class="w3"></span></div>
+                </div>
+              </article>
+            </section>
+          </div>
+          <aside class="side">
+            <h2>Key Insights</h2>
+            <article class="insight-card featured">
+              <div class="insight-label">Top Category</div>
+              <div class="insight-title">
+                <h3>Housing</h3>
+                <div class="icon">H</div>
+              </div>
+              <div class="insight-amount">$1,200.00 <span style="font-size:14px;color:rgba(221,229,247,0.66);">(45%)</span></div>
+              <div class="insight-copy">Your housing costs are <span style="color:#ff8c84;font-weight:700;">2.4% higher</span> than the regional average.</div>
+            </article>
+            <article class="insight-card success">
+              <div class="insight-label">Monthly Variance</div>
+              <div class="insight-title">
+                <h3>Versus September</h3>
+                <div class="icon green">+</div>
+              </div>
+              <div class="insight-amount" style="color:var(--green);">4% Lower than avg</div>
+            </article>
+            <article class="insight-card forecast">
+              <div class="insight-title" style="margin-bottom:10px;"><h3>AI Forecast</h3></div>
+              <div class="insight-copy">Predicted uptick in spending for November due to utility billing cycles.</div>
+              <div class="forecast-total">
+                <div><small>Predicted Total</small><br><b>$2,840</b></div>
+                <small>+6.4%</small>
+              </div>
+            </article>
+          </aside>
+        </section>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Expense | Expenses Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles/global.css">
+  <link rel="stylesheet" href="../../styles/components.css">
+  <link rel="stylesheet" href="../../styles/add-expense.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar shell">
+      <div>
+        <div class="brand">Intelligence</div>
+        <div class="tier">Premium Tier</div>
+      </div>
+      <nav class="nav">
+        <a href="../dashboard/index.html" class="nav-item"><span class="dot"></span>Dashboard</a>
+        <a href="../analytics/index.html" class="nav-item"><span class="dot"></span>Analytics</a>
+        <a href="../budget/index.html" class="nav-item"><span class="dot"></span>Budget</a>
+        <a href="../expenses/index.html" class="nav-item"><span class="dot"></span>Expenses</a>
+        <a href="../categories management/index.html" class="nav-item"><span class="dot"></span>Categories</a>
+        <a href="../settings/index.html" class="nav-item"><span class="dot"></span>Settings</a>
+        <a href="../profile/index.html" class="nav-item"><span class="dot"></span>Profile</a>
+      </nav>
+      <hr>
+      <a href="../onboarding/index.html" class="nav-item"><span class="dot"></span>Logout</a>
+    </aside>
+    <main class="main">
+      <header class="topbar shell">
+        <div class="top-brand">New Entry</div>
+        <div class="top-actions">
+          <div class="icons"><span>&#128276;</span><span>&#9711;</span></div>
+        </div>
+      </header>
+      <div class="content modal-wrapper">
+        <div class="modal shell">
+          <div class="top">
+            <div>
+              <h1>New Expense</h1>
+              <div class="subtitle">Log your latest spending activity</div>
+            </div>
+            <a href="../dashboard/index.html" class="close" style="text-decoration: none;">&times;</a>
+          </div>
+          <section class="center">
+            <div class="label">Expense Amount</div>
+            <div class="amount-row">
+              <div class="currency">$</div>
+              <input type="text" class="amount-input" placeholder="0.00" required> 
+            </div>
+            <div class="underline"></div>
+          </section>
+          <section class="grid">
+            <div class="field-wrap">
+              <label>Category</label>
+              <div class="dropdown">
+                <button class="field dropdown-btn" required>Choose category...</button>
+                <div class="dropdown-menu">
+                  <a href="#">Groceries</a>
+                  <a href="#">Transport</a>
+                  <a href="#">Others</a>
+                </div>
+              </div>
+            </div>
+            <div class="field-wrap">
+              <label>Date</label>
+              <input type="date" id="dateInput" class="field" required></input>
+            </div>
+          </section>
+          <div class="field-wrap wide">
+            <label>Merchant</label>
+            <input type="text" id="merchantInput" class="field" placeholder="Where did you spend?" style="color: var(--text);" required></input>
+          </div>
+          <div class="field-wrap wide">
+            <label>Notes (Optional)</label>
+            <input type="text" id="notesInput" class="field" placeholder="What was this for?" style="color: var(--text);" required></input>
+          </div>
+          <!-- <section class="wallet">
+            <div class="wallet-left">
+              <div class="wallet-icon">C</div>
+              <div>
+                <div class="wallet-name">Premium Debit Card</div>
+                <div class="wallet-balance">Balance: $12,450.00</div>
+              </div>
+            </div>
+            <div class="change">Change</div>
+          </section> -->
+          <section class="actions">
+            <a href="../dashboard/index.html" class="btn" style="text-decoration: none; justify-content: center;">Cancel</a>
+            <button id="add-expense-btn" class="button-primary">Add Expense</button>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="add-expense.js"></script>
+</body>
+</html>

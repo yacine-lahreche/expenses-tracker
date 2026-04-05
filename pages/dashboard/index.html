@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | Expenses Tracker</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles/global.css">
+  <link rel="stylesheet" href="../../styles/components.css">
+  <link rel="stylesheet" href="../../styles/dashboard.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar shell">
+      <div>
+        <div class="brand">Intelligence</div>
+        <div class="tier">Premium Tier</div>
+      </div>
+      <nav class="nav">
+        <a href="../dashboard/index.html" class="nav-item active"><span class="dot"></span>Dashboard</a>
+        <a href="../analytics/index.html" class="nav-item"><span class="dot"></span>Analytics</a>
+        <a href="../budget/index.html" class="nav-item"><span class="dot"></span>Budget</a>
+        <a href="../expenses/index.html" class="nav-item"><span class="dot"></span>Expenses</a>
+        <a href="../categories management/index.html" class="nav-item"><span class="dot"></span>Categories</a>
+        <a href="../settings/index.html" class="nav-item"><span class="dot"></span>Settings</a>
+        <a href="../profile/index.html" class="nav-item"><span class="dot"></span>Profile</a>
+      </nav>
+      <hr>
+      <a href="../onboarding/index.html" class="nav-item"><span class="dot"></span>Logout</a>
+    </aside>
+    <main class="main">
+      <header class="topbar shell">
+        <div class="top-brand">Liquid Intelligence</div>
+        <div class="top-actions">
+          <div class="search">Search data...</div>
+          <div class="icons"><span>&#128276;</span><span>&#9711;</span></div>
+        </div>
+      </header>
+      <div class="content">
+        <section>
+          <h1>Financial Flow</h1>
+          <p class="subtitle">Real-time pulse of your synthetic sapphire assets.</p>
+        </section>
+        <section class="stats">
+          <article class="card">
+            <div class="stat-label">Total Spent</div>
+            <p class="big-number">$12,450.00</p>
+            <div class="trend">4.2% less than last month</div>
+          </article>
+          <article class="card">
+            <div class="stat-label">Remaining</div>
+            <p class="big-number">$3,120.45</p>
+            <div class="mini-bar"><span></span></div>
+          </article>
+          <article class="card">
+            <div class="stat-label">Monthly Savings</div>
+            <p class="big-number">$2,400.00</p>
+            <div class="subtitle" style="font-size:12px;">Target: $3,000.00</div>
+          </article>
+        </section>
+        <section class="dashboard-grid">
+          <article class="card breakdown">
+            <div class="section-head">
+              <h2>Spending Breakdown</h2>
+              <div class="month">This Month</div>
+            </div>
+            <div class="donut-wrap">
+              <div class="donut"></div>
+              <div class="legend">
+                <div class="legend-item"><span class="swatch" style="background:#75e9ff;"></span><div>Housing<br><b>45%</b></div></div>
+                <div class="legend-item"><span class="swatch" style="background:#0ff1b3;"></span><div>Lifestyle<br><b>25%</b></div></div>
+                <div class="legend-item"><span class="swatch" style="background:#ff867d;"></span><div>Other<br><b>15%</b></div></div>
+              </div>
+            </div>
+          </article>
+          <aside class="alerts">
+            <div class="alerts-head">
+              <h2>Budget Status</h2>
+              <span>3 Active Alerts</span>
+            </div>
+            <article class="alert-card">
+              <div class="alert-top">
+                <div class="title-row"><div class="badge green">F</div>Food &amp; Dining</div>
+                <div class="amount">$650 / $1,000</div>
+              </div>
+              <div class="progress green"><span></span></div>
+              <div class="helper green">Safe Zone</div>
+            </article>
+            <article class="alert-card warning">
+              <div class="alert-top">
+                <div class="title-row"><div class="badge blue">E</div>Entertainment</div>
+                <div class="amount">$450 / $500</div>
+              </div>
+              <div class="progress blue"><span></span></div>
+              <div class="helper blue">Approaching Limit</div>
+            </article>
+            <article class="alert-card danger">
+              <div class="alert-top">
+                <div class="title-row"><div class="badge red">S</div>Subscriptions</div>
+                <div class="amount red">$230 / $200</div>
+              </div>
+              <div class="progress red"><span></span></div>
+              <div class="helper red">You are 15% over budget</div>
+            </article>
+          </aside>
+        </section>
+        <section class="card transactions">
+          <div class="transactions-header">
+            <div>
+              <h2>Recent Transactions</h2>
+              <p>Your latest financial movements</p>
+            </div>
+            <a href="../transactions/index.html" class="view-all" style="text-decoration: none;">View All</a>
+          </div>
+          <div class="tx-list">
+            <div class="tx-row">
+              <div class="tx-main">
+                <div class="tx-icon">A</div>
+                <div>
+                  <div class="tx-name">Apple Store Soho</div>
+                  <div class="tx-meta">Electronics • Today, 2:45 PM</div>
+                </div>
+              </div>
+              <div class="tx-amount">-$1,299.00<div class="tx-status">Verified</div></div>
+            </div>
+            <div class="tx-row">
+              <div class="tx-main">
+                <div class="tx-icon">C</div>
+                <div>
+                  <div class="tx-name">Blue Bottle Coffee</div>
+                  <div class="tx-meta">Food &amp; Drink • Yesterday, 9:12 AM</div>
+                </div>
+              </div>
+              <div class="tx-amount">-$6.50<div class="tx-meta">Pending</div></div>
+            </div>
+            <div class="tx-row">
+              <div class="tx-main">
+                <div class="tx-icon">U</div>
+                <div>
+                  <div class="tx-name">Uber Trip</div>
+                  <div class="tx-meta">Transport • Oct 24, 11:30 PM</div>
+                </div>
+              </div>
+              <div class="tx-amount">-$24.80<div class="tx-status">Verified</div></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <a href="../add-expense/index.html" class="fab" style="text-decoration: none;">+ Add Expense</a>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Categories | Expenses Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles/global.css">
+  <link rel="stylesheet" href="../../styles/components.css">
+  <link rel="stylesheet" href="../../styles/categories.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar shell">
+      <div>
+        <div class="brand">Intelligence</div>
+        <div class="tier">Premium Tier</div>
+      </div>
+      <nav class="nav">
+        <a href="../dashboard/index.html" class="nav-item"><span class="dot"></span>Dashboard</a>
+        <a href="../analytics/index.html" class="nav-item"><span class="dot"></span>Analytics</a>
+        <a href="../budget/index.html" class="nav-item"><span class="dot"></span>Budget</a>
+        <a href="../expenses/index.html" class="nav-item"><span class="dot"></span>Expenses</a>
+        <a href="../categories management/index.html" class="nav-item active"><span class="dot"></span>Categories</a>
+        <a href="../settings/index.html" class="nav-item"><span class="dot"></span>Settings</a>
+        <a href="../profile/index.html" class="nav-item"><span class="dot"></span>Profile</a>
+      </nav>
+      <hr>
+      <a href="../onboarding/index.html" class="nav-item"><span class="dot"></span>Logout</a>
+    </aside>
+    <main class="main">
+      <header class="topbar shell">
+        <div class="top-brand">Liquid Ledger</div>
+        <div class="top-actions">
+          <div class="search">Search categories...</div>
+          <div class="icons"><span>&#128276;</span><span>&#9711;</span></div>
+        </div>
+      </header>
+      <div class="content" style="position: relative;">
+        <section class="page-head">
+          <div>
+            <h1>Category Management</h1>
+            <div class="subtitle">Organize your financial flows with precision.</div>
+          </div>
+          <div class="btn">+ Add New Category</div>
+        </section>
+        <section class="grid">
+          <article class="cat-card">
+            <div class="badge">H</div>
+            <h2>Housing</h2>
+            <p>Mortgage, rent, and maintenance.</p>
+            <div class="spacer"></div>
+            <div class="cap"><div class="cap-label">Monthly Cap</div><div class="amount">$2,400.00</div></div>
+          </article>
+          <article class="cat-card">
+            <div class="badge green">F</div>
+            <h2>Food &amp; Dining</h2>
+            <p>Groceries and restaurants.</p>
+            <div class="spacer"></div>
+            <div class="cap"><div class="cap-label">Monthly Cap</div><div class="amount green">$850.00</div></div>
+          </article>
+          <article class="cat-card">
+            <div class="badge coral">E</div>
+            <h2>Entertainment</h2>
+            <p>Streaming, games, and events.</p>
+            <div class="spacer"></div>
+            <div class="cap"><div class="cap-label">Monthly Cap</div><div class="amount coral">$300.00</div></div>
+          </article>
+          <article class="cat-card">
+            <div class="badge gray">T</div>
+            <h2>Transport</h2>
+            <p>Fuel, public transit, and car care.</p>
+            <div class="spacer"></div>
+            <div class="cap"><div class="cap-label">Monthly Cap</div><div class="amount neutral">$450.00</div></div>
+          </article>
+        </section>
+        <aside class="quick-edit">
+          <div class="quick-top">
+            <h3>Quick Edit</h3>
+            <div class="close">&times;</div>
+          </div>
+          <div class="label">Category Name</div>
+          <div class="input-line">Housing</div>
+          <div class="mini-grid">
+            <div>
+              <div class="label">Icon</div>
+              <div class="mini-box"><span class="badge" style="width:18px;height:18px;border-radius:6px;margin:0;font-size:10px;">H</span>Home</div>
+            </div>
+            <div>
+              <div class="label">Color</div>
+              <div class="mini-box"><span class="mini-dot"></span>Cyan Blue</div>
+            </div>
+          </div>
+          <div class="save">Save Changes</div>
+        </aside>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
