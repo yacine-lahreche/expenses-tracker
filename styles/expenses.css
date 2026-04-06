@@ -123,7 +123,7 @@
 .table-container {
   display: grid;
   grid-template-columns: 118px 200px 1fr 170px 70px;
-  gap: 20px;
+  /* gap: 20px; */
 }
 
 .table-container-child {
@@ -156,6 +156,7 @@
   align-items: center;
   min-height: 58px;
   padding: 0 14px;
+  margin-bottom: 16px;
   border-radius: 16px;
   background: rgba(17, 35, 73, 0.95);
   border: 1px solid var(--line);
