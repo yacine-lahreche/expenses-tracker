@@ -49,7 +49,7 @@ function refreshCategoryDropdowns() {
     // Repopulate Filter Menu
     if (filterMenu) {
         const currentFilter = filterBtn.textContent.trim();
-        filterMenu.innerHTML = '<a href="#" data-filter="all"><span class="dot"></span>All Categories</a>';
+        filterMenu.innerHTML = '<a href="#" data-filter="all"><span class="dot"></span>All Categories</a>'; 
         
         categoryArr.forEach(cat => {
             const a = document.createElement("a");
@@ -135,8 +135,8 @@ function renderExpenses(expenses = expenseArr) {
                 <div class="merchant">${expense.merchant ?? 'Unknown'}</div>
                 <div class="note">${expense.notes || 'No notes'}</div>
             </div>
-            <div class="amount red">-$${expense.amount}</div>
-            <div>
+            <div class="amount red" style="margin:0;">-$${expense.amount}</div>
+            <div style="display:flex; justify-content:end; align-items:center;">
                 <button class="edit-btn" data-id="${expense.id}">&#9998;</button> 
                 <button class="delete-btn" data-id="${expense.id}">&#128465;</button>
             </div>
@@ -210,6 +210,15 @@ filterMenu?.addEventListener("click", (e) => {
     }
     filterMenu.classList.remove("show");
     filterAndRender();
+});
+
+// Edit Modal Amount Input
+editAmountInput?.addEventListener('input', (e) => {
+    let value = e.target.value;
+    value = value.replace(/[^0-9.]/g, ''); 
+    const parts = value.split('.');
+    if (parts.length > 2) value = parts[0] + '.' + parts.slice(1).join('');
+    e.target.value = value;
 });
 
 // DELEGATION LOGIC: Edit Modal Dropdown

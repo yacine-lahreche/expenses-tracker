@@ -214,21 +214,22 @@ function renderCategories() {
 
         const catCard = document.createElement("article");
         catCard.classList.add("cat-card");
+        catCard.style.marginBottom = "16px";
         catCard.innerHTML = `
             <div class="card-header"> 
                 <div class="name-pill">
-                  <span class="color-dot ${category.color}"></span>
-                  <h2>${category.name}</h2>
+                    <span class="color-dot ${category.color}"></span>
+                    <h2>${category.name}</h2>
                 </div>
                 ${category.name.toLowerCase() !== "uncategorized" ? `<div class="dot-menu" data-name="${category.name}">&#8942;</div>` : ""}
             </div>
             <div class="card-body">
                 <div class="spent-row">
-                  <p>Total spent: <strong>$${totalSpent.toLocaleString(undefined, {minimumFractionDigits: 2})}</strong></p>
+                    <p>Total spent: <strong>$${totalSpent.toLocaleString(undefined, {minimumFractionDigits: 2})}</strong></p>
                 </div>
                 
                 <div class="progress-container">
-                  <div class="progress-bar" style="width: ${percent}%"></div>
+                    <div class="progress-bar" style="width: ${percent}%"></div>
                 </div>
 
                 <div class="cap">

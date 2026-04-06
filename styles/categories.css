@@ -329,6 +329,7 @@
 @media (max-width: 768px) {
   .grid {
     grid-template-columns: 1fr;
+    gap: 0;
   }
   .quick-edit {
     padding: 16px;

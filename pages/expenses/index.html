@@ -44,8 +44,13 @@
         </div>
       </header>
       <div class="content">
-        <h1>Expenses History</h1>
-        <div class="headline-meta"></div>
+        <div class="header-content">
+          <div>
+            <h1>Expenses History</h1>
+            <div class="headline-meta"></div>
+          </div>
+          <button id="addExpenseBtn" class="btn">+ Add Expense</button>
+        </div>
         <section class="controls">
           <div class="control-card">
             <input type="text" class="search-box" placeholder="Search merchants....">
@@ -91,9 +96,9 @@
           <div>
             <h1>Edit Expense</h1>
             <div class="subtitle">Update records for this transaction</div>
-        </div>
+          </div>
         <button id="closeEditModal" class="close">&times;</button>
-      </div>
+      </div>    
       
       <section class="center">
         <div class="label">Expense Amount</div>
@@ -110,12 +115,7 @@
           <div id="editCategoryDropdown" class="dropdown dropdown-field">
             <button class="field dropdown-btn">Choose category...</button>
             <div class="dropdown-menu">
-              <a href="#">Groceries</a>
-              <a href="#">Transport</a>
-              <a href="#">Entertainment</a>
-              <a href="#">Utilities</a>
-              <a href="#">Health</a>
-              <a href="#">Others</a>
+              <!-- categories will be added here dynamically -->
             </div>
           </div>
         </div>
@@ -140,7 +140,6 @@
         <button id="saveEditBtn" class="button-primary">Save Changes</button>
       </section>
     </div>
-  </div>
   </div>
 
   <script src="../../js/sidebar.js"></script>
