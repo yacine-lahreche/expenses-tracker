@@ -8,27 +8,49 @@ const merchantInput = document.querySelector("#merchantInput");
 const notesInput = document.querySelector("#notesInput");
 const dropdowns = document.querySelectorAll(".dropdown");
 
-// CATEGORY DROPDOWN
+// CATEGORY DROPDOWN DYNAMIC LOADING
 const categoryDropdown = document.querySelector('.field-wrap .dropdown');
 const categoryBtn = categoryDropdown.querySelector(".dropdown-btn");
 const categoryMenu = categoryDropdown.querySelector(".dropdown-menu");
-const categoryItems = categoryDropdown.querySelectorAll(".dropdown-menu a");
+let categoryArr = JSON.parse(localStorage.getItem("categoryArr")) || [];
+
+function refreshCategoryDropdowns() {
+    categoryArr = JSON.parse(localStorage.getItem("categoryArr")) || [];
+    const currentSelection = categoryBtn.textContent.trim();
+    
+    categoryMenu.innerHTML = "";
+    categoryArr.forEach(category => {
+        const option = document.createElement("a");
+        option.href = "#";
+        option.textContent = category.name;
+        categoryMenu.appendChild(option);
+    });
+
+    // Check if current selection still exists
+    if (currentSelection !== "Choose category..." && !categoryArr.some(c => c.name === currentSelection)) {
+        categoryBtn.textContent = "Choose category...";
+        categoryBtn.classList.remove("selected");
+    }
+}
+
+window.onfocus = refreshCategoryDropdowns;
+refreshCategoryDropdowns();
 
 categoryBtn.addEventListener("click", (e) => {
     e.preventDefault();
-    document.querySelectorAll(".dropdown-menu.show").forEach(m => {
-        if (m !== categoryMenu) m.classList.remove("show");
-    });
+    e.stopPropagation();
     categoryMenu.classList.toggle("show");
 });
 
-categoryItems.forEach((item) => {
-    item.addEventListener("click", (e) => {
-        e.preventDefault();
-        categoryBtn.textContent = item.textContent;
-        categoryMenu.classList.remove("show");
-        categoryBtn.classList.add("selected");
-    });
+// DELEGATION LOGIC
+categoryMenu.addEventListener("click", (e) => {
+    const target = e.target.closest("a");
+    if (!target) return;
+    e.preventDefault();
+    
+    categoryBtn.textContent = target.textContent.trim();
+    categoryBtn.classList.add("selected");
+    categoryMenu.classList.remove("show");
 });
 
 // Toggle date color
@@ -96,6 +118,11 @@ addExpenseBtn.addEventListener("click", () => {
 
     if (!date) {
         alert("Please select the date of the expense.");
+        return;
+    }
+
+    if (!merchant) {
+        alert("Please enter a merchant name.");
         return;
     }
 

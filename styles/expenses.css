@@ -115,7 +115,7 @@
 
 .table-container {
   display: grid;
-  grid-template-columns: 118px 160px 1fr 170px 70px;
+  grid-template-columns: 118px 200px 1fr 170px 70px;
   gap: 20px;
 }
 
@@ -282,6 +282,10 @@
   border: none;
 }
 
+.close:hover {
+  background: rgba(255,255,255,0.08);
+}
+
 .center {
   text-align: center;
   margin-bottom: 32px;
@@ -423,6 +427,10 @@
   cursor: pointer;
 }
 
+.btn-cancel:hover {
+  background: rgba(255,255,255,0.08);
+}
+
 .button-primary {
   all: unset;
   height: 44px;
@@ -441,7 +449,61 @@
 .button-primary:hover { transform: translateY(-1px); }
 
 @media (max-width: 1100px) {
-  .controls { grid-template-columns: 1fr; }
-  .table-head, .table-row { grid-template-columns: 1fr; gap: 8px; padding: 16px; }
-  .actions, .amount { text-align: left; }
+  .controls {
+    grid-template-columns: 1fr;
+  }
+  
+  .control-card {
+    flex-wrap: wrap;
+    padding: 16px;
+    height: auto;
+  }
+
+  .search-box {
+    min-width: 100%;
+  }
+
+  .table-container {
+    display: block;
+    overflow: visible;
+  }
+
+  .table-head {
+    display: none;
+  }
+
+  .table-row {
+    display: block;
+    padding: 20px;
+    margin-bottom: 16px;
+    height: auto;
+  }
+
+  .table-row > div {
+    margin-bottom: 10px;
+  }
+
+  .category {
+    font-size: 16px;
+  }
+
+  .merchant {
+    font-size: 15px;
+    display: block;
+    margin: 4px 0;
+  }
+
+  .amount {
+    text-align: left !important;
+    font-size: 20px;
+    margin-top: 8px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+  }
+
+  .table-row .edit-btn, .table-row .delete-btn {
+    float: right;
+    margin-top: -30px;
+    margin-left: 15px;
+  }
 }

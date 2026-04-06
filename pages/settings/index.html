@@ -19,22 +19,23 @@
         <div class="tier">Premium Tier</div>
       </div>
       <nav class="nav">
-        <a href="../dashboard/index.html" class="nav-item"><span class="dot"></span>Dashboard</a>
-        <a href="../analytics/index.html" class="nav-item"><span class="dot"></span>Analytics</a>
-        <a href="../budget/index.html" class="nav-item"><span class="dot"></span>Budget</a>
-        <a href="../transactions/index.html" class="nav-item"><span class="dot"></span>Transactions</a>
-        <a href="../categories management/index.html" class="nav-item"><span class="dot"></span>Categories</a>
-        <a href="../settings/index.html" class="nav-item active"><span class="dot"></span>Settings</a>
-        <a href="../profile/index.html" class="nav-item"><span class="dot"></span>Profile</a>
+        <a href="../dashboard/index.html" class="nav-item"><img src="../../assets/icons/dashboard.png" alt="dashboard" srcset="" width="18px" height="18px"></span>Dashboard</a>
+        <a href="../analytics/index.html" class="nav-item"><img src="../../assets/icons/analytics.png" alt="analytics" srcset="" width="18px" height="18px"></span>Analytics</a>
+        <a href="../budget/index.html" class="nav-item"><img src="../../assets/icons/budget.png" alt="budget" srcset="" width="18px" height="18px"></span>Budget</a>
+        <a href="../expenses/index.html" class="nav-item"><img src="../../assets/icons/expenses.png" alt="expenses" srcset="" width="18px" height="18px"></span>Expenses</a>
+        <a href="../categories management/index.html" class="nav-item"><img src="../../assets/icons/categories.png" alt="categories" srcset="" width="18px" height="18px"></span>Categories</a>
+        <a href="../settings/index.html" class="nav-item active"><img src="../../assets/icons/settings.png" alt="settings" srcset="" width="18px" height="18px"></span>Settings</a>
+        <a href="../profile/index.html" class="nav-item"><img src="../../assets/icons/profile.png" alt="profile" srcset="" width="18px" height="18px"></span>Profile</a>
       </nav>
       <hr>
-      <a href="../onboarding/index.html" class="nav-item"><span class="dot"></span>Logout</a>
+      <a href="../onboarding/index.html" class="nav-item logout"><img src="../../assets/icons/logout.png" alt="logout" srcset="" width="18px" height="18px"></span>Logout</a>
     </aside>
     <main class="main">
       <header class="topbar shell">
+        <div class="hamburger">&#9776;</div>
         <div class="top-brand">Platform Settings</div>
         <div class="top-actions">
-          <div class="search">Search settings...</div>
+          <!-- <div class="search">Search settings...</div> -->
           <div class="icons"><span>&#128276;</span><span>&#9711;</span></div>
         </div>
       </header>
@@ -44,7 +45,7 @@
         <section class="grid">
           <article class="card">
             <h2><span>A</span>Appearance</h2>
-            <p>Choose your preferred visual style. Our intelligent interface adapts to your lighting conditions.</p>
+            <p>Choose your preferred visual style.</p>
             <div class="tile">Dark Mode <div class="switch on"></div></div>
             <div class="tile muted">Light Mode <div class="switch"></div></div>
           </article>
@@ -78,6 +79,8 @@
         </section>
       </div>
     </main>
+    <div class="sidebar-overlay"></div>
   </div>
+  <script src="../../js/sidebar.js"></script>
 </body>
 </html>
