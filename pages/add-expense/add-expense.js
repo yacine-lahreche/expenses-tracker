@@ -121,11 +121,6 @@ addExpenseBtn.addEventListener("click", () => {
         return;
     }
 
-    if (!merchant) {
-        alert("Please enter a merchant name.");
-        return;
-    }
-
     // New expense object
     const newTransaction = {
         id: Date.now(),
@@ -136,6 +131,8 @@ addExpenseBtn.addEventListener("click", () => {
         notes: notes,
         createdAt: new Date().toISOString()
     };
+
+    console.log(newTransaction);
 
     expenseArr.push(newTransaction);
     

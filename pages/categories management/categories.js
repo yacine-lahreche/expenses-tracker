@@ -170,7 +170,7 @@ saveCategoryBtn.addEventListener("click", () => {
         alert("Category updated!");
     }
 });
-
+ 
 deleteCategoryBtn.addEventListener("click", () => {
     if (currentEditingName.toLowerCase() === "uncategorized") {
         alert("The Uncategorized category cannot be deleted.");
@@ -212,6 +212,11 @@ function renderCategories() {
         const budget = parseFloat(category.budget) || 0;
         const percent = budget > 0 ? Math.min((totalSpent / budget) * 100, 100) : 0;
 
+        // Determine progress bar color class based on spending percentage
+        let barColorClass = "safe"; // default: green (0-60%)
+        if (percent > 80) barColorClass = "danger"; // red when over 80%
+        else if (percent > 60) barColorClass = "warning"; // amber/yellow when 60-80%
+
         const catCard = document.createElement("article");
         catCard.classList.add("cat-card");
         catCard.style.marginBottom = "16px";
@@ -229,9 +234,9 @@ function renderCategories() {
                 </div>
                 
                 <div class="progress-container">
-                    <div class="progress-bar" style="width: ${percent}%"></div>
+                    <div class="progress-bar ${barColorClass}" style="width: ${percent}%"></div>
                 </div>
-
+ 
                 <div class="cap">
                     <span class="cap-label">Budget</span>
                     <span class="amount">$${budget.toLocaleString(undefined, {minimumFractionDigits: 2})}</span>

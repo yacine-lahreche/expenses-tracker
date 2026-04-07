@@ -100,8 +100,7 @@ function filterAndRender() {
     }
     if (searchTerm) {
         filtered = filtered.filter(ex => 
-            ex.merchant?.toLowerCase().includes(searchTerm) || 
-            ex.notes?.toLowerCase().includes(searchTerm)
+            ex.merchant?.toLowerCase().includes(searchTerm)
         );
     }
     if (selectedDate) {
@@ -110,8 +109,8 @@ function filterAndRender() {
 
     // Sort by Date
     filtered.sort((a, b) => {
-        const dateA = new Date(a.date);
-        const dateB = new Date(b.date);
+        const dateA = new Date(a.createdAt);
+        const dateB = new Date(b.createdAt);
         return sortOrder === "Latest" ? dateB - dateA : dateA - dateB;
     });
 
@@ -129,7 +128,7 @@ function renderExpenses(expenses = expenseArr) {
         const article = document.createElement("article");
         article.classList.add("table-row");
         article.innerHTML = `
-            <div class="date">${expense.date}</div>
+            <div class="date">${expense.createdAt.split('T')[0]}</div>
             <div class="category"><span class="icon"></span>${expense.category}</div>
             <div>
                 <div class="merchant">${expense.merchant ?? 'Unknown'}</div>
@@ -248,7 +247,7 @@ document.querySelectorAll(".dropdown-btn, .sort-btn").forEach(btn => {
 if (sortMenu) {
     sortMenu.querySelectorAll("a").forEach(a => {
         a.addEventListener("click", (e) => {
-            e.preventDefault();
+            e.preventDefault(); // prevent page reload
             sortBtn.textContent = a.textContent.trim();
             sortMenu.classList.remove("show");
             filterAndRender();

@@ -39,6 +39,8 @@ body {
 }
 
 .sidebar {
+  position: sticky;
+  top: 14px; 
   height: calc(100vh - 28px);
   margin: 14px 0;
   padding: 18px 16px;
@@ -237,6 +239,13 @@ h1 {
   .layout {
     grid-template-columns: 1fr;
     width: calc(100vw - 28px);
+  }
+
+  .topbar {
+    position: sticky;
+    top: 14px; 
+    z-index: 1000;
+    backdrop-filter: blur(3px);
   }
 
   .sidebar {

@@ -517,7 +517,7 @@
   }
 
   .table-row .edit-btn, .table-row .delete-btn { 
-    margin-top: -30px;
+    margin-top: -30px; /*this is for the edit and delete buttons to be on the same line as the amount*/
     margin-left: 15px;
   }
 }
