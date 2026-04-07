@@ -16,6 +16,13 @@ let categoryArr = JSON.parse(localStorage.getItem("categoryArr")) || [];
 
 function refreshCategoryDropdowns() {
     categoryArr = JSON.parse(localStorage.getItem("categoryArr")) || [];
+    
+    // Ensure Uncategorized exists if visitied directly
+    if (!categoryArr.some(c => c.name.toLowerCase() === "uncategorized")) {
+        categoryArr.unshift({ name: "Uncategorized", budget: "0.00", color: "gray" });
+        localStorage.setItem("categoryArr", JSON.stringify(categoryArr));
+    }
+
     const currentSelection = categoryBtn.textContent.trim();
     
     categoryMenu.innerHTML = "";

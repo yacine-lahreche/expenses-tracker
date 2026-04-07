@@ -1,6 +1,6 @@
-# Expenses Tracker - Liquid Intelligence
+# Expenses Tracker - Catalyst
 
-A premium financial tracking application built with **Glassmorphism** principles and **Liquid Intelligence** design language.
+A premium financial tracking application built with **Glassmorphism** principles and **Catalyst** design language.
 
 ## Project Structure
 
@@ -52,7 +52,7 @@ expenses-tracker/
 - **Visual Feedback**: Dynamic text color switching (muted to bright) based on input state.
 - **Glassmorphism Overlay**: backdrop-blur and refractive edge effects across all interactive modals.
 
-## UI Design Principles (Liquid Intelligence)
+## UI Design Principles (Catalyst)
 - **No-Line Rule**: Boundaries defined by color shifts and inner glowing edges instead of hard borders.
 - **High Refractive Index**: Consistent use of `backdrop-filter: blur(24px+)` for all floating elements.
 - **Atmospheric Palette**: Deep navies combined with vibrant primary gradients (#76e9ff, #27d5f5).

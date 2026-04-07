@@ -257,10 +257,8 @@
     padding: 24px;
     width: 90vw;
   }
-  .top {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+  .top { 
+    align-items: center; 
     gap: 12px;
   }
   .amount-input {
@@ -272,7 +270,7 @@
     font-size: 24px;
   }
   .field-wrap label, .dropdown label {
-    margin-top: 16px;
+    margin: 0 0 8px 0;
   }
   .grid, .actions { 
     grid-template-columns: 1fr; 

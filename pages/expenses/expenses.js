@@ -5,6 +5,12 @@ const headline = document.querySelector(".headline-meta");
 function refreshData() {
     expenseArr = JSON.parse(localStorage.getItem("expenseArr")) || [];
     categoryArr = JSON.parse(localStorage.getItem("categoryArr")) || [];
+    
+    // Ensure Uncategorized exists if visited directly
+    if (!categoryArr.some(c => c.name.toLowerCase() === "uncategorized")) {
+        categoryArr.unshift({ name: "Uncategorized", budget: "0.00", color: "gray" });
+        localStorage.setItem("categoryArr", JSON.stringify(categoryArr));
+    }
 }
 
 function updateHeadline(count) {
