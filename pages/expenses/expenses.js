@@ -131,7 +131,7 @@ function renderTable(expenses) {
                 </div>
             </article>
         `).join('')
-        : `<div class="table-row" style="justify-content:center; color: var(--budget-on-surface-variant);">No transactions found matching your filters.</div>`;
+        : `<div class="table-row" style="display:flex; justify-content:center; color: var(--budget-on-surface-variant);"><span>No transactions found matching your filters.</span></div>`;
 }
 
 // --- Modal Transitions ---
