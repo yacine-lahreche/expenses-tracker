@@ -95,6 +95,59 @@
       </div>
     </main>
     <div class="sidebar-overlay"></div>
+    <!-- Add Expense Modal Overlay -->
+    <div id="addModalOverlay" class="modal-overlay">
+      <div class="modal shell">
+        <div class="modal-top">
+          <div>
+            <h1>New Expense</h1>
+            <div class="subtitle">Log your latest spending activity</div>
+          </div>
+          <button id="closeAddModal" class="close">&times;</button>
+        </div>
+
+        <section class="center">
+          <div class="label">Expense Amount</div>
+          <div class="amount-row">
+            <div class="currency">$</div>
+            <input type="text" id="addAmountInput" class="amount-input" placeholder="0.00" required>
+          </div>
+          <div class="underline"></div>
+        </section>
+
+        <section class="grid">
+          <div class="field-wrap">
+            <label>Category</label>
+            <div id="addCategoryDropdown" class="dropdown dropdown-field">
+              <button class="field dropdown-btn">Choose category...</button>
+              <div class="dropdown-menu">
+                <!-- categories will be added here dynamically -->
+              </div>
+            </div>
+          </div>
+          <div class="field-wrap">
+            <label>Date</label>
+            <input type="date" id="addDateInput" class="field" required>
+          </div>
+        </section>
+
+        <div class="field-wrap wide">
+          <label>Merchant</label>
+          <input type="text" id="addMerchantInput" class="field" placeholder="Where did you spend?">
+        </div>
+
+        <div class="field-wrap wide">
+          <label>Notes (Optional)</label>
+          <input type="text" id="addNotesInput" class="field" placeholder="What was this for?">
+        </div>
+
+        <section class="actions">
+          <button id="cancelAddBtn" class="btn-cancel">Cancel</button>
+          <button id="submitAddBtn" class="button-primary">Add Expense</button>
+        </section>
+      </div>
+    </div>
+
     <!-- Edit Modal Overlay -->
     <div id="editModalOverlay" class="modal-overlay">
       <div class="modal shell">

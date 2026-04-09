@@ -42,12 +42,13 @@ function updateHeadline(count) {
 }
 
 /**
- * Syncs all category dropdowns in the view (Filter & Edit Modal)
+ * Syncs all category dropdowns in the view (Filter, Add Modal & Edit Modal)
  */
 function refreshCategoryDropdowns() {
     refreshData();
     
     const filterMenu = document.querySelector(".controls .dropdown .dropdown-menu");
+    const addMenu = document.querySelector("#addCategoryDropdown .dropdown-menu");
     const editMenu = document.querySelector("#editCategoryDropdown .dropdown-menu");
     const filterBtn = document.querySelector(".controls .dropdown .dropdown-btn");
 
@@ -70,14 +71,16 @@ function refreshCategoryDropdowns() {
         }
     }
 
+    if (addMenu) {
+        addMenu.innerHTML = categoryArr.map(cat => `
+            <a href="#"><span class="dot"></span>${cat.name}</a>
+        `).join('');
+    }
+
     if (editMenu) {
-        editMenu.innerHTML = "";
-        categoryArr.forEach(cat => {
-            const a = document.createElement("a");
-            a.href = "#";
-            a.innerHTML = `<span class="dot"></span>${cat.name}`;
-            editMenu.appendChild(a);
-        });
+        editMenu.innerHTML = categoryArr.map(cat => `
+            <a href="#"><span class="dot"></span>${cat.name}</a>
+        `).join('');
     }
 }
 
@@ -131,7 +134,31 @@ function renderTable(expenses) {
         : `<div class="table-row" style="justify-content:center; color: var(--budget-on-surface-variant);">No transactions found matching your filters.</div>`;
 }
 
-// --- Modal Logic ---
+// --- Modal Transitions ---
+const addModal = {
+    overlay: document.getElementById("addModalOverlay"),
+    inputs: {
+        amount: document.getElementById("addAmountInput"),
+        date: document.getElementById("addDateInput"),
+        merchant: document.getElementById("addMerchantInput"),
+        notes: document.getElementById("addNotesInput")
+    },
+    catBtn: document.querySelector("#addCategoryDropdown .dropdown-btn"),
+
+    open() {
+        this.inputs.amount.value = "";
+        this.inputs.date.value = new Date().toISOString().split('T')[0];
+        this.inputs.merchant.value = "";
+        this.inputs.notes.value = "";
+        this.catBtn.textContent = "Choose category...";
+        this.catBtn.classList.remove("selected");
+        this.overlay.classList.add("show");
+    },
+    close() {
+        this.overlay.classList.remove("show");
+    }
+};
+
 const editModal = {
     overlay: document.getElementById("editModalOverlay"),
     inputs: {
@@ -155,7 +182,6 @@ const editModal = {
         this.catBtn.classList.add("selected");
         this.overlay.classList.add("show");
     },
-
     close() {
         this.overlay.classList.remove("show");
         currentEditId = null;
@@ -166,6 +192,11 @@ const editModal = {
 document.addEventListener("DOMContentLoaded", () => {
     refreshCategoryDropdowns();
     filterAndRender();
+
+    // Check for deep-link to open add modal
+    if (window.location.search.includes("openAdd=true")) {
+        addModal.open();
+    }
 
     // 1. EVENT DELEGATION: Rows Container (Edit/Delete)
     ROWS_CONTAINER?.addEventListener("click", (e) => {
@@ -184,11 +215,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // 2. SEARCH & FILTERING (Debounced input would be here if needed)
+    // 2. SEARCH & FILTERING
     SEARCH_BOX?.addEventListener("input", filterAndRender);
     DATE_INPUT?.addEventListener("change", filterAndRender);
 
-    // 3. DROPDOWN DELEGATION (Filter & Edit Menus)
+    // 3. DROPDOWN DELEGATION
     document.addEventListener("click", (e) => {
         const btn = e.target.closest(".dropdown-btn, .sort-btn");
         
@@ -206,7 +237,7 @@ document.addEventListener("DOMContentLoaded", () => {
         menu?.classList.toggle("show");
     });
 
-    // Dropdown Items Selection (Delegated)
+    // Dropdown Items Selection
     document.body.addEventListener("click", (e) => {
         const item = e.target.closest(".dropdown-menu a, .sort-menu a");
         if (!item) return;
@@ -227,7 +258,41 @@ document.addEventListener("DOMContentLoaded", () => {
         filterAndRender();
     });
 
-    // 4. MODAL ACTIONS
+    // 4. ADD EXPENSE ACTIONS
+    document.getElementById("addExpenseBtn")?.addEventListener("click", () => addModal.open());
+    document.getElementById("closeAddModal")?.addEventListener("click", () => addModal.close());
+    document.getElementById("cancelAddBtn")?.addEventListener("click", () => addModal.close());
+    addModal.overlay?.addEventListener("click", (e) => e.target === addModal.overlay && addModal.close());
+
+    document.getElementById("submitAddBtn")?.addEventListener("click", () => {
+        const amount = addModal.inputs.amount.value.trim();
+        const category = addModal.catBtn.textContent.trim();
+        const merchant = addModal.inputs.merchant.value.trim();
+        const date = addModal.inputs.date.value;
+
+        if (!amount || isNaN(amount) || parseFloat(amount) <= 0 || category === "Choose category..." || !date) {
+            alert("Please provide a valid amount, category, and date.");
+            return;
+        }
+
+        const newTransaction = {
+            id: Date.now(),
+            amount: parseFloat(amount).toFixed(2),
+            category,
+            merchant: merchant || "Unknown",
+            date,
+            notes: addModal.inputs.notes.value.trim(),
+            createdAt: new Date().toISOString()
+        };
+
+        expenseArr.push(newTransaction);
+        saveData();
+        alert("Expense added successfully!");
+        addModal.close();
+        filterAndRender();
+    });
+
+    // 5. EDIT EXPENSE ACTIONS
     document.getElementById("saveEditBtn")?.addEventListener("click", () => {
         const amount = editModal.inputs.amount.value.trim();
         const category = editModal.catBtn.textContent.trim();
@@ -259,9 +324,14 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("cancelEditBtn")?.addEventListener("click", () => editModal.close());
     editModal.overlay?.addEventListener("click", (e) => e.target === editModal.overlay && editModal.close());
 
-    // 5. MISC
-    document.getElementById("addExpenseBtn")?.addEventListener("click", () => {
-        window.location.href = "../add-expense/index.html";
+    // Amount Input Sanitization
+    [addModal.inputs.amount, editModal.inputs.amount].forEach(input => {
+        input?.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/[^0-9.]/g, ''); 
+            const parts = value.split('.');
+            if (parts.length > 2) value = parts[0] + '.' + parts.slice(1).join('');
+            e.target.value = value;
+        });
     });
 
     window.addEventListener("visibilitychange", () => document.visibilityState === "visible" && filterAndRender());

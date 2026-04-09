@@ -79,6 +79,7 @@
 
 .btn-reset:hover {
   background: rgba(129, 236, 255, 0.1);
+  box-shadow: 0 0 28px rgba(70, 223, 255, 0.4);
 }
 
 .btn-reset:active {
@@ -111,6 +112,7 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
+  text-align: center;
   position: relative;
   z-index: 10;
 }
@@ -622,6 +624,10 @@
   font-size: 14px;
   font-weight: 700;
   cursor: pointer; 
+}
+
+.save:hover, .create:hover {
+  transform: translateY(-1px); box-shadow: 0 0 10px rgba(70, 223, 255, 0.4);
 }
 
 .delete {
