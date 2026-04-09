@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Budget | Catalyst</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../styles/global.css">
   <link rel="stylesheet" href="../../styles/components.css">
   <link rel="stylesheet" href="../../styles/budget.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 </head>
+
 <body>
   <div class="layout">
     <aside class="sidebar shell">
@@ -19,24 +22,34 @@
         <div class="tier">Premium Tier</div>
       </div>
       <nav class="nav">
-        <a href="../dashboard/index.html" class="nav-item"><img src="../../assets/icons/dashboard.png" alt="dashboard" srcset="" ></span>Dashboard</a>
-        <a href="../analytics/index.html" class="nav-item"><img src="../../assets/icons/analytics.png" alt="analytics" srcset="" ></span>Analytics</a>
-        <a href="../budget/index.html" class="nav-item active"><img src="../../assets/icons/budget.png" alt="budget" srcset="" ></span>Budget</a>
-        <a href="../expenses/index.html" class="nav-item"><img src="../../assets/icons/expenses.png" alt="expenses" srcset="" ></span>Expenses</a>
-        <a href="../categories management/index.html" class="nav-item"><img src="../../assets/icons/categories.png" alt="categories" srcset="" ></span>Categories</a>
+        <a href="../dashboard/index.html" class="nav-item">
+          <img src="../../assets/icons/dashboard.png" alt="">Dashboard
+        </a>
+        <a href="../analytics/index.html" class="nav-item">
+          <img src="../../assets/icons/analytics.png" alt="">Analytics
+        </a>
+        <a href="../budget/index.html" class="nav-item active">
+          <img src="../../assets/icons/budget.png" alt="">Budget
+        </a>
+        <a href="../expenses/index.html" class="nav-item">
+          <img src="../../assets/icons/expenses.png" alt="">Expenses
+        </a>
       </nav>
-      <hr>
       <div class="sidebar-footer">
-        <a href="../onboarding/index.html" class="nav-item logout"><img src="../../assets/icons/logout.png" alt="logout" srcset="" width="18px" height="18px"></span>Logout</a>
-        <a href="../settings/index.html" class="sidebar-settings-link" title="Settings"><img src="../../assets/icons/settings.png" alt="settings" width="18px" height="18px"></a>
+        <a href="../onboarding/index.html" class="nav-item logout">
+          <img src="../../assets/icons/logout.png" alt="logout" width="18px" height="18px">Logout
+        </a>
+        <a href="../settings/index.html" class="sidebar-settings-link" title="Settings">
+          <img src="../../assets/icons/settings.png" alt="settings" width="18px" height="18px">
+        </a>
       </div>
     </aside>
+
     <main class="main">
       <header class="topbar shell">
         <div class="hamburger">&#9776;</div>
         <div class="top-brand">Catalyst</div>
         <div class="top-actions">
-          <!-- <div class="search">Search budgets...</div> -->
           <div class="icons">
             <a href="../notifications/index.html" class="topbar-notification">
               <img src="../../assets/icons/notification.png" alt="notification" width="20px" height="20px">
@@ -47,73 +60,259 @@
           </div>
         </div>
       </header>
+
       <div class="content">
-        <section class="page-head">
+        <!-- Header Section -->
+        <header class="budget-header">
           <div>
-            <h1>Budgets</h1>
-            <div class="subtitle">Monthly fiscal goal tracking &amp; limits.</div>
+            <h1 class="budget-title">Budgets</h1>
+            <p class="budget-subtitle">Monthly fiscal goal tracking & limits</p>
           </div>
-          <div class="btn">Reset monthly budgets</div>
+          <button class="glass-panel btn-reset">
+            <span class="material-symbols-outlined">restart_alt</span>
+            Reset monthly budgets
+          </button>
+        </header>
+
+        <!-- Overall Summary Card -->
+        <section class="glass-panel summary-card">
+          <div class="bg-glow"></div>
+          <div class="summary-grid">
+            <div class="stat-item">
+              <span class="stat-label">Total Budget</span>
+              <span class="stat-value stat-primary">$5,000</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Total Spent</span>
+              <span class="stat-value stat-secondary">$3,200</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Total Remaining</span>
+              <span class="stat-value stat-neutral">$1,800</span>
+            </div>
+          </div>
+          <div class="summary-progress">
+            <div class="progress-header">
+              <span class="progress-info">Overall Progress</span>
+              <span class="progress-label">64% Spent</span>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar glow-cyan" style="width: 64%"></div>
+            </div>
+          </div>
         </section>
-        <section class="budget-grid">
-          <article class="budget-card">
-            <div class="budget-top">
-              <div class="budget-label"><div class="icon">H</div>Housing</div>
-              <div class="edit">&#9998;</div>
-            </div>
-            <div class="stats">
-              <div><div class="meta">Spent</div><div class="money">$1,200</div></div>
-              <div><div class="meta">Budget</div><div class="money small">$3,000</div></div>
-            </div>
-            <div class="bar blue"><span></span></div>
-            <div class="badge green">Safe Zone</div>
-          </article>
-          <article class="budget-card warning">
-            <div class="budget-top">
-              <div class="budget-label"><div class="icon coral">F</div>Food &amp; Dining</div>
-              <div class="edit">&#9998;</div>
-            </div>
-            <div class="stats">
-              <div><div class="meta">Spent</div><div class="money">$680</div></div>
-              <div><div class="meta">Budget</div><div class="money small">$800</div></div>
-            </div>
-            <div class="bar coral"><span></span></div>
-            <div class="badge coral">Approaching Limit</div>
-          </article>
-          <article class="budget-card danger">
-            <div class="budget-top">
-              <div class="budget-label"><div class="icon coral">E</div>Entertainment</div>
-              <div class="edit">&#9998;</div>
-            </div>
-            <div class="stats">
-              <div><div class="meta">Spent</div><div class="money red">$550</div></div>
-              <div><div class="meta">Budget</div><div class="money small">$500</div></div>
-            </div>
-            <div class="bar red"><span></span></div>
-            <div class="badge coral">You are $50 over budget</div>
-          </article>
-        </section>
-        <section class="pulse">
-          <div class="pulse-head">
+
+        <!-- Monthly Pulse Chart Section -->
+        <section class="glass-panel chart-panel">
+          <div class="chart-header">
             <div>
-              <h2>Monthly Pulse</h2>
-              <p>Overall budget performance across all categories</p>
+              <h2 class="chart-title">Monthly Pulse</h2>
+              <p class="chart-subtitle">Spending trends & projections</p>
             </div>
-            <div class="legend">
-              <span class="projected">Projected</span>
-              <span class="actual">Actual</span>
+            <div class="filter-group">
+              <button class="filter-btn">Weekly</button>
+              <button class="filter-btn active">Monthly</button>
+              <button class="filter-btn">Yearly</button>
             </div>
           </div>
-          <div class="bars">
-            <div style="height: 72px;"></div><div style="height: 116px;"></div><div style="height: 96px;"></div><div style="height: 156px; background: linear-gradient(180deg, rgba(255,133,129,0.7), rgba(78,39,63,0.8));"></div><div style="height: 84px;"></div><div style="height: 60px;"></div><div style="height: 42px;"></div>
+          <div class="chart-container">
+            <!-- Grid Lines -->
+            <div class="chart-grid">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+            <!-- Bars -->
+            <div class="chart-bar" style="height: 40%">
+              <div class="tooltip">$120</div>
+            </div>
+            <div class="chart-bar" style="height: 65%"></div>
+            <div class="chart-bar" style="height: 55%"></div>
+            <div class="chart-bar" style="height: 85%"></div>
+            <div class="chart-bar" style="height: 45%"></div>
+            <div class="chart-bar" style="height: 70%"></div>
+            <div class="chart-bar current glow-cyan" style="height: 95%"></div>
+            <div class="chart-bar projected" style="height: 60%"></div>
+            <div class="chart-bar projected" style="height: 40%"></div>
+            <div class="chart-bar projected" style="height: 50%"></div>
           </div>
-          <div class="days">
-            <div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div><div>Sun</div>
+          <div class="chart-labels">
+            <span>WEEK 1</span>
+            <span>WEEK 2</span>
+            <span>WEEK 3</span>
+            <span>WEEK 4</span>
+            <span>PROJECTION</span>
           </div>
         </section>
+
+        <!-- Category Cards Grid -->
+        <section class="category-grid">
+          <!-- Housing -->
+          <div class="glass-panel category-card">
+            <div class="card-header">
+              <div class="category-icon" style="background: rgba(129, 236, 255, 0.2); color: #81ecff;">
+                <span class="material-symbols-outlined">home</span>
+              </div>
+              <button class="btn-edit" onclick="toggleModal('edit')">
+                <span class="material-symbols-outlined">edit</span>
+              </button>
+            </div>
+            <h3 class="card-title">Housing</h3>
+            <div class="card-status">
+              <span class="badge-status status-safe">Safe Zone</span>
+            </div>
+            <div class="card-stats">
+              <span class="spent-val">$1,200</span>
+              <span class="budget-val">/ $2,000</span>
+            </div>
+            <div class="card-progress">
+              <div class="progress-fill" style="background: #00ffab; width: 60%"></div>
+            </div>
+          </div>
+
+          <!-- Food -->
+          <div class="glass-panel category-card">
+            <div class="card-header">
+              <div class="category-icon" style="background: rgba(255, 132, 129, 0.2); color: #ff8481;">
+                <span class="material-symbols-outlined">restaurant</span>
+              </div>
+              <button class="btn-edit" onclick="toggleModal('edit')">
+                <span class="material-symbols-outlined">edit</span>
+              </button>
+            </div>
+            <h3 class="card-title">Food & Dining</h3>
+            <div class="card-status">
+              <span class="badge-status status-warning">Approaching Limit</span>
+            </div>
+            <div class="card-stats">
+              <span class="spent-val">$780</span>
+              <span class="budget-val">/ $850</span>
+            </div>
+            <div class="card-progress">
+              <div class="progress-fill" style="background: #ff8481; width: 91%"></div>
+            </div>
+          </div>
+
+          <!-- Entertainment -->
+          <div class="glass-panel category-card">
+            <div class="card-header">
+              <div class="category-icon" style="background: rgba(255, 113, 108, 0.2); color: #ff716c;">
+                <span class="material-symbols-outlined">movie</span>
+              </div>
+              <button class="btn-edit" onclick="toggleModal('edit')">
+                <span class="material-symbols-outlined">edit</span>
+              </button>
+            </div>
+            <h3 class="card-title">Entertainment</h3>
+            <div class="card-status">
+              <span class="badge-status status-danger">Over Budget</span>
+            </div>
+            <div class="card-stats">
+              <span class="spent-val danger">$550</span>
+              <span class="budget-val">/ $400</span>
+            </div>
+            <div class="card-progress">
+              <div class="progress-fill" style="background: #ff716c; width: 100%"></div>
+            </div>
+          </div>
+
+          <!-- Add Category Card -->
+          <div class="glass-panel category-card add-card" onclick="toggleModal('add')">
+            <div class="add-icon">
+              <span class="material-symbols-outlined">add</span>
+            </div>
+            <span class="add-label">Add Category</span>
+          </div>
+        </section>
+
+        <!-- Add Category Modal -->
+        <div id="addCategoryModal" class="add-category-modal">
+          <div class="add-category-modal-content">
+            <div class="add-category-modal-header">
+              <h3>Create Category</h3>
+              <div class="close">&times;</div>
+            </div>
+            <div class="label">Category Name</div>
+            <input type="text" id="categoryName" class="input-line" placeholder="e.g. Housing" required>
+            <div class="mini-grid">
+              <div>
+                <div class="label">Budget</div>
+                <input type="text" id="categoryBudget" class="input-line" placeholder="0.00" required
+                  style="height: 28px; border-radius: 8px;">
+              </div>
+              <div id="addCategoryColorDropdown" class="dropdown">
+                <div class="label">Color</div>
+                <div class="mini-box dropdown-btn">
+                  <span class="mini-dot" style="background: #74e8ff;"></span>
+                  <span>Cyan Blue</span>
+                </div>
+                <div class="dropdown-menu">
+                  <a href="#" data-color="cyan" data-hex="#74e8ff"><span class="mini-dot"
+                      style="background: #74e8ff;"></span> Cyan Blue</a>
+                  <a href="#" data-color="green" data-hex="#11efb4"><span class="mini-dot"
+                      style="background: #11efb4;"></span> Emerald Green</a>
+                  <a href="#" data-color="coral" data-hex="#ff7975"><span class="mini-dot"
+                      style="background: #ff7975;"></span> Coral Red</a>
+                  <a href="#" data-color="amber" data-hex="#ffb86c"><span class="mini-dot"
+                      style="background: #ffb86c;"></span> Amber Gold</a>
+                  <a href="#" data-color="violet" data-hex="#bd93f9"><span class="mini-dot"
+                      style="background: #bd93f9;"></span> Royal Violet</a>
+                </div>
+              </div>
+            </div>
+            <div id="createBtn" class="create" style="margin-top: 16px;">Create Category</div>
+          </div>
+        </div>
+
+        <!-- Category Edit Modal -->
+        <div id="categoryModalOverlay" class="modal-overlay">
+          <div class="quick-edit">
+            <div class="quick-top">
+              <h3>Quick Edit</h3>
+              <div class="close">&times;</div>
+            </div>
+            <div class="label">Category Name</div>
+            <input type="text" id="editCategoryName" class="input-line" placeholder="e.g. Housing" required>
+            <div class="mini-grid">
+              <div>
+                <div class="label">Budget</div>
+                <input type="text" id="editCategoryBudget" class="input-line" placeholder="0.00" required
+                  style="height: 28px; border-radius: 8px;">
+              </div>
+              <div id="editCategoryColorDropdown" class="dropdown">
+                <div class="label">Color</div>
+                <div class="mini-box dropdown-btn">
+                  <span class="mini-dot" style="background: #74e8ff;"></span>
+                  <span>Cyan Blue</span>
+                </div>
+                <div class="dropdown-menu">
+                  <a href="#" data-color="cyan" data-hex="#74e8ff"><span class="mini-dot"
+                      style="background: #74e8ff;"></span> Cyan Blue</a>
+                  <a href="#" data-color="green" data-hex="#11efb4"><span class="mini-dot"
+                      style="background: #11efb4;"></span> Emerald Green</a>
+                  <a href="#" data-color="coral" data-hex="#ff7975"><span class="mini-dot"
+                      style="background: #ff7975;"></span> Coral Red</a>
+                  <a href="#" data-color="amber" data-hex="#ffb86c"><span class="mini-dot"
+                      style="background: #ffb86c;"></span> Amber Gold</a>
+                  <a href="#" data-color="violet" data-hex="#bd93f9"><span class="mini-dot"
+                      style="background: #bd93f9;"></span> Royal Violet</a>
+                </div>
+              </div>
+            </div>
+            <div class="mini-grid mini-grid-2">
+              <div id="deleteCategoryBtn" class="delete">Delete Category</div>
+              <div id="saveCategoryBtn" class="save">Save Changes</div>
+            </div>
+          </div>
+        </div>
       </div>
+    </main>
     <div class="sidebar-overlay"></div>
   </div>
+
   <script src="../../js/sidebar.js"></script>
+  <script type="module" src="budget.js"></script>
 </body>
+
 </html>

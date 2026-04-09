@@ -1,153 +1,121 @@
 /**
- * DOM Elements Selection
+ * Catalyst Add-Expense Logic
+ * Streamlined transaction entry with robust validation
  */
-const amountInput = document.querySelector(".amount-input");
-const addExpenseBtn = document.querySelector("#add-expense-btn");
-const dateInput = document.querySelector("#dateInput");
-const merchantInput = document.querySelector("#merchantInput");
-const notesInput = document.querySelector("#notesInput");
-const dropdowns = document.querySelectorAll(".dropdown");
 
-// CATEGORY DROPDOWN DYNAMIC LOADING
-const categoryDropdown = document.querySelector('.field-wrap .dropdown');
-const categoryBtn = categoryDropdown.querySelector(".dropdown-btn");
-const categoryMenu = categoryDropdown.querySelector(".dropdown-menu");
+// --- Constants & Global State ---
+const SELECTORS = {
+    amount: document.querySelector(".amount-input"),
+    date: document.querySelector("#dateInput"),
+    merchant: document.querySelector("#merchantInput"),
+    notes: document.querySelector("#notesInput"),
+    submit: document.querySelector("#add-expense-btn"),
+    catBtn: document.querySelector('.field-wrap .dropdown .dropdown-btn'),
+    catMenu: document.querySelector('.field-wrap .dropdown .dropdown-menu')
+};
+
+let expenseArr = JSON.parse(localStorage.getItem("expenseArr")) || [];
 let categoryArr = JSON.parse(localStorage.getItem("categoryArr")) || [];
 
-function refreshCategoryDropdowns() {
+// --- Data Layer ---
+function refreshCategoryDropdown() {
     categoryArr = JSON.parse(localStorage.getItem("categoryArr")) || [];
     
-    // Ensure Uncategorized exists if visitied directly
+    // Ensure "Uncategorized" safety
     if (!categoryArr.some(c => c.name.toLowerCase() === "uncategorized")) {
-        categoryArr.unshift({ name: "Uncategorized", budget: "0.00", color: "gray" });
+        categoryArr.unshift({ name: "Uncategorized", budget: "0.00", color: "cyan" });
         localStorage.setItem("categoryArr", JSON.stringify(categoryArr));
     }
 
-    const currentSelection = categoryBtn.textContent.trim();
-    
-    categoryMenu.innerHTML = "";
-    categoryArr.forEach(category => {
-        const option = document.createElement("a");
-        option.href = "#";
-        option.textContent = category.name;
-        categoryMenu.appendChild(option);
-    });
+    const currentSelection = SELECTORS.catBtn.textContent.trim();
+    SELECTORS.catMenu.innerHTML = categoryArr.map(cat => `
+        <a href="#"><span class="dot"></span>${cat.name}</a>
+    `).join('');
 
-    // Check if current selection still exists
+    // Reset if selected category was deleted elsewhere
     if (currentSelection !== "Choose category..." && !categoryArr.some(c => c.name === currentSelection)) {
-        categoryBtn.textContent = "Choose category...";
-        categoryBtn.classList.remove("selected");
+        SELECTORS.catBtn.textContent = "Choose category...";
+        SELECTORS.catBtn.classList.remove("selected");
     }
 }
 
-window.onfocus = refreshCategoryDropdowns;
-refreshCategoryDropdowns();
+// --- Initialization & Listeners ---
+document.addEventListener("DOMContentLoaded", () => {
+    refreshCategoryDropdown();
 
-categoryBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    categoryMenu.classList.toggle("show");
+    // 1. DROPDOWN DELEGATION
+    SELECTORS.catBtn?.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        SELECTORS.catMenu.classList.toggle("show");
+    });
+
+    SELECTORS.catMenu?.addEventListener("click", (e) => {
+        const target = e.target.closest("a");
+        if (!target) return;
+        e.preventDefault();
+        
+        const val = target.textContent.trim();
+        SELECTORS.catBtn.textContent = val;
+        SELECTORS.catBtn.classList.add("selected");
+        SELECTORS.catMenu.classList.remove("show");
+    });
+
+    // 2. INPUT BEHAVIOR
+    SELECTORS.date?.addEventListener("change", (e) => {
+        e.target.classList.toggle("selected", !!e.target.value);
+    });
+
+    SELECTORS.amount?.addEventListener('input', (e) => {
+        let value = e.target.value.replace(/[^0-9.]/g, ''); 
+        const parts = value.split('.');
+        if (parts.length > 2) value = parts[0] + '.' + parts.slice(1).join('');
+        e.target.value = value;
+    });
+
+    // Close logic
+    window.addEventListener("click", () => {
+        document.querySelectorAll(".dropdown-menu.show").forEach(m => m.classList.remove("show"));
+    });
+
+    // 3. SUBMISSION
+    SELECTORS.submit?.addEventListener("click", () => {
+        const amount = SELECTORS.amount.value.trim();
+        const date = SELECTORS.date.value;
+        const merchant = SELECTORS.merchant.value.trim();
+        const category = SELECTORS.catBtn.textContent.trim();
+
+        // Validation
+        if (!amount || isNaN(amount) || parseFloat(amount) <= 0) {
+            alert("Please enter a valid expense amount.");
+            return;
+        }
+        if (category === "Choose category...") {
+            alert("Selecting a category is mandatory.");
+            return;
+        }
+        if (!date) {
+            alert("Please select a date.");
+            return;
+        }
+
+        const newTransaction = {
+            id: Date.now(),
+            amount: parseFloat(amount).toFixed(2),
+            category: category,
+            merchant: merchant || "Unknown",
+            date: date,
+            notes: SELECTORS.notes.value.trim(),
+            createdAt: new Date().toISOString()
+        };
+
+        expenseArr.push(newTransaction);
+        localStorage.setItem("expenseArr", JSON.stringify(expenseArr));  
+
+        alert("Expense added successfully!");
+        window.location.href = "../expenses/index.html"; 
+    });
+
+    // Sync if focus returns (user might have edited categories in another tab)
+    window.addEventListener("focus", refreshCategoryDropdown);
 });
-
-// DELEGATION LOGIC
-categoryMenu.addEventListener("click", (e) => {
-    const target = e.target.closest("a");
-    if (!target) return;
-    e.preventDefault();
-    
-    categoryBtn.textContent = target.textContent.trim();
-    categoryBtn.classList.add("selected");
-    categoryMenu.classList.remove("show");
-});
-
-// Toggle date color
-dateInput.addEventListener("change", (e) => {
-    if (e.target.value) {
-        dateInput.classList.add("selected");
-    } else {
-        dateInput.classList.remove("selected");
-    }
-});
-
-// Close dropdowns if clicking outside
-window.addEventListener("click", (e) => {
-    if (!e.target.matches('.dropdown-btn')) {
-        document.querySelectorAll(".dropdown-menu.show").forEach(menu => {
-            menu.classList.remove("show");
-        });
-    }
-});
-
-/**
- * Amount Input Validation
- * Restricts input to numeric values and ensures only one decimal point.
- */
-amountInput.addEventListener('input', (e) => {
-    let value = e.target.value;
-    // Remove anything that's not a digit or a dot
-    value = value.replace(/[^0-9.]/g, ''); 
-    const parts = value.split('.');
-
-    if (parts.length > 2) {
-        value = parts[0] + '.' + parts.slice(1).join('');
-    }
-    e.target.value = value;
-});
-
-/**
- * Transaction Data Management
- */
-let expenseArr = JSON.parse(localStorage.getItem("expenseArr")) || [];
-
-/**
- * Add Expense Form Submission
- */
-addExpenseBtn.addEventListener("click", () => {
-    const amount = amountInput.value.trim();
-    const date = dateInput.value;
-    const merchant = merchantInput.value.trim();
-    const notes = notesInput.value.trim();
-    
-    // Direct references to button values
-    const categoryValue = categoryBtn.textContent.trim();
-
-    // Comprehensive validation
-    if (!amount || parseFloat(amount) <= 0) {
-        alert("Please enter a valid expense amount.");
-        return;
-    }
-    
-    // Check if category is selected (placeholder or empty check)
-    if (!categoryValue || categoryValue === "Choose category...") {
-        alert("Choosing a category is mandatory. Please select one.");
-        return;
-    }
-
-    if (!date) {
-        alert("Please select the date of the expense.");
-        return;
-    }
-
-    // New expense object
-    const newTransaction = {
-        id: Date.now(),
-        amount: parseFloat(amount).toFixed(2),
-        category: categoryValue,
-        merchant: merchant || "Unknown",
-        date: date,
-        notes: notes,
-        createdAt: new Date().toISOString()
-    };
-
-    console.log(newTransaction);
-
-    expenseArr.push(newTransaction);
-    
-    // Save to localStorage
-    localStorage.setItem("expenseArr", JSON.stringify(expenseArr));  
-
-    // Success feedback and redirection
-    alert("Expense added successfully!");
-    window.location.href = "../expenses/index.html"; 
-});
-

@@ -1,62 +1,58 @@
-let expenseArr = JSON.parse(localStorage.getItem("expenseArr")) || [];
-let categoryArr = JSON.parse(localStorage.getItem("categoryArr")) || []; 
-const headline = document.querySelector(".headline-meta"); 
+/**
+ * Catalyst Expenses Module Logic
+ * Efficient searching, filtering, and transaction management
+ */
 
+// --- Constants & Global State ---
+const ROWS_CONTAINER = document.querySelector(".rows");
+const HEADLINE = document.querySelector(".headline-meta");
+const SEARCH_BOX = document.querySelector(".search-box");
+const DATE_INPUT = document.getElementById("dateInput");
+const SORT_BTN = document.querySelector(".sort-btn");
+const SORT_MENU = document.querySelector(".sort-menu");
+
+// State
+let expenseArr = [];
+let categoryArr = [];
+let currentEditId = null;
+
+// --- Data Layer ---
 function refreshData() {
     expenseArr = JSON.parse(localStorage.getItem("expenseArr")) || [];
     categoryArr = JSON.parse(localStorage.getItem("categoryArr")) || [];
     
-    // Ensure Uncategorized exists if visited directly
+    // Safety check for Uncategorized
     if (!categoryArr.some(c => c.name.toLowerCase() === "uncategorized")) {
-        categoryArr.unshift({ name: "Uncategorized", budget: "0.00", color: "gray" });
+        categoryArr.unshift({ name: "Uncategorized", budget: "0.00", color: "cyan" });
         localStorage.setItem("categoryArr", JSON.stringify(categoryArr));
     }
 }
 
-function updateHeadline(count) {
-    if (!headline) return;
-    refreshData(); // Ensure we have latest count
-    const totalCount = expenseArr.length;
-    switch (count) {
-        case 0: headline.textContent = "No expenses processed this month"; break;
-        case 1: headline.textContent = "1 expense processed this month"; break;
-        default: headline.textContent = `${count} expenses processed this month`; break;
-    }
+function saveData() {
+    localStorage.setItem("expenseArr", JSON.stringify(expenseArr));
+    localStorage.setItem("categoryArr", JSON.stringify(categoryArr));
 }
-refreshData();
-updateHeadline(expenseArr.length);
 
-const searchBox = document.querySelector(".search-box");
-const dateInput = document.getElementById("dateInput");
-const sortBtn = document.querySelector(".sort-btn");
-const sortMenu = document.querySelector(".sort-menu");
-const filterDropdown = document.querySelector(".controls .dropdown");
-const filterBtn = filterDropdown?.querySelector(".dropdown-btn");
-const filterMenu = filterDropdown?.querySelector(".dropdown-menu");
+// --- UI Helpers ---
+function updateHeadline(count) {
+    if (!HEADLINE) return;
+    HEADLINE.textContent = count === 0 
+        ? "No expenses processed this month" 
+        : `${count} expense${count === 1 ? '' : 's'} processed this month`;
+}
 
-const editModalOverlay = document.getElementById("editModalOverlay");
-const editCategoryDropdown = document.getElementById("editCategoryDropdown");
-const editCategoryBtn = editCategoryDropdown?.querySelector(".dropdown-btn");
-const editCategoryMenu = editCategoryDropdown?.querySelector(".dropdown-menu");
-
-const editAmountInput = document.getElementById("editAmountInput");
-const editDateInput = document.getElementById("editDateInput");
-const editMerchantInput = document.getElementById("editMerchantInput");
-const editNotesInput = document.getElementById("editNotesInput");
-const closeEditModal = document.getElementById("closeEditModal");
-const cancelEditBtn = document.getElementById("cancelEditBtn");
-const saveEditBtn = document.getElementById("saveEditBtn");
-
-let currentEditId = null;
-
+/**
+ * Syncs all category dropdowns in the view (Filter & Edit Modal)
+ */
 function refreshCategoryDropdowns() {
     refreshData();
     
-    // Repopulate Filter Menu
+    const filterMenu = document.querySelector(".controls .dropdown .dropdown-menu");
+    const editMenu = document.querySelector("#editCategoryDropdown .dropdown-menu");
+    const filterBtn = document.querySelector(".controls .dropdown .dropdown-btn");
+
     if (filterMenu) {
-        const currentFilter = filterBtn.textContent.trim();
-        filterMenu.innerHTML = '<a href="#" data-filter="all"><span class="dot"></span>All Categories</a>'; 
-        
+        filterMenu.innerHTML = '<a href="#" data-filter="all"><span class="dot"></span>All Categories</a>';
         categoryArr.forEach(cat => {
             const a = document.createElement("a");
             a.href = "#";
@@ -64,260 +60,209 @@ function refreshCategoryDropdowns() {
             filterMenu.appendChild(a);
         });
 
-        // Check if current filter still exists
+        // Reset if selected category was deleted
+        const currentFilter = filterBtn?.textContent.trim();
         if (currentFilter !== "All Categories" && !categoryArr.some(c => c.name === currentFilter)) {
-            filterBtn.textContent = "All Categories";
-            filterBtn.classList.remove("selected");
-            filterAndRender();
+            if (filterBtn) {
+                filterBtn.textContent = "All Categories";
+                filterBtn.classList.remove("selected");
+            }
         }
     }
 
-    // Repopulate Edit Modal Menu
-    if (editCategoryMenu) {
-        const currentEditCat = editCategoryBtn.textContent.trim();
-        editCategoryMenu.innerHTML = "";
-        categoryArr.forEach((category) => {
-            const option = document.createElement("a");
-            option.href = "#";
-            option.innerHTML = `<span class="dot"></span>${category.name}`;
-            editCategoryMenu.appendChild(option);
+    if (editMenu) {
+        editMenu.innerHTML = "";
+        categoryArr.forEach(cat => {
+            const a = document.createElement("a");
+            a.href = "#";
+            a.innerHTML = `<span class="dot"></span>${cat.name}`;
+            editMenu.appendChild(a);
         });
-
-        // If current selection is gone, reset
-        if (currentEditCat !== "Choose category..." && !categoryArr.some(c => c.name === currentEditCat)) {
-            editCategoryBtn.textContent = "Choose category...";
-            editCategoryBtn.classList.remove("selected");
-        }
     }
 }
 
-// Global Filter Engine
+// --- Core Engine: Filter & Render ---
 function filterAndRender() {
     refreshData();
-    const searchTerm = searchBox?.value.toLowerCase() || "";
+    
+    const searchTerm = SEARCH_BOX?.value.toLowerCase() || "";
+    const filterBtn = document.querySelector(".controls .dropdown .dropdown-btn");
     const selectedCategory = filterBtn?.textContent.trim() || "All Categories";
-    const selectedDate = dateInput?.value || "";
-    const sortOrder = sortBtn?.textContent.trim() || "Latest";
+    const selectedDate = DATE_INPUT?.value || "";
+    const sortOrder = SORT_BTN?.textContent.trim() || "Latest";
 
-    let filtered = [...expenseArr];
-
-    if (selectedCategory !== "All Categories") {
-        filtered = filtered.filter(ex => ex.category.toLowerCase() === selectedCategory.toLowerCase());
-    }
-    if (searchTerm) {
-        filtered = filtered.filter(ex => 
-            ex.merchant?.toLowerCase().includes(searchTerm)
-        );
-    }
-    if (selectedDate) {
-        filtered = filtered.filter(ex => ex.date === selectedDate);
-    }
-
-    // Sort by Date
-    filtered.sort((a, b) => {
-        const dateA = new Date(a.createdAt);
-        const dateB = new Date(b.createdAt);
-        return sortOrder === "Latest" ? dateB - dateA : dateA - dateB;
+    let filtered = expenseArr.filter(ex => {
+        const matchesCategory = selectedCategory === "All Categories" || ex.category === selectedCategory;
+        const matchesSearch = ex.merchant?.toLowerCase().includes(searchTerm);
+        const matchesDate = !selectedDate || ex.date === selectedDate;
+        return matchesCategory && matchesSearch && matchesDate;
     });
 
-    renderExpenses(filtered);
+    // Sort Logic (Efficient string/number comparison)
+    filtered.sort((a, b) => {
+        return sortOrder === "Latest" 
+            ? b.date.localeCompare(a.date) || b.id - a.id 
+            : a.date.localeCompare(b.date) || a.id - b.id;
+    });
+
+    renderTable(filtered);
     updateHeadline(filtered.length);
 }
 
-function renderExpenses(expenses = expenseArr) {
-    const rowsContainer = document.querySelector(".rows");
-    if (!rowsContainer) return;
+function renderTable(expenses) {
+    if (!ROWS_CONTAINER) return;
     
-    rowsContainer.innerHTML = "";
-    
-    expenses.forEach((expense) => {
-        const article = document.createElement("article");
-        article.classList.add("table-row");
-        article.innerHTML = `
-            <div class="date">${expense.createdAt.split('T')[0]}</div>
-            <div class="category"><span class="icon"></span>${expense.category}</div>
-            <div>
-                <div class="merchant">${expense.merchant ?? 'Unknown'}</div>
-                <div class="note">${expense.notes || 'No notes'}</div>
-            </div>
-            <div class="amount red" style="margin:0;">-$${expense.amount}</div>
-            <div style="display:flex; justify-content:end; align-items:center;">
-                <button class="edit-btn" data-id="${expense.id}">&#9998;</button> 
-                <button class="delete-btn" data-id="${expense.id}">&#128465;</button>
-            </div>
-        `;
-        rowsContainer.appendChild(article); 
-    }); 
-
-    attachEventListeners();
+    ROWS_CONTAINER.innerHTML = expenses.length > 0 
+        ? expenses.map(ex => `
+            <article class="table-row">
+                <div class="date">${ex.date}</div>
+                <div class="category"><span class="icon"></span>${ex.category}</div>
+                <div>
+                    <div class="merchant">${ex.merchant || 'Unknown'}</div>
+                    <div class="note">${ex.notes || 'No notes'}</div>
+                </div>
+                <div class="amount red" style="margin:0;">-$${parseFloat(ex.amount).toLocaleString(undefined, {minimumFractionDigits: 2})}</div>
+                <div style="display:flex; justify-content:end; align-items:center;">
+                    <button class="edit-btn" data-id="${ex.id}">&#9998;</button> 
+                    <button class="delete-btn" data-id="${ex.id}">&#128465;</button>
+                </div>
+            </article>
+        `).join('')
+        : `<div class="table-row" style="justify-content:center; color: var(--budget-on-surface-variant);">No transactions found matching your filters.</div>`;
 }
 
-function attachEventListeners() {
-    document.querySelectorAll(".edit-btn").forEach((btn) => {
-        btn.addEventListener("click", () => {
-            refreshCategoryDropdowns(); 
-            const id = parseInt(btn.dataset.id);
-            const expense = expenseArr.find(ex => ex.id === id);
-            if (expense) {
-                currentEditId = id;
-                editAmountInput.value = expense.amount;
-                editDateInput.value = expense.date;
-                editMerchantInput.value = expense.merchant;
-                editNotesInput.value = expense.notes;
-                editCategoryBtn.textContent = expense.category;
-                editCategoryBtn.classList.add("selected");
-                editModalOverlay.classList.add("show");
-            }
-        });
-    });
+// --- Modal Logic ---
+const editModal = {
+    overlay: document.getElementById("editModalOverlay"),
+    inputs: {
+        amount: document.getElementById("editAmountInput"),
+        date: document.getElementById("editDateInput"),
+        merchant: document.getElementById("editMerchantInput"),
+        notes: document.getElementById("editNotesInput")
+    },
+    catBtn: document.querySelector("#editCategoryDropdown .dropdown-btn"),
 
-    document.querySelectorAll(".delete-btn").forEach((btn) => {
-        btn.addEventListener("click", () => {
-            if (confirm("Are you sure you want to delete this expense?")) {
-                const idToDelete = parseInt(btn.dataset.id);
-                const index = expenseArr.findIndex((ex) => ex.id === idToDelete);
-                if (index !== -1) {
-                    expenseArr.splice(index, 1);
-                    localStorage.setItem("expenseArr", JSON.stringify(expenseArr));
-                    filterAndRender();
-                }
-            }
-        });
-    });
-}
+    open(id) {
+        const expense = expenseArr.find(ex => ex.id === id);
+        if (!expense) return;
 
-// Initial Populations & Events
-refreshCategoryDropdowns();
-filterAndRender();
+        currentEditId = id;
+        this.inputs.amount.value = expense.amount;
+        this.inputs.date.value = expense.date;
+        this.inputs.merchant.value = expense.merchant;
+        this.inputs.notes.value = expense.notes;
+        this.catBtn.textContent = expense.category;
+        this.catBtn.classList.add("selected");
+        this.overlay.classList.add("show");
+    },
 
-document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "visible") {
-        refreshCategoryDropdowns();
-        filterAndRender();
+    close() {
+        this.overlay.classList.remove("show");
+        currentEditId = null;
     }
-});
+};
 
-searchBox?.addEventListener("input", filterAndRender);
-dateInput?.addEventListener("change", filterAndRender);
-
-// DELEGATION LOGIC: Filter Dropdown
-filterMenu?.addEventListener("click", (e) => {
-    const target = e.target.closest("a");
-    if (!target) return;
-    e.preventDefault();
-
-    if (target.dataset.filter === "all") {
-        filterBtn.textContent = "All Categories";
-        filterBtn.classList.remove("selected");
-    } else {
-        filterBtn.textContent = target.textContent.trim();
-        filterBtn.classList.add("selected");
-    }
-    filterMenu.classList.remove("show");
+// --- Initialization & Event Delegation ---
+document.addEventListener("DOMContentLoaded", () => {
+    refreshCategoryDropdowns();
     filterAndRender();
-});
 
-// Edit Modal Amount Input
-editAmountInput?.addEventListener('input', (e) => {
-    let value = e.target.value;
-    value = value.replace(/[^0-9.]/g, ''); 
-    const parts = value.split('.');
-    if (parts.length > 2) value = parts[0] + '.' + parts.slice(1).join('');
-    e.target.value = value;
-});
+    // 1. EVENT DELEGATION: Rows Container (Edit/Delete)
+    ROWS_CONTAINER?.addEventListener("click", (e) => {
+        const editBtn = e.target.closest(".edit-btn");
+        const deleteBtn = e.target.closest(".delete-btn");
 
-// DELEGATION LOGIC: Edit Modal Dropdown
-editCategoryMenu?.addEventListener("click", (e) => {
-    const target = e.target.closest("a");
-    if (!target) return;
-    e.preventDefault();
+        if (editBtn) {
+            editModal.open(parseInt(editBtn.dataset.id));
+        } else if (deleteBtn) {
+            const id = parseInt(deleteBtn.dataset.id);
+            if (confirm("Permanently delete this transaction?")) {
+                expenseArr = expenseArr.filter(ex => ex.id !== id);
+                saveData();
+                filterAndRender();
+            }
+        }
+    });
 
-    editCategoryBtn.textContent = target.textContent.trim();
-    editCategoryBtn.classList.add("selected");
-    editCategoryMenu.classList.remove("show");
-});
+    // 2. SEARCH & FILTERING (Debounced input would be here if needed)
+    SEARCH_BOX?.addEventListener("input", filterAndRender);
+    DATE_INPUT?.addEventListener("change", filterAndRender);
 
-// Dropdown Toggles
-document.querySelectorAll(".dropdown-btn, .sort-btn").forEach(btn => {
-    btn.addEventListener("click", (e) => {
+    // 3. DROPDOWN DELEGATION (Filter & Edit Menus)
+    document.addEventListener("click", (e) => {
+        const btn = e.target.closest(".dropdown-btn, .sort-btn");
+        
+        // Close all if clicking outside
+        if (!btn) {
+            document.querySelectorAll(".dropdown-menu.show, .sort-menu.show").forEach(m => m.classList.remove("show"));
+            return;
+        }
+
         e.preventDefault();
-        e.stopPropagation();
         const menu = btn.nextElementSibling;
         document.querySelectorAll(".dropdown-menu, .sort-menu").forEach(m => {
             if (m !== menu) m.classList.remove("show");
         });
-        if (menu) menu.classList.toggle("show");
+        menu?.classList.toggle("show");
     });
-});
 
-if (sortMenu) {
-    sortMenu.querySelectorAll("a").forEach(a => {
-        a.addEventListener("click", (e) => {
-            e.preventDefault(); // prevent page reload
-            sortBtn.textContent = a.textContent.trim();
-            sortMenu.classList.remove("show");
-            filterAndRender();
-        });
-    });
-}
+    // Dropdown Items Selection (Delegated)
+    document.body.addEventListener("click", (e) => {
+        const item = e.target.closest(".dropdown-menu a, .sort-menu a");
+        if (!item) return;
+        e.preventDefault();
 
-// Modal closing
-const closeModal = () => {
-    editModalOverlay.classList.remove("show");
-    currentEditId = null;
-};
+        const menu = item.closest(".dropdown-menu, .sort-menu");
+        const btn = menu.previousElementSibling;
+        
+        if (menu.classList.contains("sort-menu")) {
+            btn.textContent = item.textContent.trim();
+        } else {
+            const val = item.textContent.trim();
+            btn.textContent = val;
+            btn.classList.toggle("selected", val !== "All Categories" && val !== "Choose category...");
+        }
 
-closeEditModal?.addEventListener("click", closeModal);
-cancelEditBtn?.addEventListener("click", closeModal);
-editModalOverlay?.addEventListener("click", (e) => {
-    if (e.target === editModalOverlay) closeModal();
-});
-
-// Save Changes
-saveEditBtn?.addEventListener("click", () => {
-    const amount = editAmountInput.value.trim();
-    const date = editDateInput.value;
-    const merchant = editMerchantInput.value.trim();
-    const category = editCategoryBtn.textContent.trim();
-    const notes = editNotesInput.value.trim();
-
-    if (!amount || parseFloat(amount) <= 0) {
-        alert("Please enter a valid amount.");
-        return;
-    }
-    if (category === "Choose category...") {
-        alert("Please select a category.");
-        return;
-    }
-    if (!merchant) {
-        alert("Please enter a merchant name.");
-        return;
-    }
-    if (!date) {
-        alert("Please select a date.");
-        return;
-    }
-
-    const index = expenseArr.findIndex(ex => ex.id === currentEditId);
-    if (index !== -1) {
-        expenseArr[index] = {
-            ...expenseArr[index],
-            amount: parseFloat(amount).toFixed(2),
-            date,
-            merchant: merchant || "Unknown",
-            category,
-            notes
-        };
-        localStorage.setItem("expenseArr", JSON.stringify(expenseArr));
-        alert("Expense updated successfully!");
+        menu.classList.remove("show");
         filterAndRender();
-        closeModal();
-    }
-});
+    });
 
-const addExpenseBtn = document.getElementById("addExpenseBtn");
-if (addExpenseBtn) {
-    addExpenseBtn.addEventListener("click", () => {
+    // 4. MODAL ACTIONS
+    document.getElementById("saveEditBtn")?.addEventListener("click", () => {
+        const amount = editModal.inputs.amount.value.trim();
+        const category = editModal.catBtn.textContent.trim();
+        const merchant = editModal.inputs.merchant.value.trim();
+        const date = editModal.inputs.date.value;
+
+        if (!amount || isNaN(amount) || parseFloat(amount) <= 0 || category === "Choose category..." || !merchant || !date) {
+            alert("Please fill all mandatory fields with valid data.");
+            return;
+        }
+
+        const index = expenseArr.findIndex(ex => ex.id === currentEditId);
+        if (index !== -1) {
+            expenseArr[index] = {
+                ...expenseArr[index],
+                amount: parseFloat(amount).toFixed(2),
+                date,
+                merchant,
+                category,
+                notes: editModal.inputs.notes.value.trim()
+            };
+            saveData();
+            filterAndRender();
+            editModal.close();
+        }
+    });
+
+    document.getElementById("closeEditModal")?.addEventListener("click", () => editModal.close());
+    document.getElementById("cancelEditBtn")?.addEventListener("click", () => editModal.close());
+    editModal.overlay?.addEventListener("click", (e) => e.target === editModal.overlay && editModal.close());
+
+    // 5. MISC
+    document.getElementById("addExpenseBtn")?.addEventListener("click", () => {
         window.location.href = "../add-expense/index.html";
     });
-}
+
+    window.addEventListener("visibilitychange", () => document.visibilityState === "visible" && filterAndRender());
+});
