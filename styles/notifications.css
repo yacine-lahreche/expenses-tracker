@@ -1,0 +1,150 @@
+/* ============================================================
+   Notifications Dropdown & Center Styles
+   Catalyst Financial Hub
+   ============================================================ */
+
+/* --- Dropdown Panel --- */
+.notification-dropdown {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  width: 320px;
+  max-height: 400px;
+  background: rgba(18, 35, 74, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(119, 200, 255, 0.15);
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(119, 200, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  z-index: 9999;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.notification-dropdown.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* --- Header --- */
+.notif-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.notif-header h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #fff;
+}
+
+/* --- Clear Button --- */
+.notif-clear-btn {
+  background: transparent;
+  border: none;
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.notif-clear-btn:hover {
+  background: rgba(81, 223, 255, 0.1);
+}
+
+/* --- Body / Scroll Area --- */
+.notif-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+
+.notif-body::-webkit-scrollbar { width: 4px; }
+.notif-body::-webkit-scrollbar-track { background: transparent; }
+.notif-body::-webkit-scrollbar-thumb {
+  background: rgba(119, 200, 255, 0.15);
+  border-radius: 4px;
+}
+
+/* --- Notification Item --- */
+.notif-item {
+  padding: 12px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: background 0.2s;
+  position: relative;
+}
+
+.notif-item:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.notif-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* --- Type Badge --- */
+.notif-type {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.type-warning { color: #ffb86c; }
+.type-expense { color: #51dfff; }
+.type-system  { color: #cdd6ec; }
+
+/* --- Timestamp --- */
+.notif-time {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* --- Message Text --- */
+.notif-message {
+  font-size: 14px;
+  color: #fff;
+  line-height: 1.4;
+  margin: 4px 0 0 0;
+}
+
+/* --- Dismiss Button --- */
+.notif-dismiss {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.2s, color 0.2s;
+}
+
+.notif-item:hover .notif-dismiss { opacity: 1; }
+.notif-dismiss:hover { color: #ff5c5c; }
+
+/* --- Empty State --- */
+.notif-empty {
+  padding: 32px 20px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
+}

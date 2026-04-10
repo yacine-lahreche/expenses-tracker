@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="../../styles/global.css">
   <link rel="stylesheet" href="../../styles/components.css">
   <link rel="stylesheet" href="../../styles/dashboard.css">
+  <link rel="stylesheet" href="../../styles/notifications.css">
 </head>
 <body>
   <div class="layout">
@@ -55,105 +56,63 @@
         <section class="stats">
           <article class="card">
             <div class="stat-label">Total Spent</div>
-            <p class="big-number">$12,450.00</p>
-            <div class="trend">4.2% less than last month</div>
+            <p class="big-number" id="totalSpentVal">$0.00</p>
+            <div class="trend" id="comparisonTrend" style="transition: opacity 0.4s ease;">Calculating...</div>
           </article>
           <article class="card">
             <div class="stat-label">Remaining</div>
-            <p class="big-number">$3,120.45</p>
-            <div class="mini-bar"><span></span></div>
+            <p class="big-number" id="remainingVal">$0.00</p>
+            <div class="mini-bar"><span id="remainingBar"></span></div>
           </article>
           <article class="card">
             <div class="stat-label">Monthly Savings</div>
-            <p class="big-number">$2,400.00</p>
-            <div class="subtitle" style="font-size:12px;">Target: $3,000.00</div>
+            <p class="big-number" id="monthlySavingsVal">$0.00</p>
+            <div class="subtitle" style="font-size:12px;">Target: $0.00</div>
           </article>
         </section>
         <section class="dashboard-grid">
           <article class="card breakdown">
             <div class="section-head">
-              <h2>Spending Breakdown</h2>
-              <div class="month">This Month</div>
-            </div>
-            <div class="donut-wrap">
-              <div class="donut"></div>
-              <div class="legend">
-                <div class="legend-item"><span class="swatch" style="background:#75e9ff;"></span><div>Housing<br><b>45%</b></div></div>
-                <div class="legend-item"><span class="swatch" style="background:#0ff1b3;"></span><div>Lifestyle<br><b>25%</b></div></div>
-                <div class="legend-item"><span class="swatch" style="background:#ff867d;"></span><div>Other<br><b>15%</b></div></div>
+              <h2>Monthly Pulse</h2>
+              <div class="chart-periods">
+                <button class="period-btn" data-period="weekly">Week</button>
+                <button class="period-btn active" data-period="monthly">Month</button>
+                <button class="period-btn" data-period="yearly">Year</button>
               </div>
+            </div>
+            <div class="chart-container">
+              <!-- Grid Lines -->
+              <div class="chart-grid">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+              <!-- Bars injected dynamically by JS -->
+            </div>
+            <div class="chart-labels">
             </div>
           </article>
           <aside class="alerts">
             <div class="alerts-head">
               <h2>Budget Status</h2>
-              <span>3 Active Alerts</span>
+              <span id="alertCount">0 Active Alerts</span>
             </div>
-            <article class="alert-card">
-              <div class="alert-top">
-                <div class="title-row"><div class="badge green">F</div>Food &amp; Dining</div>
-                <div class="amount">$650 / $1,000</div>
-              </div>
-              <div class="progress green"><span></span></div>
-              <div class="helper green">Safe Zone</div>
-            </article>
-            <article class="alert-card warning">
-              <div class="alert-top">
-                <div class="title-row"><div class="badge blue">E</div>Entertainment</div>
-                <div class="amount">$450 / $500</div>
-              </div>
-              <div class="progress blue"><span></span></div>
-              <div class="helper blue">Approaching Limit</div>
-            </article>
-            <article class="alert-card danger">
-              <div class="alert-top">
-                <div class="title-row"><div class="badge red">S</div>Subscriptions</div>
-                <div class="amount red">$230 / $200</div>
-              </div>
-              <div class="progress red"><span></span></div>
-              <div class="helper red">You are 15% over budget</div>
-            </article>
+            <div id="alertCardsContainer">
+                <!-- Dynamic alerts will be injected here -->
+            </div>
           </aside>
         </section>
         <section class="card transactions">
           <div class="transactions-header">
             <div>
-              <h2>Recent Transactions</h2>
+              <h2>Recent Expenses</h2>
               <p>Your latest financial movements</p>
             </div>
-            <a href="../transactions/index.html" class="view-all" style="text-decoration: none;">View All</a>
+            <a href="../expenses/index.html" class="view-all" style="text-decoration: none;">View All</a>
           </div>
-          <div class="tx-list">
-            <div class="tx-row">
-              <div class="tx-main">
-                <div class="tx-icon">A</div>
-                <div>
-                  <div class="tx-name">Apple Store Soho</div>
-                  <div class="tx-meta">Electronics • Today, 2:45 PM</div>
-                </div>
-              </div>
-              <div class="tx-amount">-$1,299.00<div class="tx-status">Verified</div></div>
-            </div>
-            <div class="tx-row">
-              <div class="tx-main">
-                <div class="tx-icon">C</div>
-                <div>
-                  <div class="tx-name">Blue Bottle Coffee</div>
-                  <div class="tx-meta">Food &amp; Drink • Yesterday, 9:12 AM</div>
-                </div>
-              </div>
-              <div class="tx-amount">-$6.50<div class="tx-meta">Pending</div></div>
-            </div>
-            <div class="tx-row">
-              <div class="tx-main">
-                <div class="tx-icon">U</div>
-                <div>
-                  <div class="tx-name">Uber Trip</div>
-                  <div class="tx-meta">Transport • Oct 24, 11:30 PM</div>
-                </div>
-              </div>
-              <div class="tx-amount">-$24.80<div class="tx-status">Verified</div></div>
-            </div>
+          <div class="tx-list" id="recentExpensesList">
+            <!-- Dynamic transactions will be injected here -->
           </div>
         </section>
       </div>
@@ -161,6 +120,9 @@
     <div class="sidebar-overlay"></div>
   </div>
   <script src="../../js/sidebar.js"></script>
-  <a href="../expenses/index.html?openAdd=true" class="fab" style="text-decoration: none;">+ Add Expense</a>
+  <script src="dashboard.js"></script>
+  <!-- <a href="../expenses/index.html?openAdd=true" class="fab" style="text-decoration: none;">+ Add Expense</a> -->
+  <script src="../notifications/notifications.js"></script>
 </body>
 </html>
+

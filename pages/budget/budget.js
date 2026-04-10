@@ -64,9 +64,10 @@ function refreshData() {
 }
 
 /**
- * Filters expenses for the current month and year
+ * Filters expenses strictly for the CURRENT month and year.
+ * Budgets are monthly constraints, therefore past/future expenses are excluded from these calculations.
  */
-function getMonthlyExpenses() {
+function getCurrentMonthExpenses() {
     const now = new Date();
     const currentMonth = now.getMonth();
     const currentYear = now.getFullYear();
@@ -107,7 +108,7 @@ function getCategoryIcon(name) {
  * Updates the summary card at the top of the page
  */
 function updateSummary() {
-    const monthlyExpenses = getMonthlyExpenses();
+    const monthlyExpenses = getCurrentMonthExpenses();
     const totalBudget = categoryArr.reduce((sum, cat) => sum + parseFloat(cat.budget || 0), 0);
     const totalSpent = monthlyExpenses.reduce((sum, exp) => sum + parseFloat(exp.amount || 0), 0);
     const totalRemaining = Math.max(0, totalBudget - totalSpent);
@@ -144,7 +145,7 @@ function renderCategoryCards() {
     const addCard = grid.querySelector('.add-card');
     grid.innerHTML = '';
 
-    const monthlyExpenses = getMonthlyExpenses();
+    const monthlyExpenses = getCurrentMonthExpenses();
 
     // PERFORMANCE: Pre-aggregate spending by category to avoid O(N*M) complexity
     const spendingMap = monthlyExpenses.reduce((acc, exp) => {
@@ -198,88 +199,112 @@ function renderCategoryCards() {
 }
 
 /**
- * Handles pulse chart logic for Weekly/Monthly/Yearly views
+ * Renders Dual Line Chart (Actual vs Average) based on category grouping
  */
 function renderChart(period = 'monthly') {
-    const container = document.querySelector('.chart-container');
-    const labelRow = document.querySelector('.chart-labels');
-    if (!container) return;
-
-    const gridLines = container.querySelector('.chart-grid');
-    container.innerHTML = '';
-    if (gridLines) container.appendChild(gridLines);
+    const categories = categoryArr.map(c => c.name);
+    if (categories.length === 0) return;
 
     const now = new Date();
-    let dataPoints = [];
-
-    if (period === 'weekly') {
-        const startOfWeek = new Date(now);
-        const day = now.getDay();
-        const diff = now.getDate() - (day === 0 ? 6 : day - 1);
-        startOfWeek.setDate(diff);
-
-        for (let i = 0; i < 7; i++) {
-            const date = new Date(startOfWeek);
-            date.setDate(startOfWeek.getDate() + i);
-            const dayStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-            const spent = expenseArr.filter(exp => exp.date === dayStr).reduce((s, e) => s + parseFloat(e.amount), 0);
-            dataPoints.push({ label: date.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase(), amount: spent, isProjected: false });
-        }
-
-        const weeklySpent = dataPoints.reduce((s, p) => s + p.amount, 0);
-        const dayIdx = now.getDay() === 0 ? 6 : now.getDay() - 1; // 0-6 (Mon-Sun)
-        const daysPassed = dayIdx + 1;
-        dataPoints.push({ label: 'PROJECTION', amount: (weeklySpent / daysPassed) * 7, isProjected: true });
-    } else if (period === 'monthly') {
-        const currentMonth = now.getMonth(), currentYear = now.getFullYear();
-        const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-        const weekRanges = [{ s: 1, e: 7 }, { s: 8, e: 14 }, { s: 15, e: 21 }, { s: 22, e: daysInMonth }];
-
-        weekRanges.forEach((range, i) => {
-            const weekSpent = expenseArr.filter(exp => {
-                const d = new Date(exp.date);
-                return d.getMonth() === currentMonth && d.getFullYear() === currentYear && d.getDate() >= range.s && d.getDate() <= range.e;
-            }).reduce((s, e) => s + parseFloat(e.amount || 0), 0);
-            dataPoints.push({ label: `WEEK ${i + 1}`, amount: weekSpent, isProjected: false });
-        });
-
-        const monthlySpent = dataPoints.reduce((s, p) => s + p.amount, 0);
-        const currentDay = now.getDate();
-        dataPoints.push({ label: 'PROJECTION', amount: (monthlySpent / currentDay) * daysInMonth, isProjected: true });
-    } else {
-        // Yearly
-        const currentYear = now.getFullYear();
-        const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-        months.forEach((m, i) => {
-            const monthSpent = expenseArr.filter(exp => {
-                const d = new Date(exp.date);
-                return d.getMonth() === i && d.getFullYear() === currentYear;
-            }).reduce((s, e) => s + parseFloat(e.amount || 0), 0);
-            dataPoints.push({ label: m, amount: monthSpent, isProjected: i > now.getMonth() });
-        });
+    
+    function getWeekRange(date) {
+        const d = new Date(date);
+        const day = d.getDay();
+        const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+        const start = new Date(d.setDate(diff));
+        start.setHours(0,0,0,0);
+        const end = new Date(start);
+        end.setDate(start.getDate() + 6);
+        end.setHours(23,59,59,999);
+        return { start, end };
     }
 
-    // Render Bars
-    const maxAmount = Math.max(...dataPoints.map(d => d.amount), 1);
-    if (labelRow) labelRow.innerHTML = dataPoints.map(d => `<span>${d.label}</span>`).join('');
+    let startDate, endDate;
+    if (period === 'weekly') {
+        const r = getWeekRange(now);
+        startDate = r.start; endDate = r.end;
+    } else if (period === 'monthly') {
+        startDate = new Date(now.getFullYear(), now.getMonth(), 1); 
+        endDate = now;
+    } else {
+        startDate = new Date(now.getFullYear(), 0, 1); endDate = now;
+    }
 
-    dataPoints.forEach(dp => {
-        const bar = document.createElement('div');
-        bar.className = `chart-bar group ${dp.isProjected ? 'projected' : ''}`;
-        
-        // Highlight current period
-        const isCurrentWeekly = period === 'weekly' && !dp.isProjected && dp.label === now.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase();
-        const isCurrentMonthly = period === 'monthly' && !dp.isProjected && dp.label === `WEEK ${Math.ceil(now.getDate() / 7)}`;
-        const isCurrentYearly = period === 'yearly' && !dp.isProjected && dp.label === ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'][now.getMonth()];
-        
-        if (isCurrentWeekly || isCurrentMonthly || isCurrentYearly) {
-            bar.classList.add('current', 'glow-cyan');
-        }
-
-        bar.style.height = `${Math.max((dp.amount / maxAmount) * 90, 5)}%`;
-        bar.innerHTML = `<div class="tooltip">$${Math.round(dp.amount).toLocaleString()}</div>`;
-        container.appendChild(bar);
+    // 1. Calculate ACTUAL Spending per Category
+    const actualMap = {};
+    categories.forEach(c => actualMap[c] = 0);
+    expenseArr.filter(ex => {
+        const d = new Date(ex.date);
+        return d >= startDate && d <= endDate;
+    }).forEach(ex => {
+        if (actualMap[ex.category] !== undefined) actualMap[ex.category] += parseFloat(ex.amount);
     });
+
+    // 2. Calculate AVERAGE Spending
+    const avgMap = {};
+    let firstDate = now;
+    if(expenseArr.length > 0) {
+       firstDate = new Date(Math.min(...expenseArr.map(e => new Date(e.date))));
+    }
+    const totalDaysRecorded = Math.max(1, (now - firstDate) / (1000*60*60*24));
+    
+    categories.forEach(c => {
+        const total = expenseArr.filter(ex => ex.category === c).reduce((s, e) => s + parseFloat(e.amount), 0);
+        const dailyAvg = total / totalDaysRecorded;
+        
+        let cycleMultiplier = 30; // monthly default
+        if (period === 'weekly') cycleMultiplier = 7;
+        if (period === 'yearly') cycleMultiplier = 365;
+        
+        avgMap[c] = dailyAvg * cycleMultiplier;
+    });
+
+    // 3. SVG Rendering Logic
+    const svg = document.getElementById('spendingLineChart');
+    const labelsEl = document.getElementById('spendingChartLabels');
+    if (!svg || !labelsEl) return;
+
+    const width = 400, height = 200, padding = 20;
+    const chartWidth = width - (padding * 2);
+    const chartHeight = height - (padding * 2);
+
+    const maxVal = Math.max(...Object.values(actualMap), ...Object.values(avgMap), 100);
+    const stepX = chartWidth / (categories.length - 1 || 1);
+
+    const getSmoothPath = (map) => {
+        const points = categories.map((cat, i) => {
+            const x = padding + (i * stepX);
+            const y = (height - padding) - (map[cat] / maxVal) * chartHeight;
+            return { x, y };
+        });
+
+        if (points.length === 0) return '';
+        if (points.length === 1) return `M ${points[0].x},${points[0].y}`;
+
+        let d = `M ${points[0].x},${points[0].y}`;
+        for (let i = 0; i < points.length - 1; i++) {
+            const p1 = points[i];
+            const p2 = points[i + 1];
+            // Compute horizontal midpoint for tangent smoothing (Monotone Cubic variant)
+            const midX = (p1.x + p2.x) / 2;
+            d += ` C ${midX},${p1.y} ${midX},${p2.y} ${p2.x},${p2.y}`;
+        }
+        return d;
+    };
+
+    // Safely clear the SVG canvas completely before injecting the new vectors
+    svg.innerHTML = '';
+
+    svg.innerHTML = `
+        <path d="${getSmoothPath(avgMap)}" class="line-avg" />
+        <path d="${getSmoothPath(actualMap)}" class="line-actual" />
+        ${categories.map((cat, i) => {
+            const x = padding + (i * stepX);
+            return `<circle cx="${x}" cy="${(height - padding) - (actualMap[cat] / maxVal) * chartHeight}" r="3" class="dot-actual" />`;
+        }).join('')}
+    `;
+
+    labelsEl.innerHTML = categories.map(c => `<span>${c}</span>`).join('');
 }
 
 // --- Dropdown Logic ---
@@ -434,9 +459,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Time Period Tabs
     document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
+            const targetBtn = e.currentTarget;
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            e.target.classList.add('active');
-            currentTimePeriod = e.target.textContent.toLowerCase();
+            targetBtn.classList.add('active');
+            
+            // Strictly fetch period from data-period datasets (e.g. 'weekly') rather than parsing display text ('Week') 
+            currentTimePeriod = targetBtn.dataset.period || targetBtn.textContent.toLowerCase();
+            
+            // Execute algorithmic pulse plot and completely re-render
             renderChart(currentTimePeriod);
         });
     });
