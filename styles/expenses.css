@@ -161,18 +161,14 @@
 }
 
 .icon {
-  width: 30px;
-  height: 30px;
-  border-radius: 8px;
-  display: grid;
-  place-items: center;
-  font-size: 13px;
-  font-weight: 800;
-  background: rgba(81, 223, 255, 0.1);
-  color: #82ebff;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 2px;
+  background: var(--primary);
+  box-shadow: 0 0 10px var(--primary);
 }
-
-.icon.green { background: rgba(17, 241, 180, 0.12); color: var(--green); }
 
 .merchant {
   color: #77e8ff;

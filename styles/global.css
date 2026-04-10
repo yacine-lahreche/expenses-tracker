@@ -5,6 +5,10 @@
   --primary: #51dfff;
   --green: #11f1b4;
   --coral: #ff7874;
+  --amber: #ffb86c;
+  --violet: #bd93f9;
+  --cyan: #74e8ff;
+  --gray: #7f8aa9;
 }
 
 * {
@@ -404,7 +408,7 @@ h1 {
   top: calc(100% + 8px);
   left: 0;
   width: 100%;
-  min-width: 200px;
+  min-width: fit-content;
   background: rgba(16, 34, 71, 0.85);
   backdrop-filter: blur(16px);
   border: 1px solid rgba(118, 232, 255, 0.15);
@@ -437,7 +441,7 @@ h1 {
   color: var(--muted);
   font-size: 14px;
   font-weight: 600;
-  text-decoration: none;
+  text-decoration: none; 
   border-radius: 10px;
   transition: all 0.2s ease;
 }

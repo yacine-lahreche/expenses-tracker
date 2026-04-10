@@ -49,28 +49,32 @@ function updateBadge() {
     notifications = JSON.parse(localStorage.getItem('notificationsArr')) || [];
     const unreadCount = notifications.length;
     document.querySelectorAll('.topbar-notification').forEach(icon => {
+        // Fix: icon must be position:relative so the badge anchors to IT, not the navbar
+        icon.style.position = 'relative';
+        icon.style.display = 'inline-flex';
         let badge = icon.querySelector('.notif-badge');
         if (unreadCount > 0) {
             if (!badge) {
                 badge = document.createElement('span');
                 badge.className = 'notif-badge';
-                // Append dynamically
                 icon.appendChild(badge);
-                
-                // Inline absolute glass positioning
-                badge.style.position = 'absolute';
-                badge.style.top = '-4px';
-                badge.style.right = '-4px';
-                badge.style.backgroundColor = '#ff5c5c';
-                badge.style.color = '#fff';
-                badge.style.fontSize = '9px';
-                badge.style.fontWeight = 'bold';
-                badge.style.width = '14px';
-                badge.style.height = '14px';
-                badge.style.borderRadius = '50%';
-                badge.style.display = 'flex';
-                badge.style.alignItems = 'center';
-                badge.style.justifyContent = 'center';
+                badge.style.cssText = [
+                    'position:absolute',
+                    'top:-6px',
+                    'right:-6px',
+                    'background:#ff5c5c',
+                    'color:#fff',
+                    'font-size:9px',
+                    'font-weight:bold',
+                    'width:16px',
+                    'height:16px',
+                    'border-radius:50%',
+                    'display:flex',
+                    'align-items:center',
+                    'justify-content:center',
+                    'pointer-events:none',
+                    'z-index:10'
+                ].join(';');
             }
             badge.textContent = unreadCount;
         } else {
@@ -104,9 +108,11 @@ function renderNotifications() {
         item.innerHTML = `
             <div class="notif-item-header">
                 <span class="notif-type ${typeClass}">${notif.type === 'overall_budget_exceeded' ? 'MAX BUDGET ALERT' : 'BUDGET WARNING'}</span>
-                <span class="notif-time">${formatTime(notif.time)}</span>
             </div>
             <p class="notif-message">${notif.message}</p>
+            <div style="display: flex; justify-content: flex-end; width: 100%;">
+                <span class="notif-time">${formatTime(notif.time)}</span>
+            </div>
             <button class="notif-dismiss" data-id="${notif.id}">✕</button>
         `;
 
@@ -157,6 +163,67 @@ window.addEventListener('click', (e) => {
     }
 });
 
+// 5. Full-Page Notification List (only on /notifications/index.html)
+function renderPageNotifications() {
+    const pageList = document.getElementById('pageNotifList');
+    if (!pageList) return; // Not on the notifications page, skip
+
+    notifications = JSON.parse(localStorage.getItem('notificationsArr')) || [];
+
+    if (notifications.length === 0) {
+        pageList.innerHTML = `
+            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:64px 0;gap:16px;">
+                <img src="../../assets/icons/notification.png" width="48" style="opacity:0.3;">
+                <p style="color:var(--muted);font-size:14px;">No notifications yet</p>
+            </div>`;
+        return;
+    }
+
+    const sorted = [...notifications].sort((a, b) => new Date(b.time) - new Date(a.time));
+
+    pageList.innerHTML = sorted.map(notif => {
+        let typeClass = 'type-system';
+        if (notif.type === 'budget_exceeded') typeClass = 'type-warning';
+        if (notif.type === 'overall_budget_exceeded') typeClass = 'type-expense';
+        const label = notif.type === 'overall_budget_exceeded' ? 'MAX BUDGET ALERT' : 'BUDGET WARNING';
+        return `
+            <div class="notif-item" style="background:rgba(255,255,255,0.03);border-radius:12px;margin-bottom:8px;padding:16px 20px;">
+                <div class="notif-item-header">
+                    <span class="notif-type ${typeClass}">${label}</span>
+                    <span class="notif-time">${formatTime(notif.time)}</span>
+                </div>
+                <p class="notif-message">${notif.message}</p>
+                <div class="notif-item-footer" style="display: flex; justify-content: center; width: 100%;">
+                    <button class="notif-dismiss page-dismiss" data-id="${notif.id}" style="opacity:1;position:static;margin-top:8px;font-size:12px;padding:4px 10px;">Dismiss</button>
+                </div>
+
+            </div>`;
+    }).join('');
+
+    // Dismiss listeners for full page
+    pageList.querySelectorAll('.page-dismiss').forEach(btn => {
+        btn.addEventListener('click', e => {
+            const id = parseInt(e.target.dataset.id);
+            notifications = notifications.filter(n => n.id !== id);
+            saveNotifications();
+            renderPageNotifications();
+            updateBadge();
+        });
+    });
+}
+
+// Page-level Clear All button
+const pageClearBtn = document.getElementById('pageclearNotifsBtn');
+if (pageClearBtn) {
+    pageClearBtn.addEventListener('click', () => {
+        notifications = [];
+        saveNotifications();
+        renderPageNotifications();
+        updateBadge();
+    });
+}
+
 // Initial Render on boot
 renderNotifications();
+renderPageNotifications();
 updateBadge();

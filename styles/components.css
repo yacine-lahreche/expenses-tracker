@@ -194,3 +194,31 @@
 .notif-item:hover .notif-dismiss { opacity: 1; }
 .notif-dismiss:hover { color: #ff5c5c; }
 .notif-empty { padding: 32px 20px; text-align: center; color: rgba(255,255,255,0.5); font-size: 14px; }
+
+/* Toast Notifications */
+#toast-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border: none;
+}
+
+.toast {
+    animation: toast-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes toast-in {
+    from {
+        opacity: 0;
+        transform: translateX(120%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.toast-success { box-shadow: 0 0 10px var(--green) !important; }
+.toast-error { box-shadow: 0 0 10px var(--coral) !important; }
+.toast-info { box-shadow: 0 0 10px var(--primary) !important; }
+

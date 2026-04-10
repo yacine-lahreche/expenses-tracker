@@ -63,11 +63,16 @@
       </header>
 
       <div class="content">
-        <section style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 60vh; text-align: center;">
-          <img src="../../assets/icons/notification.png" alt="notifications" width="64px" style="opacity: 0.5; margin-bottom: 24px;">
-          <h1 style="color: #fff; font-size: 24px; margin-bottom: 8px;">Notification Center</h1>
-          <p style="color: var(--muted); max-width: 400px; line-height: 1.5;">Review alerts, warnings, and system updates securely. Click the bell icon in the top right to access the quick-view dropdown.</p>
-        </section>
+        <div class="page-notif-wrapper" style="width: 100%;; margin: 32px auto; padding: 0 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <div>
+              <h1 style="color: #fff; font-size: 22px; margin: 0;">Notification Center</h1>
+              <p style="color: var(--muted); font-size: 13px; margin: 4px 0 0;">All your budget alerts and warnings</p>
+            </div>
+            <button id="pageclearNotifsBtn" class="notif-clear-btn" style="font-size: 13px; padding: 8px 16px; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;">Clear All</button>
+          </div>
+          <div id="pageNotifList"></div>
+        </div>
       </div>
     </main>
   </div>

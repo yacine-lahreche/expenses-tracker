@@ -1,3 +1,6 @@
+import { BudgetEngine } from "../../js/budget-engine.js";
+import Toast from "../../js/toast.js";
+
 /**
  * Catalyst Expenses Module Logic
  * Efficient searching, filtering, and transaction management
@@ -57,7 +60,7 @@ function refreshCategoryDropdowns() {
         categoryArr.forEach(cat => {
             const a = document.createElement("a");
             a.href = "#";
-            a.innerHTML = `<span class="dot"></span>${cat.name}`;
+            a.innerHTML = `<span class="dot" style="background: var(--${cat.color})"></span>${cat.name}`;
             filterMenu.appendChild(a);
         });
 
@@ -73,13 +76,13 @@ function refreshCategoryDropdowns() {
 
     if (addMenu) {
         addMenu.innerHTML = categoryArr.map(cat => `
-            <a href="#"><span class="dot"></span>${cat.name}</a>
+            <a href="#"><span class="dot" style="background: var(--${cat.color})"></span>${cat.name}</a>
         `).join('');
     }
 
     if (editMenu) {
         editMenu.innerHTML = categoryArr.map(cat => `
-            <a href="#"><span class="dot"></span>${cat.name}</a>
+            <a href="#"><span class="dot" style="background: var(--${cat.color})"></span>${cat.name}</a>
         `).join('');
     }
 }
@@ -116,21 +119,29 @@ function renderTable(expenses) {
     if (!ROWS_CONTAINER) return;
     
     ROWS_CONTAINER.innerHTML = expenses.length > 0 
-        ? expenses.map(ex => `
-            <article class="table-row">
-                <div class="date">${ex.date}</div>
-                <div class="category"><span class="icon"></span>${ex.category}</div>
-                <div>
-                    <div class="merchant">${ex.merchant || 'Unknown'}</div>
-                    <div class="note">${ex.notes || 'No notes'}</div>
-                </div>
-                <div class="amount red" style="margin:0;">-$${parseFloat(ex.amount).toLocaleString(undefined, {minimumFractionDigits: 2})}</div>
-                <div style="display:flex; justify-content:end; align-items:center;">
-                    <button class="edit-btn" data-id="${ex.id}">&#9998;</button> 
-                    <button class="delete-btn" data-id="${ex.id}">&#128465;</button>
-                </div>
-            </article>
-        `).join('')
+        ? expenses.map(ex => {
+            const catInfo = categoryArr.find(c => c.name === ex.category) || { color: 'primary' };
+            const catColor = catInfo.color || 'primary';
+            
+            return `
+                <article class="table-row">
+                    <div class="date">${ex.date}</div>
+                    <div class="category">
+                        <span class="icon" style="background: var(--${catColor}); box-shadow: 0 0 10px var(--${catColor});"></span>
+                        ${ex.category}
+                    </div>
+                    <div>
+                        <div class="merchant">${ex.merchant || 'Unknown'}</div>
+                        <div class="note">${ex.notes || 'No notes'}</div>
+                    </div>
+                    <div class="amount red" style="margin:0;">-$${parseFloat(ex.amount).toLocaleString(undefined, {minimumFractionDigits: 2})}</div>
+                    <div style="display:flex; justify-content:end; align-items:center;">
+                        <button class="edit-btn" data-id="${ex.id}">&#9998;</button> 
+                        <button class="delete-btn" data-id="${ex.id}">&#128465;</button>
+                    </div>
+                </article>
+            `;
+        }).join('')
         : `<div class="table-row" style="display:flex; justify-content:center; color: var(--budget-on-surface-variant);"><span>No transactions found matching your filters.</span></div>`;
 }
 
@@ -211,6 +222,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 expenseArr = expenseArr.filter(ex => ex.id !== id);
                 saveData();
                 filterAndRender();
+                Toast.show("Transaction deleted successfully.", "success");
             }
         }
     });
@@ -271,7 +283,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const date = addModal.inputs.date.value;
 
         if (!amount || isNaN(amount) || parseFloat(amount) <= 0 || category === "Choose category..." || !date) {
-            alert("Please provide a valid amount, category, and date.");
+            Toast.show("Please provide a valid amount, category, and date.", "error");
             return;
         }
 
@@ -287,7 +299,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         expenseArr.push(newTransaction);
         saveData();
-        alert("Expense added successfully!");
+        BudgetEngine.checkBudgetNotifications(newTransaction, category);
+        Toast.show("Expense added successfully!", "success");
         addModal.close();
         filterAndRender();
     });
@@ -300,7 +313,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const date = editModal.inputs.date.value;
 
         if (!amount || isNaN(amount) || parseFloat(amount) <= 0 || category === "Choose category..." || !merchant || !date) {
-            alert("Please fill all mandatory fields with valid data.");
+            Toast.show("Please fill all mandatory fields with valid data.", "error");
             return;
         }
 
@@ -316,6 +329,7 @@ document.addEventListener("DOMContentLoaded", () => {
             };
             saveData();
             filterAndRender();
+            Toast.show("Changes saved successfully!", "success");
             editModal.close();
         }
     });
