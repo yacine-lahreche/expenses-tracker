@@ -50,9 +50,9 @@
 }
 
 .budget-title {
-  margin: 0 0 6px;
+  margin: 0 0 0.375rem;
   color: #74e8ff;
-  font-size: 38px;
+  font-size: 2.375rem;
   line-height: 1;
   font-weight: 800;
 }
@@ -60,7 +60,7 @@
 .budget-subtitle {
   margin: 0;
   color: var(--muted);
-  font-size: 15px;
+  font-size: 0.9375rem;
 }
 
 .btn-reset {
@@ -287,17 +287,17 @@
 .line-chart-labels {
   display: flex;
   justify-content: space-between;
-  margin-top: 12px;
-  padding: 0 16px;
+  margin-top: 0.75rem;
+  padding: 0 1rem;
 }
 
 .line-chart-labels span {
-  font-size: 10px;
+  font-size: 0.625rem;
   color: var(--budget-on-surface-variant);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  max-width: 60px;
+  max-width: 3.75rem;
   text-align: center;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -309,7 +309,7 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.5rem;
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
 }
 
 @media (min-width: 640px) { .category-grid { grid-template-columns: repeat(2, 1fr); } }
@@ -349,7 +349,7 @@
   color: var(--budget-on-surface-variant);
   cursor: pointer;
   transition: color 0.2s;
-  padding: 4px;
+  padding: 0.25rem;
 }
 
 .btn-edit:hover {
@@ -371,7 +371,7 @@
 }
 
 .badge-status {
-  font-size: 10px;
+  font-size: 0.625rem;
   font-weight: 900;
   padding: 0.125rem 0.5rem;
   border-radius: 0.25rem;
@@ -413,7 +413,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 180px;
+  min-height: 11.25rem;
   cursor: pointer;
   background: none;
 }
@@ -463,8 +463,8 @@
 }
 
 .quick-edit, .add-category-modal-content {
-  width: min(390px, 90vw);
-  padding: 24px;
+  width: min(24.375rem, 90vw);
+  padding: 1.5rem;
   background: rgba(17, 35, 73, 0.98);
   border: 1px solid var(--budget-line);
   border-radius: 20px;
@@ -475,10 +475,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 18px;
+  margin-bottom: 1.125rem;
 }
 
-.quick-top h3, .add-category-modal-header h3 { margin: 0; font-size: 16px; }
+.quick-top h3, .add-category-modal-header h3 { margin: 0; font-size: 1rem; }
 
 .close {
   width: 32px;
@@ -488,7 +488,7 @@
   color: rgba(221,229,247,0.66);
   display: grid;
   place-items: center;
-  font-size: 20px;
+  font-size: 1.25rem;
   cursor: pointer;
   border: none;
 }
@@ -499,10 +499,10 @@
 
 .label {
   color: rgba(205,214,236,0.52);
-  font-size: 10px;
+  font-size: 0.625rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
 }
 
 /* Modals Dropdown */
@@ -521,7 +521,7 @@
   border-radius: 12px;
   z-index: 100;
   box-shadow: 0 12px 32px rgba(0,0,0,0.5);
-  margin-top: 4px;
+  margin-top: 0.25rem;
 }
 
 .dropdown-menu.show {
@@ -531,11 +531,11 @@
 .dropdown-menu a {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 14px;
+  gap: 0.625rem;
+  padding: 0.625rem 0.875rem;
   color: var(--budget-muted);
   text-decoration: none;
-  font-size: 12px;
+  font-size: 0.75rem;
   transition: all 0.2s;
 }
 
@@ -546,13 +546,13 @@
 
 .input-line {
   width: 100%;
-  height: 48px;
+  height: 3rem;
   border-radius: 12px;
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.04);
   color: var(--budget-text);
-  font-size: 14px;
-  padding: 0 16px;
+  font-size: 0.875rem;
+  padding: 0 1rem;
   display: flex;
   align-items: center;
   outline: none;
@@ -561,35 +561,35 @@
 .mini-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  margin-top: 16px;
+  gap: 0.75rem;
+  margin-top: 1rem;
 }
 
 .mini-box {
-  height: 28px;
+  height: 1.75rem;
   border-radius: 8px;
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.04);
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 0 10px;
+  gap: 0.5rem;
+  padding: 0 0.625rem;
   color: rgba(222,230,246,0.78);
-  font-size: 12px;
+  font-size: 0.75rem;
   cursor: pointer;
 }
 
 .mini-dot { width: 12px; height: 12px; border-radius: 50%; background: #74e8ff; }
 
 .save, .create {
-  height: 36px;
+  height: 2.25rem;
   border-radius: 10px;
   background: #22446f;
   border: 1px solid rgba(114,229,255,0.16);
   color: #7de9ff;
   display: grid;
   place-items: center;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 700;
   cursor: pointer; 
 }
@@ -599,14 +599,14 @@
 }
 
 .delete {
-  height: 36px;
+  height: 2.25rem;
   border-radius: 10px;
   background: #4a282e;
   border: 1px solid rgba(255,145,140,0.16);
   color: var(--budget-error);
   display: grid;
   place-items: center;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 700;
   cursor: pointer; 
 }

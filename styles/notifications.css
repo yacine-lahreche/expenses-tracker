@@ -6,10 +6,10 @@
 /* --- Dropdown Panel --- */
 .notification-dropdown {
   position: absolute;
-  top: 60px;
-  right: 20px;
-  width: 320px;
-  max-height: 400px;
+  top: 3.75rem;
+  right: 1.25rem;
+  width: 20rem;
+  max-height: 25rem;
   background: rgba(18, 35, 74, 0.95);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -34,7 +34,7 @@
 
 /* --- Header --- */
 .notif-header {
-  padding: 16px 20px;
+  padding: 1rem 1.25rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   display: flex;
   justify-content: space-between;
@@ -43,7 +43,7 @@
 
 .notif-header h3 {
   margin: 0;
-  font-size: 16px;
+  font-size: 1rem;
   color: #fff;
 }
 
@@ -52,10 +52,10 @@
   background: transparent;
   border: none;
   color: var(--primary);
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 600;
   cursor: pointer;
-  padding: 4px 8px;
+  padding: 0.25rem 0.5rem;
   border-radius: 4px;
   transition: background 0.2s;
 }
@@ -68,7 +68,7 @@
 .notif-body {
   flex: 1;
   overflow-y: auto;
-  padding: 8px 0;
+  padding: 0.5rem 0;
 }
 
 .notif-body::-webkit-scrollbar { width: 4px; }
@@ -80,10 +80,10 @@
 
 /* --- Notification Item --- */
 .notif-item {
-  padding: 12px 20px;
+  padding: 0.75rem 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0.25rem;
   transition: background 0.2s;
   position: relative;
 }
@@ -100,7 +100,7 @@
 
 /* --- Type Badge --- */
 .notif-type {
-  font-size: 11px;
+  font-size: 0.6875rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -112,28 +112,28 @@
 
 /* --- Timestamp --- */
 .notif-time {
-  font-size: 11px;
+  font-size: 0.6875rem;
   color: var(--muted);
 }
 
 /* --- Message Text --- */
 .notif-message {
-  font-size: 14px;
+  font-size: 0.875rem;
   color: #fff;
   line-height: 1.4;
-  margin: 4px 0 0 0;
+  margin: 0.25rem 0 0 0;
 }
 
 /* --- Dismiss Button --- */
 .notif-dismiss {
   position: absolute;
-  right: 12px;
-  top: 12px;
+  right: 0.75rem;
+  top: 0.75rem;
   background: transparent;
   border: none;
   color: var(--muted);
   cursor: pointer;
-  font-size: 14px;
+  font-size: 0.875rem;
   opacity: 0;
   transition: opacity 0.2s, color 0.2s;
 }
@@ -143,8 +143,8 @@
 
 /* --- Empty State --- */
 .notif-empty {
-  padding: 32px 20px;
+  padding: 2rem 1.25rem;
   text-align: center;
   color: var(--muted);
-  font-size: 14px;
+  font-size: 0.875rem;
 }

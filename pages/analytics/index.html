@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analytics | Catalyst</title>
+    <link rel="icon" type="image/x-icon" href="../../favicon.ico">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,30 +26,29 @@
         </div>
         <nav class="nav">
           <a href="../dashboard/index.html" class="nav-item">
-            <img src="../../assets/icons/dashboard.png" alt="dashboard" width="18px" height="18px">
+            <img src="../../assets/icons/dashboard.png" alt="dashboard">
             <span>Dashboard</span>
           </a>
           <a href="../analytics/index.html" class="nav-item active">
-            <img src="../../assets/icons/analytics.png" alt="analytics" width="18px" height="18px">
+            <img src="../../assets/icons/analytics.png" alt="analytics">
             <span>Analytics</span>
           </a>
           <a href="../budget/index.html" class="nav-item">
-            <img src="../../assets/icons/budget.png" alt="budget" width="18px" height="18px">
+            <img src="../../assets/icons/budget.png" alt="budget">
             <span>Budget</span>
           </a>
           <a href="../expenses/index.html" class="nav-item">
-            <img src="../../assets/icons/expenses.png" alt="expenses" width="18px" height="18px">
+            <img src="../../assets/icons/expenses.png" alt="expenses">
             <span>Expenses</span>
           </a>
         </nav>
-        <hr>
         <div class="sidebar-footer">
           <a href="../onboarding/index.html" class="nav-item logout">
-            <img src="../../assets/icons/logout.png" alt="logout" width="18px" height="18px">
+            <img src="../../assets/icons/logout.png" alt="logout">
             <span>Logout</span>
           </a>
           <a href="../settings/index.html" class="sidebar-settings-link" title="Settings">
-            <img src="../../assets/icons/settings.png" alt="settings" width="18px" height="18px">
+            <img src="../../assets/icons/settings.png" alt="settings">
           </a>
         </div>
       </aside>
@@ -122,50 +122,30 @@
               </div>
             </div>
 
-            <!-- Spending Trends -->
-            <div class="card glass-panel col-8 trends-card">
+            <!-- Spending Heatmap Chart -->
+            <div class="card glass-panel col-8 heatmap-card">
               <div class="card-head">
-                <h3 class="card-section-label">Spending Trends Over Time</h3>
-                <div class="chart-legend">
-                  <div class="legend-item">
-                    <span class="legend-dot legend-dot--cyan"></span>
-                    Actual Spending
+                <h3 class="card-section-label">Spending Activity</h3>
+                <p class="card-subtitle">Daily spend intensity over 12 weeks</p>
+              </div>
+              <div class="heatmap-container">
+                <div class="heatmap-y-labels">
+                  <span>Mon</span>
+                  <span>Wed</span>
+                  <span>Fri</span>
+                </div>
+                <div class="heatmap-grid-wrap">
+                  <div class="heatmap-months" id="heatmapMonths">
+                    <!-- Dynamic Month Labels -->
                   </div>
-                  <div class="legend-item">
-                    <span class="legend-dot legend-dot--coral"></span>
-                    Budget Limit
+                  <div class="heatmap-grid" id="heatmapGrid">
+                    <!-- 12x7 Grid injected here -->
                   </div>
                 </div>
               </div>
-              <div class="trend-chart">
-                <div class="bar-cols">
-                  <div class="bar-col" style="height:60%"></div>
-                  <div class="bar-col" style="height:75%"></div>
-                  <div class="bar-col" style="height:45%"></div>
-                  <div class="bar-col" style="height:85%"></div>
-                  <div class="bar-col" style="height:55%"></div>
-                  <div class="bar-col" style="height:70%"></div>
-                  <div class="bar-col" style="height:65%"></div>
-                  <div class="bar-col" style="height:90%"></div>
-                  <div class="bar-col" style="height:40%"></div>
-                  <div class="bar-col" style="height:60%"></div>
-                  <div class="bar-col" style="height:80%"></div>
-                </div>
-                <svg class="trend-svg" preserveAspectRatio="none">
-                  <path d="M 0,180 Q 50,150 100,160 T 200,100 T 300,140 T 400,80 T 500,120 T 600,110 T 700,40 T 800,150 T 900,130 T 1000,100"
-                        fill="none" stroke="#ff8481" stroke-width="2" stroke-dasharray="6 4" opacity="0.6"></path>
-                  <path d="M 0,160 Q 50,180 100,140 T 200,160 T 300,120 T 400,130 T 500,90 T 600,80 T 700,120 T 800,100 T 900,110 T 1000,95"
-                        fill="none" stroke="#51dfff" stroke-width="3"></path>
-                </svg>
-              </div>
-              <div class="x-labels">
-                <span class="x-label">Nov</span>
-                <span class="x-label">Jan</span>
-                <span class="x-label">Mar</span>
-                <span class="x-label">May</span>
-                <span class="x-label">Jul</span>
-                <span class="x-label">Sep</span>
-                <span class="x-label x-label--active">Oct</span>
+              <div id="heatmapEmptyState" class="empty-state-subtle" style="display:none;">
+                <span class="material-symbols-outlined">calendar_today</span>
+                <p>Start logging expenses to build your heatmap.</p>
               </div>
             </div>
 
@@ -258,43 +238,13 @@
             </div>
 
             <!-- Actionable Insights & Alerts -->
-            <div class="card glass-panel col-12">
+            <div class="card glass-panel col-12" style="margin-bottom: 14px;">
               <div class="insights-head">
                 <span class="material-symbols-outlined insights-icon">bolt</span>
                 <h3 class="insights-title">Actionable Insights &amp; Alerts</h3>
               </div>
-              <div class="insights-grid">
-
-                <div class="insight-card insight-card--error">
-                  <div class="insight-icon insight-icon--error">
-                    <span class="material-symbols-outlined">trending_up</span>
-                  </div>
-                  <div>
-                    <h4 class="insight-name">Unusual Activity</h4>
-                    <p class="insight-desc">Spending is up 25% this month compared to your usual patterns. Review your "Dining Out" logs.</p>
-                  </div>
-                </div>
-
-                <div class="insight-card insight-card--primary">
-                  <div class="insight-icon insight-icon--primary">
-                    <span class="material-symbols-outlined">category</span>
-                  </div>
-                  <div>
-                    <h4 class="insight-name">Food Category Analysis</h4>
-                    <p class="insight-desc">Food category is trending up significantly. Switching to meal-prep could save you $120/week.</p>
-                  </div>
-                </div>
-
-                <div class="insight-card insight-card--success">
-                  <div class="insight-icon insight-icon--success">
-                    <span class="material-symbols-outlined">energy_savings_leaf</span>
-                  </div>
-                  <div>
-                    <h4 class="insight-name">Optimization Success</h4>
-                    <p class="insight-desc">Excellent work! You saved 10% on utilities this month by adjusting your thermostat settings.</p>
-                  </div>
-                </div>
-
+              <div class="insights-grid" id="behavioralAlertsGrid">
+                <!-- Behavioral Alerts injected by JavaScript -->
               </div>
             </div>
 
@@ -321,5 +271,199 @@
     <script src="../../js/sidebar.js"></script>
     <script src="../notifications/notifications.js"></script>
     <script src="./analytics.js"></script>
+    
+    <script>
+      /**
+       * Spending Heatmap Engine
+       */
+      function refreshSpendingHeatmap() {
+        const grid = document.getElementById('heatmapGrid');
+        const monthContainer = document.getElementById('heatmapMonths');
+        const emptyState = document.getElementById('heatmapEmptyState');
+        if (!grid) return;
+
+        const expenses = JSON.parse(localStorage.getItem('expenseArr')) || [];
+        if (expenses.length === 0) {
+            grid.parentElement.style.display = 'none';
+            emptyState.style.display = 'flex';
+            return;
+        }
+
+        grid.parentElement.style.display = 'flex';
+        emptyState.style.display = 'none';
+
+        // 1. Calculate Grid Dates (Last 12 weeks, starting from a Monday)
+        const days = [];
+        const now = new Date();
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        
+        // Find most recent Sunday to work backwards accurately for a Mon-Sun grid
+        const currentDay = today.getDay(); // 0 = Sun
+        const daysToLastSun = currentDay; 
+        const lastSunday = new Date(today);
+        lastSunday.setDate(today.getDate() - daysToLastSun);
+
+        // We want 12 weeks * 7 days = 84 squares
+        // Ending on lastSunday
+        for (let i = 83; i >= 0; i--) {
+            const d = new Date(lastSunday);
+            d.setDate(lastSunday.getDate() - i);
+            days.push(d);
+        }
+
+        // 2. Sum Spend per day
+        const dayData = days.map(date => {
+            const dateStr = date.toISOString().split('T')[0];
+            const total = expenses.filter(e => e.date === dateStr)
+                                .reduce((s, e) => s + parseFloat(e.amount), 0);
+            return { date, dateStr, total };
+        });
+
+        // 3. Calculate Thresholds
+        const spends = dayData.map(d => d.total).filter(t => t > 0).sort((a, b) => a - b);
+        const maxSpend = spends.length ? spends[spends.length - 1] : 0;
+        const peakThreshold = spends.length ? spends[Math.floor(spends.length * 0.9)] : Infinity;
+
+        // 4. Render Grid
+        grid.innerHTML = dayData.map(day => {
+            let intensity = 'none';
+            if (day.total > 0) {
+                if (day.total >= peakThreshold) intensity = 'peak';
+                else if (day.total > maxSpend * 0.6) intensity = 'high';
+                else if (day.total > maxSpend * 0.3) intensity = 'med';
+                else intensity = 'low';
+            }
+
+            const formattedDate = day.date.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+            const tip = `${formattedDate}: $${day.total.toFixed(2)}`;
+
+            return `<div class="heatmap-day heatmap-day--${intensity}" data-tip="${tip}"></div>`;
+        }).join('');
+
+        // 5. Render Month Labels
+        const monthLabels = [];
+        let lastMonth = -1;
+        // Group into 12 columns
+        for(let w = 0; w < 12; w++) {
+            const firstDayOfWeek = dayData[w * 7].date;
+            const m = firstDayOfWeek.getMonth();
+            if (m !== lastMonth) {
+                monthLabels.push(firstDayOfWeek.toLocaleDateString(undefined, { month: 'short' }));
+                lastMonth = m;
+            } else {
+                monthLabels.push('');
+            }
+        }
+        monthContainer.innerHTML = monthLabels.map(m => `<span>${m}</span>`).join('');
+      }
+      /**
+       * Behavioral Alerts Logic
+       */
+      function refreshBehavioralAlerts() {
+        const grid = document.getElementById('behavioralAlertsGrid');
+        if (!grid) return;
+
+        const expenses = JSON.parse(localStorage.getItem('expenseArr')) || [];
+        const categories = JSON.parse(localStorage.getItem('categoryArr')) || [];
+        const now = new Date();
+        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+        // 1. Unusual Spikes (7-day vs 28-day avg)
+        const last7Days = expenses.filter(e => {
+            const d = new Date(e.date);
+            return (now - d) / (1000 * 60 * 60 * 24) <= 7;
+        });
+        const lastMonthHistory = expenses.filter(e => {
+            const d = new Date(e.date);
+            const diff = (now - d) / (1000 * 60 * 60 * 24);
+            return diff > 7 && diff <= 35;
+        });
+
+        let spikeHtml = `
+          <div class="insight-card">
+            <div class="insight-icon">
+              <span class="material-symbols-outlined">trending_up</span>
+            </div>
+            <div>
+              <h4 class="insight-name">Unusual Spike</h4>
+              <p class="insight-desc">No unusual spending detected this week</p>
+            </div>
+          </div>
+        `;
+
+        for (const cat of categories) {
+            const curSpent = last7Days.filter(e => e.category === cat.name).reduce((s, e) => s + parseFloat(e.amount), 0);
+            const historicalSpent = lastMonthHistory.filter(e => e.category === cat.name).reduce((s, e) => s + parseFloat(e.amount), 0);
+            const avgWeekly = historicalSpent / 4;
+
+            if (curSpent >= avgWeekly * 2 && curSpent > 0) {
+                const ratio = Math.round(curSpent / (avgWeekly || 1));
+                spikeHtml = `
+                  <div class="insight-card" style="box-shadow: 0 0 0 1px rgba(255,121,117,0.48)">
+                    <div class="insight-icon" style="color: #ff7975; background: rgba(255,121,117,0.1)">
+                      <span class="material-symbols-outlined">warning</span>
+                    </div>
+                    <div>
+                      <h4 class="insight-name" style="color: #ff7975">Spike Detected</h4>
+                      <p class="insight-desc">You spent ${ratio}x more than usual on <strong>${cat.name}</strong> this week</p>
+                    </div>
+                  </div>
+                `;
+                break; // Only show one major spike
+            }
+        }
+
+        // 2. Biggest Spending Day
+        const monthExps = expenses.filter(e => new Date(e.date) >= startOfMonth);
+        const dayGroups = {};
+        monthExps.forEach(e => dayGroups[e.date] = (dayGroups[e.date] || 0) + parseFloat(e.amount));
+        
+        let biggestDay = null, maxAmt = 0;
+        Object.entries(dayGroups).forEach(([date, amt]) => {
+            if (amt > maxAmt) { maxAmt = amt; biggestDay = date; }
+        });
+
+        const dayHtml = `
+          <div class="insight-card" style="box-shadow: 0 0 0 1px rgba(81, 223, 255, 0.48)">
+            <div class="insight-icon" style="color: var(--primary); background: rgba(81,223,255,0.1)">
+              <span class="material-symbols-outlined">calendar_today</span>
+            </div>
+            <div>
+              <h4 class="insight-name">Biggest Spending Day</h4>
+              <p class="insight-desc">${biggestDay ? `Your biggest spending day was <strong>${new Date(biggestDay).toLocaleDateString(undefined, {weekday: 'long', month: 'short', day: 'numeric'})}</strong> at <strong>$${maxAmt.toFixed(2)}</strong>` : 'No expenses recorded this month yet.'}</p>
+            </div>
+          </div>
+        `;
+
+        // 3. Uncategorized Issues
+        const uncategorizedCount = monthExps.filter(e => e.category === "Uncategorized").length;
+        const hygieneHtml = `
+          <div class="insight-card" style="box-shadow: 0 0 0 1px ${uncategorizedCount > 0 ? 'rgba(255,184,108,0.48)' : 'rgba(17,241,180,0.48)'}">
+            <div class="insight-icon" style="color: ${uncategorizedCount > 0 ? '#ffb86c' : '#11f1b4'}; background: ${uncategorizedCount > 0 ? 'rgba(255,184,108,0.1)' : 'rgba(17,241,180,0.1)'}">
+              <span class="material-symbols-outlined">${uncategorizedCount > 0 ? 'label_off' : 'check_circle'}</span>
+            </div>
+            <div>
+              <h4 class="insight-name" style="color: ${uncategorizedCount > 0 ? '#ffb86c' : '#11f1b4'}">Data Hygiene</h4>
+              <p class="insight-desc">${uncategorizedCount > 0 ? `You have <strong>${uncategorizedCount}</strong> expenses in Uncategorized — <a href="../categories management/index.html" style="color:inherit; text-decoration:underline;">consider sorting them</a>` : 'All expenses are categorized — nice work!'}</p>
+            </div>
+          </div>
+        `;
+
+        grid.innerHTML = spikeHtml + dayHtml + hygieneHtml;
+      }
+
+      // Initialize
+      document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            refreshSpendingHeatmap();
+            refreshBehavioralAlerts();
+        }, 150);
+      });
+      
+      window.addEventListener('storage', () => {
+        refreshSpendingHeatmap();
+        refreshBehavioralAlerts();
+      });
+    </script>
   </body>
 </html>
