@@ -63,20 +63,16 @@ document.addEventListener("DOMContentLoaded", () => {
         const absDiff = Math.abs(diff);
         const context = mode === "lastYear" ? "last year" : "last month";
 
+        badge.className = "health-badge"; // Reset
+
         if (diff > 0) {
-            badge.style.color = "var(--green)";
-            badge.style.background = "rgba(17, 241, 180, 0.1)";
-            badge.style.borderColor = "rgba(17, 241, 180, 0.2)";
+            badge.classList.add("better");
             badge.innerHTML = `<span class="material-symbols-outlined">trending_up</span><span>${absDiff}% Better vs ${context}</span>`;
         } else if (diff < 0) {
-            badge.style.color = "var(--coral)";
-            badge.style.background = "rgba(255, 120, 116, 0.1)";
-            badge.style.borderColor = "rgba(255, 120, 116, 0.2)";
+            badge.classList.add("worse");
             badge.innerHTML = `<span class="material-symbols-outlined">trending_down</span><span>${absDiff}% Worse vs ${context}</span>`;
         } else {
-            badge.style.color = "var(--muted)";
-            badge.style.background = "rgba(255, 255, 255, 0.05)";
-            badge.style.borderColor = "rgba(255, 255, 255, 0.1)";
+            badge.classList.add("same");
             badge.innerHTML = `<span class="material-symbols-outlined">horizontal_rule</span><span>Same as ${context}</span>`;
         }
     }
@@ -153,6 +149,15 @@ document.addEventListener("DOMContentLoaded", () => {
         compareHealth(currentScore, previousScore, currentMode);
         updateCategoryPerformance(budgetTarget);
         updateSpendingPatterns(currentSpent, previousSpent, currentMode);
+
+        // Expose state and trigger heatmap
+        window.currentAnalyticsState = {
+            mode: currentMode,
+            view: viewBtn.textContent
+        };
+        if (typeof refreshSpendingHeatmap === 'function') {
+            refreshSpendingHeatmap();
+        }
     }
 
     /**
@@ -210,7 +215,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const centerText = donutLayout.querySelector(".donut-center span");
         if (svg) {
             let cumulativeOffset = 0;
-            let svgHtml = `<circle cx="18" cy="18" r="16" fill="transparent" stroke="#102645" stroke-width="4"></circle>`;
+            let svgHtml = `<circle cx="18" cy="18" r="16" fill="transparent" stroke="var(--surface-variant)" stroke-width="4"></circle>`;
             const sortedStats = [...categoryStats].sort((a, b) => b.pct - a.pct);
             sortedStats.forEach(stat => {
                 if (stat.pct > 0) {

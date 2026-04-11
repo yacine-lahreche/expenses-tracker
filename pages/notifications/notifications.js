@@ -27,7 +27,7 @@ if (!dropdown) {
     }
 }
 
-const toggleBtns = document.querySelectorAll('.topbar-notification');
+const toggleBtns = document.querySelectorAll('.topbar-notification:not(#themeToggleBtn)');
 const notifList = document.getElementById('notifList');
 const clearBtn = document.getElementById('clearNotifsBtn');
 
@@ -48,7 +48,7 @@ function updateBadge() {
     // Always re-read from localStorage so new notifications are reflected
     notifications = JSON.parse(localStorage.getItem('notificationsArr')) || [];
     const unreadCount = notifications.length;
-    document.querySelectorAll('.topbar-notification').forEach(icon => {
+    document.querySelectorAll('.topbar-notification:not(#themeToggleBtn)').forEach(icon => {
         // Fix: icon must be position:relative so the badge anchors to IT, not the navbar
         icon.style.position = 'relative';
         icon.style.display = 'inline-flex';
@@ -187,7 +187,7 @@ function renderPageNotifications() {
         if (notif.type === 'overall_budget_exceeded') typeClass = 'type-expense';
         const label = notif.type === 'overall_budget_exceeded' ? 'MAX BUDGET ALERT' : 'BUDGET WARNING';
         return `
-            <div class="notif-item" style="background:rgba(255,255,255,0.03);border-radius:12px;margin-bottom:8px;padding:16px 20px;">
+            <div class="notif-item" style="background: var(--surface-container);;border-radius:12px;margin-bottom:8px;padding:16px 20px;">
                 <div class="notif-item-header">
                     <span class="notif-type ${typeClass}">${label}</span>
                     <span class="notif-time">${formatTime(notif.time)}</span>

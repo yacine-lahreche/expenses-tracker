@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../../styles/notifications.css">
 </head>
 <body>
+  <script>document.documentElement.setAttribute("data-theme", localStorage.getItem("theme") || "dark")</script>
   <div class="layout">
     <aside class="sidebar shell">
       <div>
@@ -39,6 +40,9 @@
         <div class="top-actions">
           <!-- <div class="search">Search settings...</div> -->
           <div class="icons">
+            <button id="themeToggleBtn" class="topbar-notification">
+              <img src="../../assets/icons/dark.png" alt="theme" width="20px" height="20px">
+            </button>
             <a href="../notifications/index.html" class="topbar-notification">
               <img src="../../assets/icons/notification.png" alt="notification" width="20px" height="20px">
             </a>
@@ -54,7 +58,7 @@
         <section class="grid">
           <article class="card">
             <h2><span>A</span>Appearance</h2>
-            <p>Choose your preferred visual style.</p>
+            <div class="field-label">Choose your preferred visual style.</div>
             <div class="tile">Dark Mode <div class="switch on"></div></div>
             <div class="tile muted">Light Mode <div class="switch"></div></div>
           </article>
@@ -91,6 +95,7 @@
     <div class="sidebar-overlay"></div>
   </div>
   <script src="../../js/sidebar.js"></script>
+  <script src="../../js/theme.js"></script>
   <script src="../notifications/notifications.js"></script>
 </body>
 </html>

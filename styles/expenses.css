@@ -9,9 +9,8 @@
   display: flex;
   align-items: center;
   gap: 0.625rem;
-  color: rgba(220,228,245,0.72);
-  font-size: 0.875rem;
-  /* margin-bottom: 30px; */
+  color: var(--muted);
+  font-size: var(--text-base);
 }
 
 .headline-meta::before {
@@ -31,7 +30,7 @@
 
 .control-card {
   border-radius: 16px;
-  background: rgba(17, 35, 73, 0.95);
+  background: var(--surface-card);
   border: 1px solid var(--line);
   min-height: 4.375rem;
   display: flex;
@@ -43,21 +42,21 @@
 .search-box, .date-box, .sort-btn {
   height: 2.25rem;
   border-radius: 12px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.03);
+  background: var(--surface-input);
+  border: 1px solid var(--line);
   display: flex;
   align-items: center;
   padding: 0 0.875rem;
-  color: rgba(220,228,245,0.72);
-  font-size: 0.8125rem;
+  color: var(--text);
+  font-size: var(--text-sm);
   outline: none;
 }
 
 .search-box { flex: 1; min-width: 13.75rem; }
-.date-box { width: 9.375rem; color: var(--muted); cursor: pointer; }
+.date-box { width: 9.375rem; color: var(--text); cursor: pointer; }
 .sort-card { padding: 1rem 1.125rem; display: flex; align-items: center; justify-content: space-between; }
 .sort-label {
-  color: rgba(205,214,236,0.62);
+  color: var(--muted);
   font-size: 0.6875rem;
   font-weight: 800;
   letter-spacing: 0.16em;
@@ -65,12 +64,12 @@
 }
 
 .search-box::placeholder {
-  color: rgba(216,224,247,0.42);
-  font-family: "Inter", sans-serif;
-  font-size: 0.8125rem;
+  color: var(--muted);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
 }
 
-.sort-btn { width: 6.25rem; color: #7ce8ff; font-weight: 800; justify-content: center; cursor: pointer; }
+.sort-btn { width: 6.25rem; color: var(--primary); font-weight: 800; justify-content: center; cursor: pointer; }
 
 .dropdown-btn{
   width: 10rem;
@@ -120,8 +119,8 @@
   grid-template-columns: subgrid;
   grid-column: 1 / -1;
   gap: 1.25rem;
-  color: rgba(205,214,236,0.46);
-  font-size: 0.6875rem;
+  color: var(--muted);
+  font-size: var(--text-xs);
   font-weight: 800;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -141,17 +140,17 @@
   padding: 0 0.875rem;
   margin-bottom: 1rem;
   border-radius: 16px;
-  background: rgba(17, 35, 73, 0.95);
+  background: var(--surface-card);
   border: 1px solid var(--line);
   transition: transform 0.2s ease;
 }
 
 .table-row:hover {
   transform: scale(1.005);
-  background: rgba(23, 44, 88, 0.95);
+  background: var(--surface-bright);
 }
 
-.date { color: rgba(221,229,247,0.72); font-size: 0.875rem; }
+.date { color: var(--muted); font-size: var(--text-base); }
 
 .category {
   display: flex;
@@ -171,19 +170,19 @@
 }
 
 .merchant {
-  color: #77e8ff;
-  font-family: "Manrope", sans-serif;
-  font-size: 1rem;
+  color: var(--primary);
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
   font-weight: 700;
   margin-bottom: 0.1875rem;
 }
 
-.note { color: var(--muted); font-size: 0.8125rem; }
+.note { color: var(--muted); font-size: var(--text-sm); }
 
 .amount {
   text-align: right;
-  font-family: "Manrope", sans-serif;
-  font-size: 1.0625rem;
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
   font-weight: 800;
 }
 
@@ -192,7 +191,7 @@
 
 .edit-btn, .delete-btn {
   font-size: 18px;
-  color: rgba(221,229,247,0.7); 
+  color: var(--muted); 
   cursor: pointer;
   border: none;
   background: none;
@@ -204,11 +203,11 @@
   margin: 2.125rem auto 0;
   display: grid;
   place-items: center;
-  color: #76e8ff;
-  font-size: 0.8125rem;
+  color: var(--cyan);
+  font-size: var(--text-sm);
   font-weight: 700;
   border-radius: 16px;
-  background: rgba(17, 35, 73, 0.95);
+  background: var(--surface-dropdown);
   border: 1px solid var(--line);
   cursor: pointer;
 }
@@ -234,9 +233,10 @@
 .modal {
   width: min(31.25rem, calc(100vw - 2.75rem));
   border-radius: 24px;
-  background: rgba(17, 35, 73, 0.96);
+  background: var(--surface-card);
+  backdrop-filter: blur(24px) saturate(180%);
   border: 1px solid var(--line);
-  box-shadow: 0 28px 72px rgba(0,0,0,0.34);
+  box-shadow: var(--shadow-xl);
   padding: 2rem;
   position: relative;
 }
@@ -250,23 +250,24 @@
 
 .modal h1 {
   margin: 0 0 0.25rem;
-  color: #70e8ff;
-  font-size: 1.5rem;
+  color: var(--primary);
+  font-size: var(--text-3xl);
   font-weight: 800;
-  font-family: "Manrope", sans-serif;
+  font-family: var(--font-display);
 }
 
 .close {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.05);
-  color: rgba(221,229,247,0.66);
+  background: var(--line-light);
+  color: var(--muted);
   display: grid;
   place-items: center;
   font-size: 1.25rem;
   cursor: pointer;
   border: none;
+  transition: all 0.2s ease;
 }
 
 .close:hover {
@@ -279,8 +280,8 @@
 }
 
 .label {
-  color: rgba(205,214,236,0.52);
-  font-size: 0.6875rem;
+  color: var(--muted);
+  font-size: var(--text-xs);
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -296,8 +297,8 @@
 }
 
 .currency {
-  font-family: "Manrope", sans-serif;
-  font-size: 2rem;
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
   font-weight: 800;
   color: var(--primary);
 }
@@ -306,7 +307,7 @@
   position: relative;
   font-size: 4.375rem;
   font-weight: 400;
-  color: #fff;
+  color: var(--text);
   line-height: 1;
   min-width: 9.375rem;
   text-align: left;
@@ -314,7 +315,7 @@
   background: transparent;
   border-left: 1px solid rgba(210,220,240,0.46);
   padding-left: 1.25rem;
-  font-family: "Manrope", sans-serif;
+  font-family: var(--font-display);
   outline: none; 
 }
 
@@ -334,8 +335,8 @@
 
 .field-wrap label {
   display: block;
-  color: rgba(205,214,236,0.62);
-  font-size: 0.75rem;
+  color: var(--muted);
+  font-size: var(--text-sm);
   margin: 1.5rem 0 0.5rem 0; 
 }
 
@@ -343,10 +344,10 @@
   width: 100%;
   height: 2.25rem;
   border-radius: 12px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.04);
+  background: var(--surface-input);
+  border: 1px solid var(--line-light);
   color: var(--text);
-  font-size: 0.875rem;
+  font-size: var(--text-base);
   padding: 0 1rem;
   display: flex;
   align-items: center;
@@ -367,12 +368,13 @@
 .btn-cancel {
   height: 2.75rem;
   border-radius: 12px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.03);
+  background: var(--line-light);
+  border: 1px solid var(--line);
   color: var(--muted);
-  font-family: "Manrope", sans-serif;
+  font-family: var(--font-display);
   font-weight: 700;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .btn-cancel:hover {
@@ -387,9 +389,9 @@
   color: #16314c;
   display: grid;
   place-items: center;
-  font-size: 0.9375rem;
+  font-size: var(--text-md);
   font-weight: 800;
-  font-family: "Manrope", sans-serif;
+  font-family: var(--font-display);
   cursor: pointer;
   transition: transform 0.2s ease;
 }

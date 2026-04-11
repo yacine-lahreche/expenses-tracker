@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Budget | Catalyst</title>
-  <link rel="icon" type="image/x-icon" href="../../favicon.ico">
+  <link rel="icon" type="image/x-icon" href="../../assets/icons/favicon-dark.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;700;800&display=swap" rel="stylesheet">
@@ -17,6 +17,7 @@
 </head>
 
 <body>
+  <script>document.documentElement.setAttribute("data-theme", localStorage.getItem("theme") || "dark")</script>
   <div class="layout">
     <aside class="sidebar shell">
       <div>
@@ -53,6 +54,9 @@
         <div class="top-brand">Catalyst</div>
         <div class="top-actions">
           <div class="icons">
+            <button id="themeToggleBtn" class="topbar-notification">
+              <img src="../../assets/icons/dark.png" alt="theme" width="20px" height="20px">
+            </button>
             <a href="../notifications/index.html" class="topbar-notification">
               <img src="../../assets/icons/notification.png" alt="notification" width="20px" height="20px">
             </a>
@@ -125,7 +129,7 @@
           </div>
           <div class="chart-legend" style="display: flex; justify-content: center; gap: 24px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.04);">
             <div class="legend-item" style="display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--muted);"><span class="line-icon solid" style="width: 16px; height: 2px; background: var(--primary); box-shadow: 0 0 8px var(--primary);"></span>Current Spending</div>
-            <div class="legend-item" style="display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--muted);"><span class="line-icon dashed" style="width: 16px; height: 2px; border-bottom: 2px dashed rgba(221, 229, 247, 0.4);"></span>Average Spending</div>
+            <div class="legend-item" style="display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--muted);"><span class="line-icon dashed" style="width: 16px; height: 2px; border-bottom: 2px dashed var(--muted);"></span>Average Spending</div>
           </div>
         </section>
 
@@ -295,6 +299,7 @@
   </div>
 
   <script src="../../js/sidebar.js"></script>
+  <script src="../../js/theme.js"></script>
   <script type="module" src="budget.js"></script>
   <script src="../notifications/notifications.js"></script>
 </body>

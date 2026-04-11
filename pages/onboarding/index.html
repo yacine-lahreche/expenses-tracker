@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Welcome | Expenses Tracker</title>
-  <link rel="icon" type="image/x-icon" href="../../favicon.ico">
+  <link rel="icon" type="image/x-icon" href="../../assets/icons/favicon-dark.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
@@ -12,12 +12,12 @@
   <link rel="stylesheet" href="../../styles/components.css">
   <link rel="stylesheet" href="../../styles/onboarding.css">
   <link rel="stylesheet" href="../../styles/notifications.css">
+  <script src="../../js/theme.js"></script>
 </head>
-<body style="display: grid; place-items: center; overflow: hidden; background: linear-gradient(180deg, #07182f 0%, #041126 100%);">
+<body class="onboarding-page">
+  <script>document.documentElement.setAttribute("data-theme", localStorage.getItem("theme") || "dark")</script>
   <div class="orb top" aria-hidden="true"></div>
-  <div class="tile bottom" aria-hidden="true">
-    <div class="sparkles"><span></span></div>
-  </div>
+  <div class="orb bottom" aria-hidden="true"></div>
   <main class="onboarding-card">
     <div class="brand-large">Catalyst</div>
     <div class="hero" aria-hidden="true">

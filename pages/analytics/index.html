@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analytics | Catalyst</title>
-    <link rel="icon" type="image/x-icon" href="../../favicon.ico">
+    <link rel="icon" type="image/x-icon" href="../../assets/icons/favicon-dark.ico">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="../../styles/analytics.css">
   </head>
   <body>
+    <script>document.documentElement.setAttribute("data-theme", localStorage.getItem("theme") || "dark")</script>
     <div class="layout">
 
       <!-- Sidebar (shared pattern) -->
@@ -62,6 +63,9 @@
           <div class="top-brand">Catalyst</div>
           <div class="top-actions">
             <div class="icons">
+              <button id="themeToggleBtn" class="topbar-notification">
+                <img src="../../assets/icons/dark.png" alt="theme" width="20px" height="20px">
+              </button>
               <a href="../notifications/index.html" class="topbar-notification">
                 <img src="../../assets/icons/notification.png" alt="notification" width="20px" height="20px">
               </a>
@@ -106,7 +110,7 @@
               <h3 class="card-section-label">Budget Health Score</h3>
               <div class="gauge-wrap">
                 <svg class="gauge-face" viewBox="0 0 192 192">
-                  <circle cx="96" cy="96" r="88" fill="transparent" stroke="#102645" stroke-width="12"></circle>
+                  <circle cx="96" cy="96" r="88" fill="transparent" stroke="var(--surface-variant)" stroke-width="12"></circle>
                   <circle cx="96" cy="96" r="88" fill="transparent" stroke="#51dfff"
                           stroke-dasharray="552.92" stroke-dashoffset="100"
                           stroke-linecap="round" stroke-width="12"></circle>
@@ -126,7 +130,7 @@
             <div class="card glass-panel col-8 heatmap-card">
               <div class="card-head">
                 <h3 class="card-section-label">Spending Activity</h3>
-                <p class="card-subtitle">Daily spend intensity over 12 weeks</p>
+                <!-- <p class="card-subtitle">Daily spend intensity over 12 weeks</p> -->
               </div>
               <div class="heatmap-container">
                 <div class="heatmap-y-labels">
@@ -155,7 +159,7 @@
               <div class="donut-layout">
                 <div class="donut-wrap">
                   <svg viewBox="0 0 36 36" style="width:100%;height:100%;">
-                    <circle cx="18" cy="18" r="16" fill="transparent" stroke="#102645" stroke-width="4"></circle>
+                    <circle cx="18" cy="18" r="16" fill="transparent" stroke="var(--surface-variant)" stroke-width="4"></circle>
                     <circle cx="18" cy="18" r="16" fill="transparent" stroke="#51dfff"
                             stroke-dasharray="45 100" stroke-dashoffset="0" stroke-width="4"></circle>
                     <circle cx="18" cy="18" r="16" fill="transparent" stroke="#11f1b4"
@@ -269,6 +273,7 @@
     </div> -->
 
     <script src="../../js/sidebar.js"></script>
+    <script src="../../js/theme.js"></script>
     <script src="../notifications/notifications.js"></script>
     <script src="./analytics.js"></script>
     
@@ -280,9 +285,12 @@
         const grid = document.getElementById('heatmapGrid');
         const monthContainer = document.getElementById('heatmapMonths');
         const emptyState = document.getElementById('heatmapEmptyState');
+        const yLabels = document.querySelector('.heatmap-y-labels');
         if (!grid) return;
 
         const expenses = JSON.parse(localStorage.getItem('expenseArr')) || [];
+        const state = window.currentAnalyticsState || { mode: 'lastMonth', view: 'Week 1' };
+        
         if (expenses.length === 0) {
             grid.parentElement.style.display = 'none';
             emptyState.style.display = 'flex';
@@ -292,40 +300,122 @@
         grid.parentElement.style.display = 'flex';
         emptyState.style.display = 'none';
 
-        // 1. Calculate Grid Dates (Last 12 weeks, starting from a Monday)
-        const days = [];
-        const now = new Date();
-        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-        
-        // Find most recent Sunday to work backwards accurately for a Mon-Sun grid
-        const currentDay = today.getDay(); // 0 = Sun
-        const daysToLastSun = currentDay; 
-        const lastSunday = new Date(today);
-        lastSunday.setDate(today.getDate() - daysToLastSun);
+        let dayData = [];
+        let cols = 12;
+        let rows = 7;
+        let monthLabels = [];
+        let flow = 'column';
 
-        // We want 12 weeks * 7 days = 84 squares
-        // Ending on lastSunday
-        for (let i = 83; i >= 0; i--) {
-            const d = new Date(lastSunday);
-            d.setDate(lastSunday.getDate() - i);
-            days.push(d);
+        const now = new Date();
+        const currentYear = now.getFullYear();
+        const currentMonth = now.getMonth();
+
+        if (state.mode === 'overall') {
+            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            const daysToLastSun = today.getDay();
+            const lastSunday = new Date(today);
+            lastSunday.setDate(today.getDate() - daysToLastSun);
+
+            for (let i = 83; i >= 0; i--) {
+                const d = new Date(lastSunday);
+                d.setDate(lastSunday.getDate() - i);
+                const dateStr = d.toISOString().split('T')[0];
+                const total = expenses.filter(e => e.date === dateStr).reduce((s, e) => s + parseFloat(e.amount), 0);
+                dayData.push({ date: d, dateStr, total });
+            }
+
+            let lastM = -1;
+            for(let w = 0; w < 12; w++) {
+                const d = dayData[w * 7].date;
+                const m = d.getMonth();
+                if (m !== lastM) {
+                    monthLabels.push(d.toLocaleDateString(undefined, { month: 'short' }));
+                    lastM = m;
+                } else {
+                    monthLabels.push('');
+                }
+            }
+            yLabels.style.display = 'flex';
+        } else if (state.mode === 'lastYear') {
+            const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            const mIdx = months.indexOf(state.view);
+            rows = 7;
+            cols = 11; // 5 weeks current + 1 spacer + 5 weeks prev
+
+            const getMonthGrid = (y, m) => {
+                const gridData = [];
+                // Start from the Monday of the week containing the 1st
+                const first = new Date(y, m, 1);
+                const startOffset = (first.getDay() + 6) % 7; // Mon=0
+                const start = new Date(first);
+                start.setDate(first.getDate() - startOffset);
+
+                for (let i = 0; i < 35; i++) {
+                    const d = new Date(start);
+                    d.setDate(start.getDate() + i);
+                    const dateStr = d.toISOString().split('T')[0];
+                    const isOtherMonth = d.getMonth() !== m;
+                    const total = isOtherMonth ? 0 : expenses.filter(e => e.date === dateStr).reduce((s, e) => s + parseFloat(e.amount), 0);
+                    gridData.push({ date: d, dateStr, total, isOtherMonth });
+                }
+                return gridData;
+            };
+
+            const currentGrid = getMonthGrid(currentYear, mIdx);
+            const prevGrid = getMonthGrid(currentYear - 1, mIdx);
+
+            // Merge with spacer
+            for (let col = 0; col < 5; col++) {
+                for (let row = 0; row < 7; row++) dayData.push(currentGrid[col * 7 + row]);
+            }
+            // Spacer column
+            for (let row = 0; row < 7; row++) dayData.push({ total: 0, isSpacer: true });
+            for (let col = 0; col < 5; col++) {
+                for (let row = 0; row < 7; row++) dayData.push(prevGrid[col * 7 + row]);
+            }
+
+            monthLabels = ['Week 1', '', '', '', 'Week 5', 'vs', 'Week 1', '', '', '', 'Week 5'];
+            yLabels.style.display = 'flex';
+        } else if (state.mode === 'lastMonth') {
+            const weekIdx = parseInt(state.view.replace('Week ', '')) - 1;
+            rows = 2;
+            cols = 7;
+            flow = 'row';
+
+            const getWeekDays = (y, m, w) => {
+                const days = [];
+                const start = w * 7 + 1;
+                for (let i = 0; i < 7; i++) {
+                    const d = new Date(y, m, start + i);
+                    const dateStr = d.toISOString().split('T')[0];
+                    const total = expenses.filter(e => e.date === dateStr).reduce((s, e) => s + parseFloat(e.amount), 0);
+                    days.push({ date: d, dateStr, total });
+                }
+                return days;
+            };
+
+            const currentWeek = getWeekDays(currentYear, currentMonth, weekIdx);
+            let pm = currentMonth - 1, py = currentYear;
+            if (pm < 0) { pm = 11; py--; }
+            const prevWeek = getWeekDays(py, pm, weekIdx);
+
+            dayData = [...currentWeek, ...prevWeek];
+            monthLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+            yLabels.style.display = 'none'; // Grid becomes 2 rows: Curr vs Prev
         }
 
-        // 2. Sum Spend per day
-        const dayData = days.map(date => {
-            const dateStr = date.toISOString().split('T')[0];
-            const total = expenses.filter(e => e.date === dateStr)
-                                .reduce((s, e) => s + parseFloat(e.amount), 0);
-            return { date, dateStr, total };
-        });
+        // Intensity Logic
+        const renderedSpends = dayData.filter(d => d.total > 0 && !d.isOtherMonth && !d.isSpacer).map(d => d.total).sort((a, b) => a - b);
+        const maxSpend = renderedSpends.length ? renderedSpends[renderedSpends.length - 1] : 0;
+        const peakThreshold = renderedSpends.length ? renderedSpends[Math.floor(renderedSpends.length * 0.9)] : Infinity;
 
-        // 3. Calculate Thresholds
-        const spends = dayData.map(d => d.total).filter(t => t > 0).sort((a, b) => a - b);
-        const maxSpend = spends.length ? spends[spends.length - 1] : 0;
-        const peakThreshold = spends.length ? spends[Math.floor(spends.length * 0.9)] : Infinity;
+        grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+        grid.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+        grid.style.gridAutoFlow = flow;
 
-        // 4. Render Grid
-        grid.innerHTML = dayData.map(day => {
+        grid.innerHTML = dayData.map((day, idx) => {
+            if (day.isSpacer) return '<div style="background:transparent; pointer-events:none;"></div>';
+            
             let intensity = 'none';
             if (day.total > 0) {
                 if (day.total >= peakThreshold) intensity = 'peak';
@@ -334,26 +424,16 @@
                 else intensity = 'low';
             }
 
-            const formattedDate = day.date.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
-            const tip = `${formattedDate}: $${day.total.toFixed(2)}`;
+            const isMuted = day.isOtherMonth || (state.mode === 'lastMonth' && idx >= 7);
+            const formattedDate = day.date ? day.date.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }) : '';
+            const tip = day.date ? `${formattedDate}: $${day.total.toFixed(2)}` : '';
 
-            return `<div class="heatmap-day heatmap-day--${intensity}" data-tip="${tip}"></div>`;
+            return `<div class="heatmap-day heatmap-day--${intensity}" 
+                         data-tip="${tip}" 
+                         style="${isMuted ? 'opacity:0.3;' : ''}"></div>`;
         }).join('');
 
-        // 5. Render Month Labels
-        const monthLabels = [];
-        let lastMonth = -1;
-        // Group into 12 columns
-        for(let w = 0; w < 12; w++) {
-            const firstDayOfWeek = dayData[w * 7].date;
-            const m = firstDayOfWeek.getMonth();
-            if (m !== lastMonth) {
-                monthLabels.push(firstDayOfWeek.toLocaleDateString(undefined, { month: 'short' }));
-                lastMonth = m;
-            } else {
-                monthLabels.push('');
-            }
-        }
+        monthContainer.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
         monthContainer.innerHTML = monthLabels.map(m => `<span>${m}</span>`).join('');
       }
       /**
@@ -444,7 +524,7 @@
             </div>
             <div>
               <h4 class="insight-name" style="color: ${uncategorizedCount > 0 ? '#ffb86c' : '#11f1b4'}">Data Hygiene</h4>
-              <p class="insight-desc">${uncategorizedCount > 0 ? `You have <strong>${uncategorizedCount}</strong> expenses in Uncategorized — <a href="../categories management/index.html" style="color:inherit; text-decoration:underline;">consider sorting them</a>` : 'All expenses are categorized — nice work!'}</p>
+              <p class="insight-desc">${uncategorizedCount > 0 ? `You have <strong>${uncategorizedCount}</strong> expenses in Uncategorized — <a href="../expenses/index.html" style="color:inherit; text-decoration:underline;">consider sorting them</a>` : 'All expenses are categorized — nice work!'}</p>
             </div>
           </div>
         `;

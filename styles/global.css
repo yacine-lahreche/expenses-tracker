@@ -1,14 +1,65 @@
 :root {
-  --line: rgba(118, 199, 255, 0.12);
-  --text: #dde5f7;
-  --muted: #7f8aa9;
-  --primary: #51dfff;
-  --green: #11f1b4;
-  --coral: #ff7874;
-  --amber: #ffb86c;
-  --violet: #bd93f9;
-  --cyan: #74e8ff;
-  --gray: #7f8aa9;
+  /* Colors & Tokens */
+  --line:           rgba(118, 199, 255, 0.12);
+  --line-heavy:     rgba(89, 140, 195, 0.12);
+  --line-light:     rgba(255, 255, 255, 0.05);
+  --text:           #dde5f7;
+  --muted:          #7f8aa9;
+  --primary:        #51dfff;
+  --green:          #11f1b4;
+  --coral:          #ff7874;
+  --amber:          #ffb86c;
+  --violet:         #bd93f9;
+  --cyan:           #74e8ff;
+  --gray:           #7f8aa9;
+
+  /* Surfaces */
+  --surface-canvas:         #06162f;
+  --surface-glass:          rgba(7, 17, 39, 0.88);
+  --surface-card:           rgba(11, 32, 61, 0.6);
+  --surface-input:          rgba(255, 255, 255, 0.03);
+  --surface-dropdown:       rgba(16, 34, 71, 0.85);
+  --surface-overlay:        rgba(0, 0, 0, 0.4);
+  --surface-variant:        #102645;
+  --surface-bright:         #152c4e;
+  --surface-container:      #061934;
+  --surface-container-low:  #02132b;
+  --surface-container-high: #0b203d;
+
+  /* Fonts */
+  --font-display: "Manrope", sans-serif;
+  --font-body:    "Inter", sans-serif;
+
+  /* Font Sizes */
+  --text-xs:   0.6875rem;
+  --text-sm:   0.75rem;
+  --text-base: 0.875rem;
+  --text-md:   0.9375rem;
+  --text-lg:   1rem;
+  --text-xl:   1.125rem;
+  --text-2xl:  1.25rem;
+  --text-3xl:  1.5rem;
+  --text-4xl:  2rem;
+  --text-5xl:  2.375rem;
+  --text-6xl:  3.75rem;
+
+  /* Gradients */
+  --gradient-base:    linear-gradient(180deg, #06162f 0%, #031124 100%);
+  --gradient-primary: linear-gradient(135deg, var(--primary), #00c4e8);
+
+  /* Budget Specific (Consolidated) */
+  --budget-primary:            #81ecff;
+  --budget-secondary:          #00ffab;
+  --budget-tertiary:           #ff8481;
+  --budget-error:              #ff716c;
+  --budget-line:               rgba(118, 199, 255, 0.12);
+
+  /* Shadows */
+  --shadow-sm:      0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md:      0 12px 24px rgba(0, 0, 0, 0.12);
+  --shadow-lg:      0 20px 48px rgba(0, 0, 0, 0.26);
+  --shadow-xl:      0 28px 64px rgba(0, 0, 0, 0.4);
+  --shadow-glow:    0 0 20px rgba(81, 223, 255, 0.3);
 }
 
 * {
@@ -16,11 +67,11 @@
 }
 
 html {
-  background: #06162f;
+  background: var(--surface-canvas);
   background-image: 
     radial-gradient(circle at 14% 18%, rgba(59, 190, 255, 0.06), transparent 24%),
     radial-gradient(circle at 90% 85%, rgba(9, 255, 195, 0.04), transparent 18%),
-    linear-gradient(180deg, #06162f 0%, #031124 100%);
+    var(--gradient-base);
   background-attachment: fixed;
   background-size: cover;
   min-height: 100%;
@@ -30,7 +81,7 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-body);
   color: var(--text);
   background: transparent;
 }
@@ -46,9 +97,9 @@ body {
 
 .shell {
   border-radius: 22px;
-  background: rgba(7, 17, 39, 0.88);
-  border: 1px solid rgba(89, 140, 195, 0.12);
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.26);
+  background: var(--surface-glass);
+  border: 1px solid var(--line-heavy);
+  box-shadow: var(--shadow-lg);
 }
 
 .sidebar {
@@ -62,9 +113,9 @@ body {
 }
 
 .brand {
-  font-family: "Manrope", sans-serif;
+  font-family: var(--font-display);
   color: var(--primary);
-  font-size: 0.9375rem;
+  font-size: var(--text-md);
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -73,7 +124,7 @@ body {
 
 .tier {
   color: rgba(208, 217, 242, 0.42);
-  font-size: 0.5rem;
+  font-size: var(--text-xs);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   margin-bottom: 1.75rem;
@@ -91,8 +142,8 @@ body {
   min-height: 2.5rem;
   padding: 0 0.75rem;
   border-radius: 11px;
-  color: rgba(196, 204, 228, 0.55);
-  font-size: 0.875rem;
+  color: var(--muted);
+  font-size: var(--text-base);
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
@@ -108,7 +159,7 @@ body {
 
 .nav-item:hover {
   color: var(--text);
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--line-light);
 }
 
 .nav-item:hover img {
@@ -122,7 +173,7 @@ body {
 }
 
 .nav-item.active {
-  background: rgba(15, 48, 77, 0.9);
+  background: var(--surface-container-low);
   color: var(--primary);
   border: 1px solid rgba(63, 230, 255, 0.5);
 }
@@ -137,7 +188,7 @@ body {
 
 .hamburger {
   display: none;
-  font-size: 1.5rem;
+  font-size: var(--text-3xl);
   cursor: pointer;
   color: var(--primary);
   user-select: none;
@@ -151,7 +202,7 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--surface-overlay);
   backdrop-filter: blur(4px);
   z-index: 1999;
   opacity: 0;
@@ -178,7 +229,7 @@ body {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--line-light);
   border: 1px solid rgba(255, 255, 255, 0.08);
   transition: all 0.2s ease;
   cursor: pointer;
@@ -209,7 +260,7 @@ body {
 
 .sidebar hr {
   border: 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid var(--line-light);
   margin: auto 0 0.875rem;
 }
 
@@ -229,9 +280,9 @@ body {
 
 .top-brand {
   color: var(--primary);
-  font-family: "Manrope", sans-serif;
+  font-family: var(--font-display);
   font-weight: 800;
-  font-size: 1.0625rem;
+  font-size: var(--text-xl);
 }
 
 .top-actions {
@@ -244,10 +295,10 @@ body {
   width: min(11.25rem, 100%);
   height: 2.125rem;
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--line-light);
+  border: 1px solid var(--line-light);
   color: rgba(216, 224, 247, 0.3);
-  font-size: 0.75rem;
+  font-size: var(--text-sm);
   padding: 0 1rem;
   display: flex;
   align-items: center;
@@ -257,8 +308,8 @@ body {
   display: flex;
   align-items: center; /* Ensure vertical alignment */
   gap: 0.875rem;
-  color: rgba(220, 228, 245, 0.7);
-  font-size: 1rem;
+  color: var(--muted);
+  font-size: var(--text-lg);
 }
 
 .topbar-profile {
@@ -268,7 +319,7 @@ body {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--line-light);
   border: 1px solid rgba(255, 255, 255, 0.08);
   transition: all 0.2s ease;
   cursor: pointer;
@@ -298,7 +349,7 @@ body {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--line-light);
   border: 1px solid rgba(255, 255, 255, 0.08);
   transition: all 0.2s ease;
   cursor: pointer;
@@ -328,13 +379,13 @@ body {
 }
 
 h1, h2, h3, .big-number, .btn {
-  font-family: "Manrope", sans-serif;
+  font-family: var(--font-display);
 }
 
 h1 {
   margin: 0 0 0.375rem;
-  color: #74e8ff;
-  font-size: 2.375rem;
+  color: var(--primary);
+  font-size: var(--text-5xl);
   line-height: 1;
   font-weight: 800;
 }
@@ -342,7 +393,7 @@ h1 {
 .subtitle {
   margin: 0;
   color: var(--muted);
-  font-size: 0.9375rem;
+  font-size: var(--text-md);
 }
 
 .page-head {
@@ -409,12 +460,12 @@ h1 {
   left: 0;
   width: 100%;
   min-width: fit-content;
-  background: rgba(16, 34, 71, 0.85);
+  background: var(--surface-dropdown);
   backdrop-filter: blur(16px);
   border: 1px solid rgba(118, 232, 255, 0.15);
   border-radius: 16px;
   padding: 0.5rem;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-xl);
   z-index: 2000;
   overflow: hidden;
   animation: dropdownReveal 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -439,7 +490,7 @@ h1 {
   gap: 12px;
   padding: 0.625rem 0.875rem;
   color: var(--muted);
-  font-size: 0.875rem;
+  font-size: var(--text-base);
   font-weight: 600;
   text-decoration: none; 
   border-radius: 10px;
@@ -474,17 +525,126 @@ h1 {
 }
 
 .dropdown-btn, .sort-btn {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--surface-input);
+  border: 1px solid var(--line-light);
   color: var(--text);
   transition: all 0.2s ease;
 }
 
 .dropdown-btn:hover, .sort-btn:hover {
-  background: rgba(255, 255, 255, 0.08); 
+  background: var(--budget-line); 
 }
 
 .dropdown-btn.selected {
   color: var(--primary); 
   background: rgba(81, 223, 255, 0.05);
 }
+
+/* ============================================================
+   LIGHT THEME OVERRIDES
+   ============================================================ */
+[data-theme="light"] {
+  /* Colors & Tokens */
+  --text:           #01132b;
+  --muted:          #4a5a7a78;
+  --primary:        #0062cc;
+  --green:          #00875a;
+  --coral:          #cc2200;
+  --amber:          #a35200;
+  --violet:         #6d28d9;
+  --cyan:           #00738c;
+  --gray:           #4a5a7a;
+  --line:           rgba(0, 60, 140, 0.12);
+  --line-heavy:     rgba(0, 60, 140, 0.16);
+  --line-light:     rgba(0, 60, 140, 0.06);
+
+  /* Surfaces - Pearl Perspective */
+  --surface-canvas:         #e8f0ff;
+  --surface-glass:          rgba(255, 255, 255, 0.72);
+  --surface-card:           rgba(255, 255, 255, 0.70);
+  --surface-input:          rgba(0, 60, 140, 0.04);
+  --surface-dropdown:       #deeaff;
+  --surface-overlay:        rgba(220, 232, 255, 0.88);
+  --surface-variant:        rgba(0, 60, 140, 0.03);
+  --surface-bright:         rgba(255, 255, 255, 0.85);
+  --surface-container:      rgba(0, 60, 140, 0.02);
+  --surface-container-low:  rgba(0, 60, 140, 0.01);
+  --surface-container-high: rgba(255, 255, 255, 0.6);
+
+  /* Gradients */
+  --gradient-base:    linear-gradient(180deg, #e8f0ff 0%, #dce8ff 100%);
+  --gradient-primary: linear-gradient(90deg, #4da8ff, #0077ee);
+  --gradient-danger:  linear-gradient(90deg, #e03030, #b81c1c);
+
+  /* Shadows - Blue Tinted */
+  --shadow-sm:      0 2px 4px rgba(0, 40, 120, 0.05);
+  --shadow-md:      0 12px 24px rgba(0, 40, 120, 0.12);
+  --shadow-lg:      0 20px 48px rgba(0, 40, 120, 0.26);
+  --shadow-xl:      0 28px 64px rgba(0, 40, 120, 0.4);
+  --shadow-glow:    0 0 20px rgba(0, 98, 204, 0.2);
+
+  /* Budget Specific */
+  --budget-primary:   #0077ee;
+  --budget-secondary: #00875a;
+  --budget-tertiary:  #cc2200;
+  --budget-error:     #e03030;
+  --budget-line:      rgba(0, 60, 140, 0.12);
+}
+
+[data-theme="light"] {
+  background: var(--surface-canvas);
+  background-image: 
+    radial-gradient(circle at 14% 18%, rgba(0, 100, 200, 0.05), transparent 24%),
+    radial-gradient(circle at 90% 85%, rgba(0, 180, 120, 0.03), transparent 18%),
+    var(--gradient-base);
+}
+
+[data-theme="light"] body {
+  background-image: var(--gradient-base);
+}
+
+[data-theme="light"] .nav-item:hover img,
+[data-theme="light"] .sidebar-settings-link:hover img,
+[data-theme="light"] .nav-item.active img,
+[data-theme="light"] .sidebar-settings-link.active img {
+  filter: brightness(1.25) saturate(4.1) hue-rotate(354deg) sepia(0) contrast(1);
+  mix-blend-mode: multiply;
+}
+
+/*dashboard*/
+[data-theme="light"] .tier { color: var(--muted); }
+[data-theme="light"] .stat-label { color: var(--gray); }
+
+[data-theme="light"] .view-all {
+  background: rgba(0, 98, 204, 0.08);
+  border: 1px solid rgba(0, 98, 204, 0.2);
+  color: var(--primary);
+}
+
+[data-theme="light"] .view-all:hover {
+  background: rgba(0, 98, 204, 0.12);
+  border: 1px solid rgba(0, 98, 204, 0.3);
+}
+
+/*analytics*/
+[data-theme="light"] .heatmap-day--none { background: rgba(30, 30, 30, 0.04); }
+[data-theme="light"] .mini-label { color: var(--muted); }
+
+/*budget*/
+[data-theme="light"] .filter-btn.active {
+  background-color: rgba(81, 241, 255, 0.12);
+  color: var(--budget-primary);
+}
+
+[data-theme="light"] .quick-edit, [data-theme="light"] .add-category-modal-content {
+  background: var(--gradient-base);
+}
+
+/*expenses*/
+[data-theme="light"] .btn:hover {
+  background: rgba(0, 98, 204, 0.12);
+  border: 1px solid rgba(0, 98, 204, 0.3);
+}
+
+[data-theme="light"] .modal { background: var(--gradient-base);}
+[data-theme="light"] .close:hover { background: rgba(173, 173, 173, 0.08); }

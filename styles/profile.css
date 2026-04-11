@@ -9,24 +9,26 @@
   width: 7.5rem;
   height: 7.5rem;
   border-radius: 40px;
-  background: linear-gradient(135deg, #11f1b4, #51dfff);
+  background: var(--gradient-primary);
   display: grid;
   place-items: center;
+  font-family: var(--font-display);
   font-size: 3rem;
-  color: #06162f;
+  color: var(--surface-canvas);
   font-weight: 800;
   box-shadow: 0 16px 32px rgba(81, 223, 255, 0.2);
 }
 
 .profile-info h1 {
   margin: 0 0 0.5rem;
-  font-size: 2rem;
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
 }
 
 .profile-info p {
   margin: 0;
   color: var(--muted);
-  font-size: 1rem;
+  font-size: var(--text-lg);
 }
 
 .stats-grid {
@@ -42,7 +44,7 @@
 
 .stat-card .label {
   display: block;
-  font-size: 0.6875rem;
+  font-size: var(--text-xs);
   text-transform: uppercase;
   color: var(--muted);
   letter-spacing: 0.1em;
@@ -50,6 +52,7 @@
 }
 
 .stat-card .value {
+  font-family: var(--font-display);
   font-size: 1.75rem;
   font-weight: 800;
   color: var(--primary);
@@ -69,19 +72,19 @@
 }
 
 .detail-item label {
-  font-size: 0.75rem;
+  font-size: var(--text-sm);
   color: var(--muted);
   text-transform: uppercase;
 }
 
 .detail-item .value {
-  font-size: 0.9375rem;
+  font-size: var(--text-md);
   color: var(--text);
   font-weight: 600;
   padding: 0.75rem 1rem;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--line-light);
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--line-light);
 }
 
 @media (max-width: 768px) {

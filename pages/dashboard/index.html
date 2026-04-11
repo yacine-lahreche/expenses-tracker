@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard | Expenses Tracker</title>
-  <link rel="icon" type="image/x-icon" href="../../favicon.ico">
+  <link rel="icon" type="image/x-icon" href="../../assets/icons/favicon-dark.ico">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="../../styles/notifications.css">
 </head>
 <body>
+  <script>document.documentElement.setAttribute("data-theme", localStorage.getItem("theme") || "dark")</script>
   <div class="layout">
     <aside class="sidebar shell">
       <div>
@@ -39,6 +40,9 @@
         <div class="top-actions">
           <!-- <div class="search">Search data...</div> -->
           <div class="icons">
+            <button id="themeToggleBtn" class="topbar-notification">
+              <img src="../../assets/icons/dark.png" alt="theme" width="20px" height="20px">
+            </button>
             <a href="../notifications/index.html" class="topbar-notification">
               <img src="../../assets/icons/notification.png" alt="notification" width="20px" height="20px">
             </a>
@@ -120,6 +124,7 @@
     <div class="sidebar-overlay"></div>
   </div>
   <script src="../../js/sidebar.js"></script>
+  <script src="../../js/theme.js"></script>
   <script src="dashboard.js"></script>
   <!-- <a href="../expenses/index.html?openAdd=true" class="fab" style="text-decoration: none;">+ Add Expense</a> -->
   <script src="../notifications/notifications.js"></script>

@@ -343,18 +343,17 @@ function updateRecentExpenses() {
     }
 
     container.innerHTML = recent.map(ex => {
-        const catInitial = ex.category ? ex.category.charAt(0).toUpperCase() : '?';
         const formattedDate = new Date(ex.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
-        
         let metaText = `${ex.category} • ${formattedDate}`;
-        if (ex.notes) {
-            metaText += ` • ${ex.notes}`;
-        }
+        if (ex.notes) metaText += ` • ${ex.notes}`;
+
+        const catObj = categoryArr.find(c => c.name === ex.category);
+        const catColor = catObj ? catObj.color : 'var(--primary)';
 
         return `
             <div class="tx-row">
               <div class="tx-main">
-                <div class="tx-icon">${catInitial}</div>
+                <div class="tx-icon" style="background: ${catColor}; --cat-color: ${catColor};"></div>
                 <div>
                   <div class="tx-name">${ex.merchant || 'Unknown Merchant'}</div>
                   <div class="tx-meta" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px;">
