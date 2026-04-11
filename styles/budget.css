@@ -485,6 +485,7 @@
   font-size: 1.25rem;
   cursor: pointer;
   border: none;
+  transition: all 0.2s ease;
 }
 
 .close:hover {

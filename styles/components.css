@@ -1,4 +1,5 @@
-.card {
+/* Cards (.card, .cat-card, .alert-card, etc.) */
+.card /* ⚠️ DUPLICATE — also in analytics.css, settings.css */ {
   border-radius: 16px;
   background: var(--surface-card);
   border: 1px solid var(--line);
@@ -13,7 +14,8 @@
   box-shadow: var(--shadow-md);
 }
 
-.badge {
+/* Badges & Dots (.badge, .color-dot, etc.) */
+.badge /* ⚠️ DUPLICATE — also in budget.css */ {
   width: 34px;
   height: 34px;
   border-radius: 9px;
@@ -28,7 +30,30 @@
 .badge.blue { background: rgba(81, 223, 255, 0.12); color: var(--primary); }
 .badge.red { background: rgba(255, 120, 116, 0.12); color: var(--coral); }
 
-.fab {
+/* Buttons & FAB (.btn, .fab, .button-primary, etc.) */
+.btn /* ⚠️ DUPLICATE — also in expenses.css, budget.css, global.css */ {
+  height: 2.75rem;
+  border-radius: 14px;
+  background: var(--surface-card);
+  border: 1px solid var(--line);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  background: #2b558c;
+  box-shadow: 0 0 28px rgba(70, 223, 255, 0.4);
+}
+
+.fab /* ⚠️ DUPLICATE — also in dashboard.css */ {
   position: fixed;
   right: 2.875rem;
   bottom: 1.5rem;
@@ -52,29 +77,8 @@
   transform: scale(1.05);
 }
 
-.btn {
-  height: 2.75rem;
-  border-radius: 14px;
-  background: var(--surface-card);
-  border: 1px solid var(--line);
-  color: var(--primary);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 1rem;
-  font-family: var(--font-display);
-  font-size: var(--text-base);
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.btn:hover {
-  background: #2b558c;
-  box-shadow: 0 0 28px rgba(70, 223, 255, 0.4);
-}
-
-.progress {
+/* Progress Bars (.progress, .progress-bar, etc.) */
+.progress /* ⚠️ DUPLICATE — also in dashboard.css, budget.css */ {
   width: 100%;
   height: 6px;
   background: rgba(119, 132, 162, 0.18);
@@ -87,8 +91,37 @@
   height: 100%;
   border-radius: inherit;
 }
+
+/* Modals & Overlays (.modal, .modal-overlay, .close, etc.) */
+#toast-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    border: none;
+}
+
+.toast {
+    animation: toast-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.toast-success { box-shadow: 0 0 10px var(--green) !important; }
+.toast-error { box-shadow: 0 0 10px var(--coral) !important; }
+.toast-info { box-shadow: 0 0 10px var(--primary) !important; }
+
+@keyframes toast-in {
+    from {
+        opacity: 0;
+        transform: translateX(120%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Dropdowns (.dropdown, .dropdown-menu, .dropdown-btn, etc.) */
 /* Styling for the Notifications Dropdown */
-.notification-dropdown {
+.notification-dropdown /* ⚠️ DUPLICATE — also in notifications.css */ {
     position: absolute;
     top: 3.75rem;
     right: 1.25rem;
@@ -116,7 +149,7 @@
     pointer-events: auto;
 }
 
-.notif-header {
+.notif-header /* ⚠️ DUPLICATE — also in notifications.css */ {
     padding: 1rem 1.25rem;
     border-bottom: 1px solid var(--line-light);
     display: flex;
@@ -131,7 +164,7 @@
     color: var(--text);
 }
 
-.notif-clear-btn {
+.notif-clear-btn /* ⚠️ DUPLICATE — also in notifications.css */ {
     background: transparent;
     border: none;
     color: var(--cyan);
@@ -147,7 +180,7 @@
     background: rgba(81, 223, 255, 0.1);
 }
 
-.notif-body {
+.notif-body /* ⚠️ DUPLICATE — also in notifications.css */ {
     flex: 1;
     overflow-y: auto;
     padding: 0.5rem 0;
@@ -157,7 +190,7 @@
 .notif-body::-webkit-scrollbar-track { background: transparent; }
 .notif-body::-webkit-scrollbar-thumb { background: rgba(119, 200, 255, 0.15); border-radius: 4px; }
 
-.notif-item {
+.notif-item /* ⚠️ DUPLICATE — also in notifications.css */ {
     padding: 0.75rem 1.25rem;
     display: flex;
     flex-direction: column;
@@ -174,15 +207,15 @@
     align-items: center;
 }
 
-.notif-type { font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+.notif-type /* ⚠️ DUPLICATE — also in notifications.css */ { font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
 .type-warning { color: var(--amber); }
 .type-expense { color: var(--primary); }
 .type-system { color: var(--text); }
 
-.notif-time { font-size: var(--text-xs); color: var(--muted); }
-.notif-message { font-size: var(--text-base); color: var(--text); line-height: 1.4; margin: 0.25rem 0 0 0; }
+.notif-time /* ⚠️ DUPLICATE — also in notifications.css */ { font-size: var(--text-xs); color: var(--muted); }
+.notif-message /* ⚠️ DUPLICATE — also in notifications.css */ { font-size: var(--text-base); color: var(--text); line-height: 1.4; margin: 0.25rem 0 0 0; }
 
-.notif-dismiss {
+.notif-dismiss /* ⚠️ DUPLICATE — also in notifications.css */ {
     position: absolute;
     right: 0.75rem;
     top: 0.75rem;
@@ -197,32 +230,6 @@
 
 .notif-item:hover .notif-dismiss { opacity: 1; }
 .notif-dismiss:hover { color: var(--coral); }
-.notif-empty { padding: 2rem 1.25rem; text-align: center; color: var(--muted); font-size: var(--text-base); }
+.notif-empty /* ⚠️ DUPLICATE — also in notifications.css */ { padding: 2rem 1.25rem; text-align: center; color: var(--muted); font-size: var(--text-base); }
 
-/* Toast Notifications */
-#toast-container {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    border: none;
-}
-
-.toast {
-    animation: toast-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes toast-in {
-    from {
-        opacity: 0;
-        transform: translateX(120%);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-.toast-success { box-shadow: 0 0 10px var(--green) !important; }
-.toast-error { box-shadow: 0 0 10px var(--coral) !important; }
-.toast-info { box-shadow: 0 0 10px var(--primary) !important; }
-
+/* Form Fields (.field, .input-line, .label, etc.) */
